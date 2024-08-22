@@ -9,6 +9,8 @@
 #include "PtrDemo.hpp"
 #include "ConstIterators.hpp"
 #include "ThrowAndNoExcept.hpp"
+#include "ConstExpreession.hpp"
+#include "ConstMutable.hpp"
 
 #include <memory>
 #include <vector>
@@ -25,7 +27,9 @@ std::vector<void (*)()> Demos =
         &OverloadingAndOverridingDemo,
         &PtrDemo,
         &ConstIteratorsDemo,
-        &ThrowAndNoExceptDemo};
+        &ThrowAndNoExceptDemo,
+        &ConstExpressionDemo,
+        &ConstMutableDemo};
 
 int main(int argc, char *argv[])
 {
