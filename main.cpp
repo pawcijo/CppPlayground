@@ -11,6 +11,11 @@
 #include "ThrowAndNoExcept.hpp"
 #include "ConstExpreession.hpp"
 #include "ConstMutable.hpp"
+#include "RuleOfThree.hpp"
+#include "SOLID.hpp"
+#include "VirtualDestructor.hpp"
+#include "ReferencePolymorphism.hpp"
+#include "StaticMemoryAllocation.hpp"
 
 #include <memory>
 #include <vector>
@@ -29,7 +34,12 @@ std::vector<void (*)()> Demos =
         &ConstIteratorsDemo,
         &ThrowAndNoExceptDemo,
         &ConstExpressionDemo,
-        &ConstMutableDemo};
+        &ConstMutable::ConstMutableDemo,
+        &RuleOfThree::RuleOfThreeDemo,
+        &SOLID::SOLID_Demo,
+        &VirtualDestructor::VirtualDestructorDemo,
+        &ReferencePoli::ReferencePolymorphismDemo,
+        &StaticMemoryAllocation::StaticMemoryAllocationDemo};
 
 int main(int argc, char *argv[])
 {
@@ -56,7 +66,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    cout << "- - - - - - - - - Modern Cpp - - - - - - - - - - - \n \n";
+    cout << "\033[1;32m- - - - - - - - -Modern Cpp- - - - - - - - - - - \033[0m\n"<<std::endl;
     Demos[num]();
     return 0;
 }

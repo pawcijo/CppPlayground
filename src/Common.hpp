@@ -2,9 +2,16 @@
 
 #include <memory>
 
+#define LOG_FUNCTION_NAME(color) printf("\n\033[1;%sm%s:\033[0m\n", color, __FUNCTION__)
+
 #define LOG_START_FUNCTION() printf("\n%s: - - - - - - - - - -  Start - - - - - - - - -\n", __FUNCTION__)
 
 #define LOG_END_FUNCTION() printf("%s: - - - - - - - - - -  End - - - - - - - - - -\n\n", __FUNCTION__)
+
+#define BOLD_TEXT_START "\033[1;37m"
+
+#define BOLD_TEXT_END "\033[0m"
+
 
 // Overload for lvalues
 template <typename T>
