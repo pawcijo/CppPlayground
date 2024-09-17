@@ -1,6 +1,8 @@
 #pragma once
 
 #include <memory>
+#include <string>
+#include <utility>
 
 #define LOG_FUNCTION_NAME(color) printf("\n\033[1;%sm%s:\033[0m\n", color, __FUNCTION__)
 
@@ -12,6 +14,7 @@
 
 #define BOLD_TEXT_END "\033[0m"
 
+using NoteFormat = std::vector<std::pair<std::string, std::string>>;
 
 // Overload for lvalues
 template <typename T>
@@ -64,4 +67,10 @@ template <typename T>
 void Show_address(T &param)
 {
     std::cout << "Address of value: " << std::addressof(param) << std::endl;
+}
+
+template <typename T>
+void Show_address(const char *name, T &param)
+{
+    std::cout << "Address of " << name << ":" << std::addressof(param) << std::endl;
 }

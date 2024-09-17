@@ -1,51 +1,22 @@
 #include <iostream>
 
-#include "DeductingTypes.hpp"
-#include "AutoDeduction.hpp"
-#include "Declaretype.hpp"
-#include "UndesiredTypes.hpp"
-#include "AssigmentAndInitialization.hpp"
-#include "OverloadingAndOverriding.hpp"
-#include "PtrDemo.hpp"
-#include "ConstIterators.hpp"
-#include "ThrowAndNoExcept.hpp"
-#include "ConstExpreession.hpp"
-#include "ConstMutable.hpp"
-#include "RuleOfThree.hpp"
-#include "SOLID.hpp"
-#include "VirtualDestructor.hpp"
-#include "ReferencePolymorphism.hpp"
-#include "StaticMemoryAllocation.hpp"
+#include "Common/DemoFactory.hpp"
+#include "Common/DemoBase.hpp"
 
 #include <memory>
 #include <vector>
 
 using namespace std;
 
-std::vector<void (*)()> Demos =
-    {
-        &DeductingTypesDemo,
-        &AutoDeductionDemo,
-        &DeclareTypeDemo,
-        &UndesiredTypesDemo,
-        &AssigmentDemo,
-        &OverloadingAndOverridingDemo,
-        &PtrDemo,
-        &ConstIteratorsDemo,
-        &ThrowAndNoExceptDemo,
-        &ConstExpressionDemo,
-        &ConstMutable::ConstMutableDemo,
-        &RuleOfThree::RuleOfThreeDemo,
-        &SOLID::SOLID_Demo,
-        &VirtualDestructor::VirtualDestructorDemo,
-        &ReferencePoli::ReferencePolymorphismDemo,
-        &StaticMemoryAllocation::StaticMemoryAllocationDemo};
-
 int main(int argc, char *argv[])
 {
+
+    int DemoSize = static_cast<int>(Demos::Count);
+    std::unique_ptr<DemoBase> demo;
+
     if (argc < 2)
     {
-        std::cerr << "Please select demo from  1 to " << Demos.size() << "." << std::endl;
+        std::cerr << "Please select demo from  1 to " << (DemoSize - 1) << "." << std::endl;
         return 1;
     }
 
@@ -60,13 +31,26 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    if (static_cast<unsigned long>(num) >= Demos.size())
+    if (static_cast<int>(num) >= DemoSize)
     {
-        std::cerr << "Wrong number." << "\nPlease select demo from  0 to " << Demos.size() - 1 << "." << std::endl;
+        std::cerr << "Wrong number." << "\nPlease select demo from  0 to " << DemoSize - 1 << "." << std::endl;
         return 1;
     }
 
-    cout << "\033[1;32m- - - - - - - - -Modern Cpp- - - - - - - - - - - \033[0m\n"<<std::endl;
-    Demos[num]();
+    cout << "\033[1;32m- - - - - - - - -Modern Cpp- - - - - - - - - - - \033[0m\n"
+         << std::endl;
+
+    demo = Demofactory::createDemo(static_cast<Demos>(num));
+
+    if (nullptr != demo)
+    {
+        demo->ShowDemo();
+    }
+    else
+    {
+        std::cout << "Demo not implemnted yet \n";
+    }
+
+    // Run demo    Demos[num]();
     return 0;
 }
