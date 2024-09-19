@@ -117,19 +117,36 @@ void TemplateTest()
 {
     LOG_START_FUNCTION();
 
-    //const int theAnswer = 42;
-    //auto x = theAnswer;
-    //auto y = &theAnswer;
+    // const int theAnswer = 42;
+    // auto x = theAnswer;
+    // auto y = &theAnswer;
 
-   // TD<decltype(x)> xType; // elicit errors containing
-   // TD<decltype(y)> yType; // x's and y's types
+    // TD<decltype(x)> xType; // elicit errors containing
+    // TD<decltype(y)> yType; // x's and y's types
 
     LOG_END_FUNCTION();
 }
 
-void DeclareTypeDemo()
+class DeclareTypeDemo : public DemoBase
 {
-    DeclareTypeVsAutoDemo();
-    DeclareTypeVsAutoVariableDemo();
-    ParethisisDiffForDecltypeDemo();
-}
+public:
+    DeclareTypeDemo()
+    {
+        mName = "DeclareTypeDemo";
+        mNotes = {};
+    };
+    ~DeclareTypeDemo() = default;
+
+    void ShowExample() override
+    {
+        PrintNotes();
+        DeclareTypeVsAutoDemo();
+        DeclareTypeVsAutoVariableDemo();
+        ParethisisDiffForDecltypeDemo();
+    }
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    };
+};

@@ -23,7 +23,24 @@ int func(int x) noexcept;
     LOG_END_FUNCTION();
 }
 
-void ThrowAndNoExceptDemo()
+class ThrowAndNoExceptDemo : public DemoBase
 {
-    ThrowStyleDemo();
-}
+public:
+    ThrowAndNoExceptDemo()
+    {
+        mName = "ThrowAndNoExceptDemo";
+        mNotes = {};
+    };
+    ~ThrowAndNoExceptDemo() = default;
+
+    void ShowExample() override
+    {
+        PrintNotes();
+        ThrowStyleDemo();
+    }
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    };
+};

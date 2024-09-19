@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Common/Common.hpp"
 
+#include "Common/DemoBase.hpp"
+
 using namespace std;
 
 // decltype
@@ -125,11 +127,38 @@ void PtrVsArrayDemo()
     LOG_END_FUNCTION();
 }
 
-void  DeductingTypesDemo()
+class DeductingTypesDemo : public DemoBase
 {
-    UniveralTypeDemo();
-    DecltypeDemo();
-    PtrTypeTemplateDeductionDemo();
-    PtrVsArrayDemo();
+    public:
+    DeductingTypesDemo()
+    {
+        mName = "DeductingTypesDemo";
+        mNotes = {};
+    };
+    ~DeductingTypesDemo() = default;
 
-}
+    void PrintNotes() override
+    {   
+        PrintName();
+        for (const auto &pair : mNotes)
+        {
+            std::cout << BOLD_TEXT_START << pair.first << BOLD_TEXT_END << std::endl
+                      << pair.second << std::endl
+                      << std::endl;
+        }
+    }
+
+    void ShowExample() override
+    {
+        PrintNotes();
+        UniveralTypeDemo();
+        DecltypeDemo();
+        PtrTypeTemplateDeductionDemo();
+        PtrVsArrayDemo();
+    }
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    };
+};

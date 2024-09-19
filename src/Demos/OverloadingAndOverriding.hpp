@@ -27,12 +27,29 @@ void OverloadingRvalueLvalue()
 
     WidgetTest aWidget;
     aWidget.doWork();
-    
 
     LOG_END_FUNCTION();
 }
 
-void OverloadingAndOverridingDemo()
+class OverloadingAndOverridingDemo : public DemoBase
 {
-    OverloadingRvalueLvalue();
-}
+public:
+    OverloadingAndOverridingDemo()
+    {
+        mName = "OverloadingAndOverridingDemo";
+        mNotes = {};
+    };
+    ~OverloadingAndOverridingDemo() = default;
+
+    void ShowExample() override
+    {
+        PrintNotes();
+        OverloadingRvalueLvalue();
+    }
+
+    void
+    ShowDemo() override
+    {
+        ShowExample();
+    };
+};

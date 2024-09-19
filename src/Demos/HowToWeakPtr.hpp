@@ -8,8 +8,6 @@
 namespace HowToWeakPtr
 {
 
-    NoteFormat notes = {{{}, {}}, {{}, {}}};
-
     class TestObject
     {
         std::string someString;
@@ -43,14 +41,6 @@ namespace HowToWeakPtr
 
         std::string stringValue() const { return someString; }
     };
-
-    void PrintNotes()
-    {
-        for (const auto &pair : notes)
-        {
-            std::cout << pair.first << pair.second << std::endl;
-        }
-    }
 
     void HowToWeakPtrExample()
     {
@@ -96,10 +86,26 @@ namespace HowToWeakPtr
 
         LOG_END_FUNCTION();
     }
+}
 
-    void HowToWeakPtrDemo()
+class HowToWeakPtrDemo : public DemoBase
+{
+public:
+    HowToWeakPtrDemo()
     {
-        HowToWeakPtrExample();
+        mName = "HowToWeakPtrDemo";
+        mNotes = {};
+    };
+    ~HowToWeakPtrDemo() = default;
+
+    void ShowExample() override
+    {
+        PrintNotes();
+        HowToWeakPtr::HowToWeakPtrExample();
     }
 
-}
+    void ShowDemo() override
+    {
+        ShowExample();
+    };
+};

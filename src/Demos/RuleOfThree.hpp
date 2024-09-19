@@ -4,17 +4,16 @@
 
 #include <iostream>
 
-namespace RuleOfThree
-{
-    static const char *Note = R"(
+static const char *Note = R"(
 The Rule of Three
 states that if you declare any of a copy constructor, copy assignment operator, or
 destructor, you should declare all three.
 )";
 
-
 void ExampleDemo()
 {
+
+    std::cout << Note << std::endl;
     LOG_START_FUNCTION();
 
     std::cout << R"(
@@ -37,9 +36,24 @@ class Example
     LOG_END_FUNCTION();
 }
 
-void RuleOfThreeDemo()
+class RuleOfThreeDemo : public DemoBase
 {
-    std::cout << Note << std::endl;
-    ExampleDemo();
-}
-}
+public:
+    RuleOfThreeDemo()
+    {
+        mName = "RuleOfThreeDemo";
+        mNotes = {};
+    };
+    ~RuleOfThreeDemo() = default;
+
+    void ShowExample() override
+    {
+        PrintNotes();
+        ExampleDemo();
+    }
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    };
+};

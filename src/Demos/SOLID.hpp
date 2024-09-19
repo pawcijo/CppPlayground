@@ -4,13 +4,11 @@
 
 #include <iostream>
 
-namespace SOLID
+void SingleResponsibilityPrinciple()
 {
-    void SingleResponsibilityPrinciple()
-    {
 
-        LOG_FUNCTION_NAME("36");
-        std::cout << R"(
+    LOG_FUNCTION_NAME("36");
+    std::cout << R"(
 "There should never be more than one reason for a class to change."
 In other words, every class should have only one responsibility.
 
@@ -24,30 +22,30 @@ public:
 };
 
 )" << std::endl;
-    }
+}
 
-    void OpenClosedPrinciple()
-    {
-        LOG_FUNCTION_NAME("35");
-        std::cout << std::endl
-                  << "\033[1;32;43mOpen for Extension:\033[0m\n"
-                  << R"( 
+void OpenClosedPrinciple()
+{
+    LOG_FUNCTION_NAME("35");
+    std::cout << std::endl
+              << "\033[1;32;43mOpen for Extension:\033[0m\n"
+              << R"( 
 This means that the behavior of a module, class, or function 
 can be extended or enhanced. 
 You should be able to add new functionality without altering existing code.)"
-                  << std::endl
-                  << std::endl
-                  << "\033[1;37;43mClosed for Modification:\033[0m \n"
-                  << R"(
+              << std::endl
+              << std::endl
+              << "\033[1;37;43mClosed for Modification:\033[0m \n"
+              << R"(
 This means that once a class or module has been developed and tested, 
 you should not change its internal source code. 
 Modifications should be avoided to prevent introducing bugs or 
 breaking existing functionality.
 )" << std::endl
 
-                  << "\033[1;37mInheritance and Polymorphism\033[0m\n"
+              << "\033[1;37mInheritance and Polymorphism\033[0m\n"
 
-                  << R"(
+              << R"(
 // Base class
 class Shape {
 public:
@@ -71,9 +69,9 @@ public:
 };
 )" << std::endl
 
-                  << "\033[1;37mOr Composition\033[0m\n"
+              << "\033[1;37mOr Composition\033[0m\n"
 
-                  << R"(
+              << R"(
 class Logger {
 public:
     virtual void log(const std::string& message) = 0;
@@ -107,20 +105,20 @@ public:
 Here, 
 
 )" << std::endl;
-    }
+}
 
-    void LiskovSubstitutionPrinciple()
-    {
-        LOG_FUNCTION_NAME("34");
+void LiskovSubstitutionPrinciple()
+{
+    LOG_FUNCTION_NAME("34");
 
-        std::cout << R"(
+    std::cout << R"(
 "Objects of a superclass should be replaceable with objects of a subclass
 without affecting the correctness of the program.")"
-                  << std::endl
-                  << std::endl
-                  << "\033[1;37mBreaking the principle exaple :\033[0m \n\n"
+              << std::endl
+              << std::endl
+              << "\033[1;37mBreaking the principle exaple :\033[0m \n\n"
 
-                  << R"(class Bird {
+              << R"(class Bird {
 public:
     virtual void fly() {
         std::cout << "Flying!" << std::endl;
@@ -135,9 +133,9 @@ public:
     }
 };)" << std::endl
 
-                  << "\033[1;37mApplying the principle:\033[0m \n"
+              << "\033[1;37mApplying the principle:\033[0m \n"
 
-                  << R"(
+              << R"(
 class Bird {
 public:
     virtual void move() = 0; // Pure virtual function
@@ -157,16 +155,16 @@ public:
     }
 };
 )";
-    }
+}
 
-    void InterfaceSegregationPrinciple()
-    {
-        LOG_FUNCTION_NAME("33");
+void InterfaceSegregationPrinciple()
+{
+    LOG_FUNCTION_NAME("33");
 
-        std::cout << "Clients should not be forced to depend on interfaces they do not use." << std::endl;
-        std::cout << "\033[1;37mBreaking the principle exaple :\033[0m \n\n";
+    std::cout << "Clients should not be forced to depend on interfaces they do not use." << std::endl;
+    std::cout << "\033[1;37mBreaking the principle exaple :\033[0m \n\n";
 
-        std::cout << R"(
+    std::cout << R"(
     class Worker {
 public:
     virtual void work() = 0;
@@ -189,9 +187,9 @@ public:
 };
     )";
 
-        std::cout << "\033[1;37mApplying the principle: :\033[0m \n\n";
+    std::cout << "\033[1;37mApplying the principle: :\033[0m \n\n";
 
-        std::cout << R"(
+    std::cout << R"(
     class Workable {
 public:
     virtual void work() = 0;
@@ -216,18 +214,18 @@ public:
 
 
 )";
-    }
+}
 
-    void DependencyInversionPrinciple()
-    {
-        LOG_FUNCTION_NAME("32");
+void DependencyInversionPrinciple()
+{
+    LOG_FUNCTION_NAME("32");
 
-        std::cout << R"( "High-level modules should not depend on low-level modules. Both should depend on abstractions." )" << std::endl;
-        std::cout << R"( "Abstractions should not depend on details. Details should depend on abstractions." )" << std::endl
-                  << std::endl;
+    std::cout << R"( "High-level modules should not depend on low-level modules. Both should depend on abstractions." )" << std::endl;
+    std::cout << R"( "Abstractions should not depend on details. Details should depend on abstractions." )" << std::endl
+              << std::endl;
 
-        std::cout << "\033[1;37mBreaking the principle exaple :\033[0m \n\n";
-        std::cout << R"(
+    std::cout << "\033[1;37mBreaking the principle exaple :\033[0m \n\n";
+    std::cout << R"(
 class Database {
 public:
     void connect() { /* ... */ }
@@ -244,8 +242,8 @@ public:
     }
 };)" << std::endl;
 
-        std::cout << "\033[1;37mApplying the principle: :\033[0m \n\n";
-        std::cout << R"(
+    std::cout << "\033[1;37mApplying the principle: :\033[0m \n\n";
+    std::cout << R"(
 // Abstraction
 class IDatabase {
 public:
@@ -272,10 +270,21 @@ public:
     }
 };
 )" << std::endl;
-    }
+}
 
-    void SOLID_Demo()
+class SOLID_Demo : public DemoBase
+{
+public:
+    SOLID_Demo()
     {
+        mName = "SOLID_Demo";
+        mNotes = {};
+    };
+    ~SOLID_Demo() = default;
+
+    void ShowExample() override
+    {
+        PrintNotes();
 
         std::cout << "\033[1;36mS \033[0m "
                   << "\033[1;35mO \033[0m "
@@ -289,4 +298,9 @@ public:
         InterfaceSegregationPrinciple();
         DependencyInversionPrinciple();
     }
-}
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    };
+};

@@ -3,38 +3,40 @@
 #include "Common/DemoBase.hpp"
 #include "Common/Common.hpp"
 
-#include "DeductingTypes.hpp"
-#include "AutoDeduction.hpp"
-#include "Declaretype.hpp"
-#include "UndesiredTypes.hpp"
-#include "AssigmentAndInitialization.hpp"
-#include "OverloadingAndOverriding.hpp"
-#include "PtrDemo.hpp"
-#include "ConstIterators.hpp"
-#include "ThrowAndNoExcept.hpp"
-#include "ConstExpreession.hpp"
-#include "ConstMutable.hpp"
-#include "RuleOfThree.hpp"
-#include "SOLID.hpp"
-#include "VirtualDestructor.hpp"
-#include "ReferencePolymorphism.hpp"
-#include "StaticMemoryAllocation.hpp"
-#include "DeepShallowCopy.hpp"
-#include "WeakPtrVsSharedPtr.hpp"
-#include "ExceptionAndStack.hpp"
-#include "CompilationProcess.hpp"
-#include "UniquePtrFactory.hpp"
-#include "MoreAboutSharedPtr.hpp"
-#include "HowToWeakPtr.hpp"
-#include "AllocateShared.hpp"
+#include "Demos/DeductingTypes.hpp"
+#include "Demos/AutoDeduction.hpp"
+#include "Demos/Declaretype.hpp"
+#include "Demos/UndesiredTypes.hpp"
+#include "Demos/AssigmentAndInitialization.hpp"
+#include "Demos/OverloadingAndOverriding.hpp"
+#include "Demos/PtrDemo.hpp"
+#include "Demos/ConstIterators.hpp"
+#include "Demos/ThrowAndNoExcept.hpp"
+#include "Demos/ConstExpreession.hpp"
+#include "Demos/ConstMutable.hpp"
+#include "Demos/RuleOfThree.hpp"
+#include "Demos/SOLID.hpp"
+#include "Demos/VirtualDestructor.hpp"
+#include "Demos/ReferencePolymorphism.hpp"
+#include "Demos/StaticMemoryAllocation.hpp"
+#include "Demos/DeepShallowCopy.hpp"
+#include "Demos/WeakPtrVsSharedPtr.hpp"
+#include "Demos/ExceptionAndStack.hpp"
+#include "Demos/CompilationProcess.hpp"
+#include "Demos/UniquePtrFactory.hpp"
+#include "Demos/MoreAboutSharedPtr.hpp"
+#include "Demos/HowToWeakPtr.hpp"
+#include "Demos/AllocateShared.hpp"
 
-#include "Patterns/Pimpl.hpp"
+#include "Demos/Patterns/Pimpl.hpp"
 
 #include <memory>
+#include <map>
+#include <utility>
 
 enum class Demos : int
 {
-    DeductingTypesDemo,
+    DeductingTypesDemo = 1,
     AutoDeductionDemo,
     DeclareTypeDemo,
     UndesiredTypesDemo,
@@ -62,6 +64,35 @@ enum class Demos : int
     Count
 };
 
+#define ENUM_TO_STRING(name) #name
+
+std::vector<std::pair<Demos, std::string>> demoVector = {
+    {Demos::DeductingTypesDemo, "DeductingTypesDemo"},
+    {Demos::AutoDeductionDemo, "AutoDeductionDemo"},
+    {Demos::DeclareTypeDemo, "DeclareTypeDemo"},
+    {Demos::UndesiredTypesDemo, "UndesiredTypesDemo"},
+    {Demos::AssigmentDemo, "AssigmentDemo"},
+    {Demos::OverloadingAndOverridingDemo, "OverloadingAndOverridingDemo"},
+    {Demos::PtrDemo, "PtrDemo"},
+    {Demos::ConstIteratorsDemo, "ConstIteratorsDemo"},
+    {Demos::ThrowAndNoExceptDemo, "ThrowAndNoExceptDemo"},
+    {Demos::ConstExpressionDemo, "ConstExpressionDemo"},
+    {Demos::ConstMutableDemo, "ConstMutableDemo"},
+    {Demos::RuleOfThreeDemo, "RuleOfThreeDemo"},
+    {Demos::SOLID_Demo, "SOLID_Demo"},
+    {Demos::VirtualDestructorDemo, "VirtualDestructorDemo"},
+    {Demos::ReferencePolymorphismDemo, "ReferencePolymorphismDemo"},
+    {Demos::StaticMemoryAllocationDemo, "StaticMemoryAllocationDemo"},
+    {Demos::DeepShallowCopyDemo, "DeepShallowCopyDemo"},
+    {Demos::WeakPtrVsSharedPtrDemo, "WeakPtrVsSharedPtrDemo"},
+    {Demos::ExceptionAndStackDemo, "ExceptionAndStackDemo"},
+    {Demos::CompilationProcessDemo, "CompilationProcessDemo"},
+    {Demos::UniquePtrFactoryDemo, "UniquePtrFactoryDemo"},
+    {Demos::MoreAboutSharedPtrDemo, "MoreAboutSharedPtrDemo"},
+    {Demos::HowToWeakPtrDemo, "HowToWeakPtrDemo"},
+    {Demos::AllocateSharedDemo, "AllocateSharedDemo"},
+    {Demos::PimplDemo, "PimplDemo"}};
+
 class Demofactory
 {
 public:
@@ -72,80 +103,79 @@ public:
         switch (chosenDemo)
         {
         case Demos::DeductingTypesDemo:
-            // Code for DeductingTypesDemo
+            demo = std::make_unique<DeductingTypesDemo>();
             break;
         case Demos::AutoDeductionDemo:
-            // Code for AutoDeductionDemo
+            demo = std::make_unique<AutoDeductionDemo>();
             break;
         case Demos::DeclareTypeDemo:
-            // Code for DeclareTypeDemo
+            demo = std::make_unique<DeclareTypeDemo>();
             break;
         case Demos::UndesiredTypesDemo:
-            // Code for UndesiredTypesDemo
+             demo = std::make_unique<UndesiredTypesDemo>();
             break;
         case Demos::AssigmentDemo:
-            // Code for AssigmentDemo
+             demo = std::make_unique<AssigmentDemo>();
             break;
         case Demos::OverloadingAndOverridingDemo:
-            // Code for OverloadingAndOverridingDemo
+             demo = std::make_unique<OverloadingAndOverridingDemo>();
             break;
         case Demos::PtrDemo:
-            // Code for PtrDemo
+             demo = std::make_unique<PtrDemo>();
             break;
         case Demos::ConstIteratorsDemo:
-            // Code for ConstIteratorsDemo
+             demo = std::make_unique<ConstIteratorsDemo>();
             break;
         case Demos::ThrowAndNoExceptDemo:
-            // Code for ThrowAndNoExceptDemo
+             demo = std::make_unique<ThrowAndNoExceptDemo>();
             break;
         case Demos::ConstExpressionDemo:
-            // Code for ConstExpressionDemo
+             demo = std::make_unique<ConstExpressionDemo>();
             break;
         case Demos::ConstMutableDemo:
-            // Code for ConstMutableDemo
+             demo = std::make_unique<ConstMutableDemo>();
             break;
         case Demos::RuleOfThreeDemo:
-            // Code for RuleOfThreeDemo
+             demo = std::make_unique<RuleOfThreeDemo>();
             break;
         case Demos::SOLID_Demo:
-            // Code for SOLID_Demo
+             demo = std::make_unique<SOLID_Demo>();
             break;
         case Demos::VirtualDestructorDemo:
-            // Code for VirtualDestructorDemo
+             demo = std::make_unique<VirtualDestructorDemo>();
             break;
         case Demos::ReferencePolymorphismDemo:
-            // Code for ReferencePolymorphismDemo
+             demo = std::make_unique<ReferencePolymorphismDemo>();
             break;
         case Demos::StaticMemoryAllocationDemo:
-            // Code for StaticMemoryAllocationDemo
+             demo = std::make_unique<StaticMemoryAllocationDemo>();
             break;
         case Demos::DeepShallowCopyDemo:
-            // Code for DeepShallowCopyDemo
+             demo = std::make_unique<DeepShallowCopyDemo>();
             break;
         case Demos::WeakPtrVsSharedPtrDemo:
-            // Code for WeakPtrVsSharedPtrDemo
+             demo = std::make_unique<WeakPtrVsSharedPtrDemo>();
             break;
         case Demos::ExceptionAndStackDemo:
-            // Code for ExceptionAndStackDemo
+             demo = std::make_unique<ExceptionAndStackDemo>();
             break;
         case Demos::CompilationProcessDemo:
-            // Code for CompilationProcessDemo
+             demo = std::make_unique<CompilationProcessDemo>();
             break;
         case Demos::UniquePtrFactoryDemo:
-            // Code for UniquePtrFactoryDemo
+             demo = std::make_unique<AutoDeductionDemo>();
             break;
         case Demos::MoreAboutSharedPtrDemo:
-            // Code for MoreAboutSharedPtrDemo
+             demo = std::make_unique<MoreAboutSharedPtrDemo>();
             break;
         case Demos::HowToWeakPtrDemo:
-            // Code for HowToWeakPtrDemo
+             demo = std::make_unique<HowToWeakPtrDemo>();
             break;
         case Demos::AllocateSharedDemo:
-            // Code for AllocateSharedDemo
+             demo = std::make_unique<AllocateSharedDemo>();
             break;
         case Demos::PimplDemo:
-        demo = std::make_unique<PimplExample::PimplExample>();
-            // Code for PimplDemo
+            demo = std::make_unique<PimplExample>();
             break;
         default:
             // Code for unknown demo

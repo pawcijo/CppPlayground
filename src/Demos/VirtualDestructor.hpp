@@ -4,7 +4,6 @@
 
 #include <iostream>
 
-namespace VirtualDestructor{
 class BaseClass
 {
 
@@ -14,17 +13,16 @@ public:
         std::cout << "Created Base class \n";
     }
 
-     ~BaseClass()
-     {
-         std::cout << "Destroyed Base class \n";
-     }
+    ~BaseClass()
+    {
+        std::cout << "Destroyed Base class \n";
+    }
 
     virtual void Use()
     {
         std::cout << "Use Base class \n";
     }
 };
-
 
 class DerivedClass final : public BaseClass
 {
@@ -40,21 +38,42 @@ public:
         std::cout << "Destroyed  Derived class \n";
     }
 
-    void Use()  override
+    void Use() override
     {
         std::cout << "Use Derived class \n";
     }
 };
 
-void VirtualDestructorDemo()
+void VirtualDestructorExample()
 {
     LOG_START_FUNCTION();
     BaseClass *deriverd = new DerivedClass();
 
     deriverd->Use();
 
-    delete dynamic_cast<DerivedClass*>(deriverd);
+    delete dynamic_cast<DerivedClass *>(deriverd);
 
     LOG_END_FUNCTION();
 }
-}
+
+class VirtualDestructorDemo : public DemoBase
+{
+public:
+    VirtualDestructorDemo()
+    {
+        mName = "VirtualDestructorDemo";
+        mNotes = {};
+    };
+    ~VirtualDestructorDemo() = default;
+
+    void ShowExample() override
+    {
+        PrintNotes();
+        VirtualDestructorExample();
+    }
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    };
+};

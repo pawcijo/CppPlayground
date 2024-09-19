@@ -3,7 +3,6 @@
 #include <vector>
 #include <iostream>
 
-
 #include "Common/Common.hpp"
 
 class Widget
@@ -14,8 +13,9 @@ public:
     Widget(int aValue) : mValue(aValue) {};
     Widget() { mValue = 0; }
 
-    Widget* operator=(const Widget &){
-        Widget * widget = new Widget();
+    Widget *operator=(const Widget &)
+    {
+        Widget *widget = new Widget();
         return widget;
     }
 
@@ -33,9 +33,9 @@ std::vector<bool> features(const Widget & /*w*/)
     return featuresVec;
 }
 
-void processWidget(const Widget& /*w*/, bool priority)
+void processWidget(const Widget & /*w*/, bool priority)
 {
-    std::cout<<"Priosirty"<<priority<<std::endl;
+    std::cout << "Priosirty" << priority << std::endl;
 }
 
 void AutoDeducesWrongDemo()
@@ -45,7 +45,7 @@ void AutoDeducesWrongDemo()
     Widget widget;
 
     bool something = features(widget)[5];
-    auto somethingAuto =  features(widget)[5];
+    auto somethingAuto = features(widget)[5];
     auto highPriorityExplicit = static_cast<bool>(features(widget)[5]);
 
     detectValueCategoryImpl(something);
@@ -53,15 +53,30 @@ void AutoDeducesWrongDemo()
     detectValueCategoryImpl(highPriorityExplicit);
     detectValueCategoryImpl(features(widget)[5]);
 
-    processWidget(widget,something);
-    processWidget(widget,somethingAuto);
-
+    processWidget(widget, something);
+    processWidget(widget, somethingAuto);
 
     LOG_END_FUNCTION();
 }
 
-void UndesiredTypesDemo()
+class UndesiredTypesDemo : public DemoBase
 {
+public:
+    UndesiredTypesDemo()
+    {
+        mName = "UndesiredTypesDemo";
+        mNotes = {};
+    };
+    ~UndesiredTypesDemo() = default;
 
-    AutoDeducesWrongDemo();
-}
+    void ShowExample() override
+    {
+        PrintNotes();
+        AutoDeducesWrongDemo();
+    }
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    };
+};

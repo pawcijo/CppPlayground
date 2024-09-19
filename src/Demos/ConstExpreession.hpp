@@ -5,6 +5,8 @@
 #include <array>
 #include <iostream>
 
+#include "Common/DemoBase.hpp"
+
 constexpr const char *expr = "dupa";
 constexpr std::string_view kekw = "xD";
 
@@ -66,7 +68,7 @@ constexpr auto value_2 = 5;
 constexpr auto lista = {2.0, 1.0};
 constexpr Point point = lista;
 
-void ConstExpressionDemo()
+void ConstExpressionExample()
 {
     LOG_START_FUNCTION();
 
@@ -83,3 +85,26 @@ void ConstExpressionDemo()
 
     LOG_END_FUNCTION();
 }
+
+
+class ConstExpressionDemo : public DemoBase
+{
+public:
+    ConstExpressionDemo()
+    {
+        mName = "ConstExpressionDemo";
+        mNotes = {};
+    };
+    ~ConstExpressionDemo() = default;
+
+    void ShowExample() override
+    {
+        PrintNotes();
+        ConstExpressionExample();
+    }
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    };
+};

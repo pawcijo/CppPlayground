@@ -80,8 +80,25 @@ void AssigmentAndInitialization()
     LOG_END_FUNCTION();
 }
 
-void AssigmentDemo()
-{
 
-    AssigmentAndInitialization();
-}
+class AssigmentDemo : public DemoBase
+{
+public:
+    AssigmentDemo()
+    {
+        mName = "AssigmentDemo";
+        mNotes = {};
+    };
+    ~AssigmentDemo() = default;
+
+    void ShowExample() override
+    {
+        PrintNotes();
+        AssigmentAndInitialization();
+    }
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    };
+};

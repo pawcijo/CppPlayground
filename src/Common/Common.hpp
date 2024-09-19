@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 #define LOG_FUNCTION_NAME(color) printf("\n\033[1;%sm%s:\033[0m\n", color, __FUNCTION__)
 
@@ -13,6 +14,11 @@
 #define BOLD_TEXT_START "\033[1;37m"
 
 #define BOLD_TEXT_END "\033[0m"
+
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+
+#define CLASS_NAME() (typeid(*this).name())
 
 using NoteFormat = std::vector<std::pair<std::string, std::string>>;
 

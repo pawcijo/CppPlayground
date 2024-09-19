@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 #include <vector>
 
@@ -67,7 +68,25 @@ auto custom_cbegin(const Type &container) -> decltype(std::begin(container))
     LOG_END_FUNCTION();
 }
 
-void ConstIteratorsDemo()
+class ConstIteratorsDemo : public DemoBase
 {
-    OldIteratorsDemo();
-}
+public:
+    ConstIteratorsDemo()
+    {
+        mName = "ConstIteratorsDemo";
+        mNotes = {};
+    };
+    ~ConstIteratorsDemo() = default;
+
+    void ShowExample() override
+    {
+        PrintNotes();
+        OldIteratorsDemo();
+    }
+
+    void
+    ShowDemo() override
+    {
+        ShowExample();
+    };
+};

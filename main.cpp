@@ -17,6 +17,11 @@ int main(int argc, char *argv[])
     if (argc < 2)
     {
         std::cerr << "Please select demo from  1 to " << (DemoSize - 1) << "." << std::endl;
+        for (const auto &sView : demoVector)
+        {
+            std::cout << static_cast<int>(sView.first) << " : " << sView.second << std::endl;
+        }
+
         return 1;
     }
 
@@ -25,15 +30,15 @@ int main(int argc, char *argv[])
     {
         num = std::stoi(argv[1]);
     }
-    catch (std::invalid_argument exception)
+    catch (std::invalid_argument &exception)
     {
         std::cerr << "Wrong number." << "\nPlease pass numeric value." << std::endl;
         return 1;
     }
 
-    if (static_cast<int>(num) >= DemoSize)
+    if (static_cast<int>(num) >= DemoSize || static_cast<int>(num) <= 0)
     {
-        std::cerr << "Wrong number." << "\nPlease select demo from  0 to " << DemoSize - 1 << "." << std::endl;
+        std::cerr << "Wrong number." << "\nPlease select demo from  1 to " << DemoSize - 1 << "." << std::endl;
         return 1;
     }
 
@@ -51,6 +56,5 @@ int main(int argc, char *argv[])
         std::cout << "Demo not implemnted yet \n";
     }
 
-    // Run demo    Demos[num]();
     return 0;
 }
