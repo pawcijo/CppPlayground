@@ -14,11 +14,11 @@ include_directories(
     .
 )
 
-
-file(GLOB CPP_SOURCES ${CMAKE_SOURCE_DIR}/src/*.hpp)
+file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 # Add the executable
 add_executable(ModernCpp 
                 main.cpp
-                ${SOURCE_FILES})
+                ${SOURCES}
+                )
 
