@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 #include <iostream>
 
@@ -69,7 +70,7 @@ public:
 };
 }
 
-void RefrencePoliDemo()
+inline void RefrencePoliDemo()
 {
     LOG_START_FUNCTION();
     ReferencePolymorphism::BaseClass A;

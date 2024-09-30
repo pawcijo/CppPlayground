@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 class Widget
 {
@@ -22,7 +23,7 @@ public:
     int &Value() { return mValue; }
 };
 
-std::vector<bool> features(const Widget & /*w*/)
+inline std::vector<bool> features(const Widget & /*w*/)
 {
     std::vector<bool> featuresVec;
 
@@ -33,12 +34,12 @@ std::vector<bool> features(const Widget & /*w*/)
     return featuresVec;
 }
 
-void processWidget(const Widget & /*w*/, bool priority)
+inline void processWidget(const Widget & /*w*/, bool priority)
 {
     std::cout << "Priosirty" << priority << std::endl;
 }
 
-void AutoDeducesWrongDemo()
+inline void AutoDeducesWrongDemo()
 {
     LOG_START_FUNCTION();
 

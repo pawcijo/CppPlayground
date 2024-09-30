@@ -1,21 +1,26 @@
 #pragma once
 
-#include "Common.hpp"
 #include <iostream>
+
+#include "Common.hpp"
 
 class DemoBase
 {
-protected:
+   protected:
     std::string mName;
     NoteFormat mNotes;
 
-public:
+   public:
     DemoBase() = default;
-    virtual ~DemoBase() {};
+    virtual ~DemoBase(){};
 
-    void PrintName()
+    /*
+    Print name of the demo.
+    */
+    virtual void PrintName()
     {
-        std::cout << "\033[1;35m" << mName << "\033[0m " << ": \n"
+        std::cout << "\033[1;35m" << mName << "\033[0m "
+                  << ": \n"
                   << std::endl;
     }
 
@@ -32,5 +37,9 @@ public:
     }
 
     virtual void ShowExample() = 0;
-    virtual void ShowDemo() = 0;
+
+    virtual void ShowDemo()
+    {
+        ShowExample();
+    };
 };

@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Common/Common.hpp"
-#include "MyUniquePtr.hpp"
+#include "Common/DemoBase.hpp"
+#include "Common/MyUniquePtr.hpp"
 
 #include <iostream>
 #include <algorithm>
 #include <vector>
 
-void MyUniquePtrDemo()
+inline void MyUniquePtrDemo()
 {
     LOG_START_FUNCTION();
 

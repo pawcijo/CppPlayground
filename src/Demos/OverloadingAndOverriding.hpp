@@ -1,11 +1,12 @@
 #pragma once
-#include "Common/Common.hpp"
-
 #include <iostream>
+
+#include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 class WidgetTest
 {
-public:
+   public:
     // this version of doWork applies
     // only when *this is an lvalue
     void doWork() &
@@ -20,7 +21,7 @@ public:
     }
 };
 
-void OverloadingRvalueLvalue()
+inline void OverloadingRvalueLvalue()
 {
     LOG_START_FUNCTION();
     WidgetTest().doWork();
@@ -33,7 +34,7 @@ void OverloadingRvalueLvalue()
 
 class OverloadingAndOverridingDemo : public DemoBase
 {
-public:
+   public:
     OverloadingAndOverridingDemo()
     {
         mName = "OverloadingAndOverridingDemo";
@@ -47,8 +48,7 @@ public:
         OverloadingRvalueLvalue();
     }
 
-    void
-    ShowDemo() override
+    void ShowDemo() override
     {
         ShowExample();
     };

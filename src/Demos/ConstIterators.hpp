@@ -13,7 +13,7 @@ auto custom_cbegin(const Type &container) -> decltype(std::begin(container))
     return std::begin(container);
 }
 
-void OldIteratorsDemo()
+inline void OldIteratorsDemo()
 {
     LOG_START_FUNCTION();
 

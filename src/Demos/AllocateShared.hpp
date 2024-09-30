@@ -1,19 +1,20 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 #include <string>
 #include <memory>
 
 namespace AllocateShared{
-NoteFormat notes = {{{"Custom Allocator: "}, {R"(std::make_unique and std::make_shared are two of the three make functions:
+const NoteFormat notes = {{{"Custom Allocator: "}, {R"(std::make_unique and std::make_shared are two of the three make functions:
 functions that take an arbitrary set of arguments, perfect-forward them to the constructor
 for a dynamically allocated object, and return a smart pointer to that object.
 The third make function is std::allocate_shared. It acts just like
 std::make_shared, except its first argument is an allocator object to be used for the
 dynamic memory allocation.)"}}};
 
-void PrintCustomNotes()
+inline void PrintCustomNotes()
 {
     for (const auto &pair : notes)
     {
@@ -95,7 +96,7 @@ bool operator==(const CustomAllocator<T> &, const CustomAllocator<U> &) { return
 template <typename T, typename U>
 bool operator!=(const CustomAllocator<T> &, const CustomAllocator<U> &) { return false; }
 
-void AllocateSharedExample()
+inline void AllocateSharedExample()
 {
     AllocateShared::PrintCustomNotes();
     LOG_START_FUNCTION();

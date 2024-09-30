@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 #include <iostream>
 
 class MutableConst
@@ -19,7 +20,7 @@ public:
     }
 };
 
-void ShowMutableconst()
+inline void ShowMutableconst()
 {
     LOG_START_FUNCTION();
 

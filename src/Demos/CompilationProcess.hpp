@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 #include <iostream>
 #include <utility>
@@ -8,7 +9,7 @@
 
 namespace CompilationProcess
 {
-NoteFormat Notes =
+inline NoteFormat Notes =
     {{{"Preprocessing: "}, {"\n* Expands macros (#define) \n* Inserts the contents of header files with #include.\n"
                             "* Handles conditional compilation (#ifdef, #if). \n* Strips comments from the code.\n* Creates compilation unit from cpp file"}},
      {{"Compilation(Diagnostic - front end ): "}, {"\nSyntax and semantic check(consistency of return types for functions,\n"
@@ -18,7 +19,7 @@ NoteFormat Notes =
      {{"Object file creation: "}, {"Translates assembly code into machine code, generating object files."}},
      {{"Linking: "}, {"Combines object files and libraries into a final executable."}}};
 
-NoteFormat Summary =
+inline NoteFormat Summary =
     {{{"Process start: "}, {"Creating compilation units from cpp files."}},
      {{"Preprocessing: "}, {"Expands macros, includes headers, and prepares the code for compilation."}},
      {{"Compilation (front-end middle-end  ): "}, {"Converts C++ code into assembly code."}},
@@ -26,7 +27,7 @@ NoteFormat Summary =
      {{"Object file creation: "}, {"Object files generation (.o or .obj), which contain machine code but are not yet linked together."}},
      {{"Linking: "}, {"Combines object files and libraries into a final executable."}}};
 
-void Print(const NoteFormat &notes)
+inline void Print(const NoteFormat &notes)
 {
     for (const auto &pair : notes)
     {
@@ -35,7 +36,7 @@ void Print(const NoteFormat &notes)
 }
 }
 
-void CompilationProcessExplained()
+inline void CompilationProcessExplained()
 {
     CompilationProcess::Print(CompilationProcess::Notes);
     std::cout << "\n--------------SUMMARY------------------------" << std::endl;

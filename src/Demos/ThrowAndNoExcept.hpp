@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 #include <iostream>
 
-void ThrowStyleDemo()
+inline void ThrowStyleDemo()
 {
     LOG_START_FUNCTION();
 

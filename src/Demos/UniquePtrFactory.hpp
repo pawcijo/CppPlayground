@@ -40,7 +40,7 @@ namespace UniquePtrFactory
         std::string stringValue() const { return someString; }
     };
 
-    void RandomLogger(const TestObject *ob)
+    inline void RandomLogger(const TestObject *ob)
     {
         std::cout << ob->stringValue() << "(object destruction)" << std::endl;
     }
@@ -68,7 +68,7 @@ namespace UniquePtrFactory
         }
     };
 
-    void
+    inline void
     UniquePtrFactoryExample()
     {
         LOG_START_FUNCTION();

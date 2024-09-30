@@ -68,7 +68,7 @@ constexpr auto value_2 = 5;
 constexpr auto lista = {2.0, 1.0};
 constexpr Point point = lista;
 
-void ConstExpressionExample()
+inline void ConstExpressionExample()
 {
     LOG_START_FUNCTION();
 

@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 #include <iostream>
 
-void SingleResponsibilityPrinciple()
+inline void SingleResponsibilityPrinciple()
 {
 
     LOG_FUNCTION_NAME("36");
@@ -24,7 +25,7 @@ public:
 )" << std::endl;
 }
 
-void OpenClosedPrinciple()
+inline void OpenClosedPrinciple()
 {
     LOG_FUNCTION_NAME("35");
     std::cout << std::endl
@@ -107,7 +108,7 @@ Here,
 )" << std::endl;
 }
 
-void LiskovSubstitutionPrinciple()
+inline void LiskovSubstitutionPrinciple()
 {
     LOG_FUNCTION_NAME("34");
 
@@ -157,7 +158,7 @@ public:
 )";
 }
 
-void InterfaceSegregationPrinciple()
+inline void InterfaceSegregationPrinciple()
 {
     LOG_FUNCTION_NAME("33");
 
@@ -216,7 +217,7 @@ public:
 )";
 }
 
-void DependencyInversionPrinciple()
+inline void DependencyInversionPrinciple()
 {
     LOG_FUNCTION_NAME("32");
 

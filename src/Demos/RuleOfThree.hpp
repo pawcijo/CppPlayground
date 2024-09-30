@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 #include <iostream>
 
@@ -10,7 +11,7 @@ states that if you declare any of a copy constructor, copy assignment operator, 
 destructor, you should declare all three.
 )";
 
-void ExampleDemo()
+inline void ExampleDemo()
 {
 
     std::cout << Note << std::endl;

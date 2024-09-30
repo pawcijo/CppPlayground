@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 #include <iostream>
 
@@ -44,7 +45,7 @@ public:
     }
 };
 
-void VirtualDestructorExample()
+inline void VirtualDestructorExample()
 {
     LOG_START_FUNCTION();
     BaseClass *deriverd = new DerivedClass();

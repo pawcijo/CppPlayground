@@ -41,7 +41,7 @@ void UniveralTypeDemo()
     printAddress("25", 25);              // Some address A
     printAddress("int x  (x)", x);       // Some address B
     printAddress("int y = x;", y);       // Some Address C
-    printAddress(" int &z = x  (z)", z); // B ( z is ref of x)
+    printAddress("int &z = x  (z)", z);  // B ( z is ref of x)
 
     LOG_END_FUNCTION();
 }

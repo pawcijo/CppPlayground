@@ -10,7 +10,7 @@
 
 namespace WeakPtrVsShared
 {
-std::vector<std::pair<std::string, std::string>> Notes = {{{"Purpose"},
+const std::vector<std::pair<std::string, std::string>> Notes = {{{"Purpose"},
                                                            "A std::weak_ptr is a smart pointer that does not own the object it points to.\n"
                                                            "Instead, it provides a way to observe or temporarily access an object that is\n"
                                                            "managed by one or more std::shared_ptrs, without contributing to the reference count.\n"},
@@ -24,7 +24,7 @@ std::vector<std::pair<std::string, std::string>> Notes = {{{"Purpose"},
                                                             "is valid (i.e., the object still exists) by using .lock(), which returns \n"
                                                             "a shared_ptr if the object is still alive. \n"}}};
 
-void PrintCustomNote()
+inline void PrintCustomNote()
 {
     for (const auto &pair : Notes)
     {
@@ -45,7 +45,7 @@ public:
     float AnotherVariable() { return another_variable; }
 };
 
-void WeakPtrVsSharedPtrExample()
+inline void WeakPtrVsSharedPtrExample()
 {
     LOG_START_FUNCTION();
     std::shared_ptr<ExampleClass> sPtr = std::make_shared<ExampleClass>();

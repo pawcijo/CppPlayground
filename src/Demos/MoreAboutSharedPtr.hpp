@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 
 #include <iostream>
 #include <vector>
 #include <utility>
 
-NoteFormat controlBlockNotes = {
+const NoteFormat controlBlockNotes = {
     {{"when Control block is created:"}, {}},
     {{}, {"std::make_shared always creates a control block."}},
     {{}, {"std::shared_ptr is constructed from a unique-ownership (unique_ptr, auto_ptr)."}},

@@ -6,6 +6,8 @@
 #include <memory>
 #include <vector>
 
+#include <filesystem>
+
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -17,9 +19,9 @@ int main(int argc, char *argv[])
     if (argc < 2)
     {
         std::cerr << "Please select demo from  1 to " << (DemoSize - 1) << "." << std::endl;
-        for (const auto &sView : demoVector)
+        for (const auto &aPair : demoVector)
         {
-            std::cout << static_cast<int>(sView.first) << " : " << sView.second << std::endl;
+            std::cout << static_cast<int>(aPair.first) << " : " << aPair.second << std::endl;
         }
 
         return 1;

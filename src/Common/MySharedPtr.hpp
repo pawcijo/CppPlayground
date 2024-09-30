@@ -57,8 +57,8 @@ public:
     }
 
     // Move Constructor
-    MySharedPtr(const MySharedPtr &&moved_other) noexcept : mPtr(other.mPtr),
-                                                            ref_counter(other.ref_counter)
+    MySharedPtr(const MySharedPtr &&moved_other) noexcept : mPtr(moved_other.mPtr),
+                                                            ref_counter(moved_other.ref_counter)
     {
         moved_other.mPtr = nullptr;
         moved_other.ref_counter = nullptr;
@@ -82,5 +82,4 @@ public:
         cleanup();
     }
 
-    MySharedPtr(MySharedPtr &) :
 };

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Common/Common.hpp"
-
 #include "Common/DemoBase.hpp"
 
 template <typename T>

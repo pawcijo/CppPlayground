@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 #include <deque>
 
 #include <utility>
@@ -31,7 +32,7 @@ authAndAccessDeclareType(T &&c, I i) // requires
     return std::forward<T>(c)[i];
 }
 
-auto makeStringDeque()
+inline auto makeStringDeque()
 {
     return std::deque<std::string>{
         std::string("dupa"),
@@ -41,7 +42,7 @@ auto makeStringDeque()
         std::string("rypu")};
 }
 
-void DeclareTypeVsAutoDemo()
+inline void DeclareTypeVsAutoDemo()
 {
     LOG_START_FUNCTION();
 
@@ -69,7 +70,7 @@ void DeclareTypeVsAutoDemo()
     LOG_END_FUNCTION();
 }
 
-void DeclareTypeVsAutoVariableDemo()
+inline void DeclareTypeVsAutoVariableDemo()
 {
     LOG_START_FUNCTION();
 
@@ -87,7 +88,7 @@ void DeclareTypeVsAutoVariableDemo()
     LOG_END_FUNCTION();
 }
 
-decltype(auto) f1()
+inline decltype(auto) f1()
 {
     int x = 0;
     return x; // decltype(x) is int, so f1 returns int
@@ -101,7 +102,7 @@ decltype(auto) f2()
 }
 */
 
-void ParethisisDiffForDecltypeDemo()
+inline void ParethisisDiffForDecltypeDemo()
 {
     LOG_START_FUNCTION();
     detectValueCategoryImpl(f1());
@@ -113,7 +114,7 @@ void ParethisisDiffForDecltypeDemo()
 template <typename T> // declaration only for TD;
 class TD;
 
-void TemplateTest()
+inline void TemplateTest()
 {
     LOG_START_FUNCTION();
 

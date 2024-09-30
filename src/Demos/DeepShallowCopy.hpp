@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common/Common.hpp"
+#include "Common/DemoBase.hpp"
 #include <iostream>
 
 constexpr const char *ShallowNote = "A shallow copy duplicates the object's values exactly as they are,\n"
@@ -10,7 +11,7 @@ constexpr const char *ShallowNote = "A shallow copy duplicates the object's valu
 constexpr const char *DeepNote = "A deep copy duplicates not only the object's values but also creates new copies of dynamically\n"
                                  "allocated memory or other referenced objects.\n";
 
-void PrintNote(const char *note)
+inline void PrintNote(const char *note)
 {
     std::cout << note << std::endl;
 }
@@ -59,7 +60,7 @@ public:
     };
 };
 
-void ShallowCopyExample()
+inline void ShallowCopyExample()
 {
     LOG_START_FUNCTION();
 
@@ -71,7 +72,7 @@ void ShallowCopyExample()
     LOG_END_FUNCTION();
 }
 
-void DeepCopyExample()
+inline void DeepCopyExample()
 {
     LOG_START_FUNCTION();
 
