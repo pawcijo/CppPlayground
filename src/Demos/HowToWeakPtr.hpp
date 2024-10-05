@@ -43,7 +43,7 @@ namespace HowToWeakPtr
         std::string stringValue() const { return someString; }
     };
 
-    void HowToWeakPtrExample()
+    inline void HowToWeakPtrExample()
     {
         LOG_START_FUNCTION();
 

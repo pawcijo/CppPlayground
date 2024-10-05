@@ -16,12 +16,17 @@ int main(int argc, char *argv[])
     int DemoSize = static_cast<int>(Demos::Count);
     std::unique_ptr<DemoBase> demo;
 
+    auto demoMap = Demofactory::getDemoMap();
+
     if (argc < 2)
     {
         std::cerr << "Please select demo from  1 to " << (DemoSize - 1) << "." << std::endl;
-        for (const auto &aPair : demoVector)
+       
+        int counter = 1;
+        for (const auto &value : demoMap)
         {
-            std::cout << static_cast<int>(aPair.first) << " : " << aPair.second << std::endl;
+            std::cout << counter << " : " << value.second.second << std::endl;
+            counter++;
         }
 
         return 1;

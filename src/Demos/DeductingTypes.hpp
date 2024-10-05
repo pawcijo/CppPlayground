@@ -162,3 +162,4 @@ class DeductingTypesDemo : public DemoBase
         ShowExample();
     };
 };
+
