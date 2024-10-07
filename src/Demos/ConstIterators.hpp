@@ -4,6 +4,7 @@
 #include "Common/DemoBase.hpp"
 
 #include <vector>
+#include <algorithm>
 
 #include <iostream>
 
