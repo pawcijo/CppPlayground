@@ -50,6 +50,7 @@ when forwarding them, because they’re only sometimes bound to rvalues.)"}}};
     {
         PrintNotes();
     }
+
     void ShowDemo() override
     {
         ShowExample();

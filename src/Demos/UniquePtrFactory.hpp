@@ -5,34 +5,31 @@
 #include "Common/Common.hpp"
 #include "Common/DemoBase.hpp"
 
-namespace UniquePtrFactory
-{
-
-class TestObject
+class FactoryTestObject
 {
     std::string someString;
 
    public:
-    TestObject() : someString("ExampleString")
+    FactoryTestObject() : someString("ExampleString")
     {
         std::cout << "Random obj created." << std::endl;
     };
 
-    TestObject(const TestObject &another) = default;
+    FactoryTestObject(const FactoryTestObject &another) = default;
 
-    TestObject operator=(const TestObject &another)
+    FactoryTestObject operator=(const FactoryTestObject &another)
     {
         someString = another.someString;
 
         return *this;
     }
 
-    TestObject(const TestObject &&another)
+    FactoryTestObject(const FactoryTestObject &&another)
     {
         someString = another.someString;
     };
 
-    TestObject operator=(const TestObject &&another)
+    FactoryTestObject operator=(const FactoryTestObject &&another)
     {
         someString = another.someString;
 
@@ -45,24 +42,24 @@ class TestObject
     }
 };
 
-inline void RandomLogger(const TestObject *ob)
+inline void RandomLogger(const FactoryTestObject *ob)
 {
     std::cout << ob->stringValue() << "(object destruction)" << std::endl;
 }
 
-class TestObjectFactory
+class FactoryTestObjectFactory
 {
    public:
-    static auto CreateTestObject()
+    static auto CreateFactoryTestObject()
     {
-        auto customDel = [](TestObject *obj)  // this is now
-        {                                     // inside
-            RandomLogger(obj);                // makedelete
-            delete obj;                       // Investment
+        auto customDel = [](FactoryTestObject *obj)  // this is now
+        {                                            // inside
+            RandomLogger(obj);                       // makedelete
+            delete obj;                              // Investment
         };
-        std::unique_ptr<TestObject, decltype(customDel)> obj(nullptr, customDel);
+        std::unique_ptr<FactoryTestObject, decltype(customDel)> obj(nullptr, customDel);
 
-        obj.reset(new TestObject());
+        obj.reset(new FactoryTestObject());
 
         auto deleter = obj.get_deleter();
         deleter(obj.get());
@@ -77,7 +74,7 @@ inline void UniquePtrFactoryExample()
 {
     LOG_START_FUNCTION();
 
-    auto obj = TestObjectFactory::CreateTestObject();
+    auto obj = FactoryTestObjectFactory::CreateFactoryTestObject();
 
     if (nullptr == obj)
     {
@@ -96,11 +93,15 @@ class UniquePtrFactoryDemo : public DemoBase
         // TODO write some notes :)
         mNotes = {{{"TODO write some notes"}, {}}};
     }
-    void ShowDemo() override
+
+    void ShowExample() override
     {
         PrintNotes();
         UniquePtrFactoryExample();
     }
-};
 
-}  // namespace UniquePtrFactory
+    void ShowDemo() override
+    {
+        ShowExample();
+    }
+};
