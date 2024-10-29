@@ -1,4 +1,4 @@
-# Cpp_playground
+# Cpp Playground
 
 Welcome to my C++ playground.
 
