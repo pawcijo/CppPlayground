@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include <memory>
+#include <ostream>
 #include <string>
 #include <utility>
 
@@ -24,31 +25,58 @@ class ForwardDemo : public DemoBase
     {
         mName = "ForwardDemo";
         mNotes = {{{"Fast note:"},
-        {
-R"(when forwarding them to other functions, because they’re always bound to rvalues,
+                   {
+                       R"("In short, rvalue references should be unconditionally cast to rvalues (via std::move)
+when forwarding them to other functions, because they’re always bound to rvalues,
 and universal references should be conditionally cast to rvalues (via std::forward)
-when forwarding them, because they’re only sometimes bound to rvalues.)"}}};
+when forwarding them, because they’re only sometimes bound to rvalues." - Effective modern c++ 169)"}}};
     }
     void MoveEmaple(std::unique_ptr<std::string> str_ptr)
     {
+        LOG_START_FUNCTION();
+
         helper_variable = std::move(str_ptr);
+        LOG_END_FUNCTION();
     }
 
     template <typename T>
     void ForwardEmaple(T&& t_value)
     {
-        helper_variable_2 = std::forward(t_value);
+        LOG_START_FUNCTION();
+        helper_variable_2 = std::forward<T>(t_value);
+        LOG_END_FUNCTION();
     }
 
     template <typename T>
     void DontDoThat(T&& t_value)
     {
+        LOG_START_FUNCTION();
+        // Dont move it !
+        // t_value might be a universal reference not a rvalue.
         helper_variable_3 = std::move(t_value);
+        LOG_END_FUNCTION();
     }
 
     void ShowExample() override
     {
         PrintNotes();
+
+        MoveEmaple(std::make_unique<std::string>("Test"));
+
+        auto someString = std::string("Test2");
+        ForwardEmaple(someString);
+
+        std::cout << "SomeString value before " << BOLD_TEXT_START << "DontDoThat()" << BOLD_TEXT_END
+                  << " call:" << someString << std::endl;
+        // If you this
+        DontDoThat(someString);
+
+        // helper_variable_3 will take someString value
+        // and someString  will have unspecified value.
+        //
+
+        std::cout << "SomeString value after " << BOLD_TEXT_START << "DontDoThat()" << BOLD_TEXT_END
+                  << " call: " << someString << std::endl;
     }
 
     void ShowDemo() override
