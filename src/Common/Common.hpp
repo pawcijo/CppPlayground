@@ -13,8 +13,15 @@
 #define LOG_END_FUNCTION() printf("%s: - - - - - - - - - -  End - - - - - - - - - -\n\n", __FUNCTION__)
 
 #define BOLD_TEXT_START "\033[1;37m"
-
 #define BOLD_TEXT_END "\033[0m"
+
+#define YELLOW_TEXT_COLOR "\033[1;33m"
+#define BLUE_TEXT_COLOR "\033[1;34m"
+#define PINK_TEXT_COLOR "\033[1;35m"
+#define CYAN_TEXT_COLOR "\033[1;36m"
+#define GREEN_TEXT_COLOR "\033[1;37m"
+
+#define TEXT_COLOR_CLEAR "\033[0m"
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
@@ -38,6 +45,7 @@ void detectValueCategory(T &arg)
 }
 
 // Overload for rvalues
+// or universal reference.
 template <typename T>
 void detectValueCategory(T &&arg)
 {
@@ -52,7 +60,6 @@ void detectValueCategory(T &&arg)
 }
 
 // Helper function to distinguish between references and value types
-
 template <typename T>
 void detectValueCategoryImpl(T &&arg)
 {
@@ -65,7 +72,7 @@ void detectValueCategoryImpl(T &&arg)
     else
     {
         std::cout << "Argument is not a reference and ";
-        // For non-references, we need to handle lvalues and rvalues separately
+        // For non-references, we need to handle universal references and rvalues separately.
         detectValueCategory(std::forward<T>(arg));
     }
 }
