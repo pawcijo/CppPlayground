@@ -24,3 +24,37 @@ cd Build/Release
 cmake -DCMAKE_BUILD_TYPE=Release ../..
 make
 ```
+
+
+## TODO:
+
+#### C++17:
+- variant 
+- any
+- string_view
+- charconv
+- execution
+- filesystem
+- memory_resource
+- optional
+
+#### C++20:
+- bit
+- compare
+- concepts
+- coroutine
+- format
+- numbers
+- ranges
+- source_location
+- span
+- syncstream
+- version
+- barrier
+- latch
+- semaphore
+- stop_token 
+
+ 
+
+
