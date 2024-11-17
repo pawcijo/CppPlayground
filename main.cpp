@@ -4,6 +4,8 @@
 #include "Common/DemoBase.hpp"
 
 #include <memory>
+#include <ostream>
+#include <stdexcept>
 #include <vector>
 
 #include <filesystem>
@@ -21,7 +23,7 @@ int main(int argc, char *argv[])
     if (argc < 2)
     {
         std::cerr << "Please select demo from  1 to " << (DemoSize - 1) << "." << std::endl;
-       
+
         int counter = 1;
         for (const auto &value : demoMap)
         {
@@ -36,10 +38,20 @@ int main(int argc, char *argv[])
     try
     {
         num = std::stoi(argv[1]);
+
+        //double check
+        std::string test =  argv[1];
+        if(!is_string_only_numeric(test))
+        {
+            std::string message = "Nice try, but " + test + " is not in right format.";
+            throw std::invalid_argument(message);
+        }
+
     }
     catch (std::invalid_argument &exception)
     {
         std::cerr << "Wrong number." << "\nPlease pass numeric value." << std::endl;
+        std::cerr<<"ERROR: "<<exception.what()<<std::endl;
         return 1;
     }
 

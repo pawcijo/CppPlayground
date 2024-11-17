@@ -33,6 +33,12 @@
 
 using NoteFormat = std::vector<std::pair<std::string, std::string>>;
 
+inline bool is_string_only_numeric(const std::string &str)
+{
+    return str.find_first_not_of("0123456789") == std::string::npos;
+}
+
+
 // Overload for lvalues
 template <typename T>
 void detectValueCategory(T &arg)
