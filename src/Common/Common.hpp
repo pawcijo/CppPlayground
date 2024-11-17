@@ -13,13 +13,16 @@
 #define LOG_END_FUNCTION() printf("%s: - - - - - - - - - -  End - - - - - - - - - -\n\n", __FUNCTION__)
 
 #define BOLD_TEXT_START "\033[1;37m"
-#define BOLD_TEXT_END "\033[0m"
+#define ITALIC_TEXT_START "\033[3;37m"
+#define BOLD_ITALIC_TEXT_START "\033[1;3m"
+
+#define TEXT_FORMAT_CLEAR "\033[0m"
 
 #define YELLOW_TEXT_COLOR "\033[1;33m"
 #define BLUE_TEXT_COLOR "\033[1;34m"
-#define PINK_TEXT_COLOR "\033[1;35m"
+#define RED_TEXT_COLOR "\033[1;35m"
 #define CYAN_TEXT_COLOR "\033[1;36m"
-#define GREEN_TEXT_COLOR "\033[1;37m"
+#define GREEN_TEXT_COLOR "\033[1;32m"
 
 #define TEXT_COLOR_CLEAR "\033[0m"
 

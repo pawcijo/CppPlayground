@@ -24,7 +24,7 @@ void PrintNote()
 {
     for (const auto &pair : Notes)
     {
-        std::cout << BOLD_TEXT_START << pair.first << ": " << BOLD_TEXT_END << pair.second << std::endl;
+        std::cout << BOLD_TEXT_START << pair.first << ": " << TEXT_FORMAT_CLEAR << pair.second << std::endl;
     }
 }
 
@@ -32,7 +32,7 @@ void PrintStackUnwindingNotes()
 {
     for (const auto &pair : StackUnwindingNotes)
     {
-        std::cout << BOLD_TEXT_START << pair.first << ": " << BOLD_TEXT_END << pair.second << std::endl;
+        std::cout << BOLD_TEXT_START << pair.first << ": " << TEXT_FORMAT_CLEAR << pair.second << std::endl;
     }
 }
 

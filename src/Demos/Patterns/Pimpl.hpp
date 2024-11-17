@@ -37,7 +37,7 @@ R"(1.Performance Overhead(std::unique_ptr and Memory locality is disrupted)
 
         for (const auto &pair : mNotes)
         {
-            std::cout << BOLD_TEXT_START << pair.first << BOLD_TEXT_END << std::endl
+            std::cout << BOLD_TEXT_START << pair.first << TEXT_FORMAT_CLEAR << std::endl
                       << pair.second << std::endl
                       << std::endl;
         }

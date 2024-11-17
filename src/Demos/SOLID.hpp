@@ -14,7 +14,7 @@ inline void SingleResponsibilityPrinciple()
 In other words, every class should have only one responsibility.
 
 class DoOneThing
-{   
+{
 int variable;
 double another_variabl;
 ...
@@ -29,18 +29,18 @@ inline void OpenClosedPrinciple()
 {
     LOG_FUNCTION_NAME("35");
     std::cout << std::endl
-              << "\033[1;32;43mOpen for Extension:\033[0m\n"
-              << R"( 
-This means that the behavior of a module, class, or function 
-can be extended or enhanced. 
+              << "\033[1;32mOpen for Extension:\033[0m\n"
+              << R"(
+This means that the behavior of a module, class, or function
+can be extended or enhanced.
 You should be able to add new functionality without altering existing code.)"
               << std::endl
               << std::endl
-              << "\033[1;37;43mClosed for Modification:\033[0m \n"
+              << "\033[1;32mClosed for Modification:\033[0m \n"
               << R"(
-This means that once a class or module has been developed and tested, 
-you should not change its internal source code. 
-Modifications should be avoided to prevent introducing bugs or 
+This means that once a class or module has been developed and tested,
+you should not change its internal source code.
+Modifications should be avoided to prevent introducing bugs or
 breaking existing functionality.
 )" << std::endl
 
@@ -102,9 +102,6 @@ public:
         logger.log("Doing something...");
     }
 };
-
-Here, 
-
 )" << std::endl;
 }
 
@@ -287,11 +284,11 @@ public:
     {
         PrintNotes();
 
-        std::cout << "\033[1;36mS \033[0m "
-                  << "\033[1;35mO \033[0m "
-                  << "\033[1;34mL \033[0m "
-                  << "\033[1;33mI \033[0m "
-                  << "\033[1;32mD\033[0m";
+        std::cout << CYAN_TEXT_COLOR   <<"S"<< TEXT_COLOR_CLEAR
+                  << RED_TEXT_COLOR    <<"O"<< TEXT_COLOR_CLEAR
+                  << BLUE_TEXT_COLOR   <<"L"<< TEXT_COLOR_CLEAR
+                  << YELLOW_TEXT_COLOR <<"I"<< TEXT_COLOR_CLEAR
+                  << GREEN_TEXT_COLOR  <<"D"<< TEXT_COLOR_CLEAR;
 
         SingleResponsibilityPrinciple();
         OpenClosedPrinciple();

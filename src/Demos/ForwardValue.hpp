@@ -29,12 +29,12 @@ class ForwardDemo : public DemoBase
                        R"("In short, rvalue references should be unconditionally cast to rvalues (via std::move)
 when forwarding them to other functions, because they’re always bound to rvalues,
 and universal references should be conditionally cast to rvalues (via std::forward)
-when forwarding them, because they’re only sometimes bound to rvalues." - Effective modern c++ 169)"}}};
+when forwarding them, because they’re only sometimes bound to rvalues." -  Effective modern c++ 169)"}}};
     }
     void MoveEmaple(std::unique_ptr<std::string> str_ptr)
     {
         LOG_START_FUNCTION();
-
+         std::cout<<"\033[1;3m"<< "Duuupsko" << TEXT_COLOR_CLEAR <<"\n";
         helper_variable = std::move(str_ptr);
         LOG_END_FUNCTION();
     }
@@ -66,7 +66,7 @@ when forwarding them, because they’re only sometimes bound to rvalues." - Effe
         auto someString = std::string("Test2");
         ForwardEmaple(someString);
 
-        std::cout << "SomeString value before " << BOLD_TEXT_START << "DontDoThat()" << BOLD_TEXT_END
+        std::cout << "SomeString value before " << BOLD_TEXT_START << "DontDoThat()" << TEXT_FORMAT_CLEAR
                   << " call:" << someString << std::endl;
         // If you this
         DontDoThat(someString);
@@ -75,7 +75,7 @@ when forwarding them, because they’re only sometimes bound to rvalues." - Effe
         // and someString  will have unspecified value.
         //
 
-        std::cout << "SomeString value after " << BOLD_TEXT_START << "DontDoThat()" << BOLD_TEXT_END
+        std::cout << "SomeString value after " << BOLD_TEXT_START << "DontDoThat()" << TEXT_FORMAT_CLEAR
                   << " call: " << someString << std::endl;
     }
 

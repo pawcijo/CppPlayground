@@ -99,7 +99,7 @@ public:
     {
         PrintNotes();
 
-        std::cout << BOLD_TEXT_START << ReferencePolymorphism::Note << BOLD_TEXT_END << std::endl;
+        std::cout << BOLD_TEXT_START << ReferencePolymorphism::Note << TEXT_FORMAT_CLEAR << std::endl;
         RefrencePoliDemo();
     }
 

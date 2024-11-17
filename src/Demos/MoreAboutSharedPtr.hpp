@@ -52,7 +52,7 @@ void PrintCustomNotes()
 {
     for (const auto &pair : controlBlockNotes)
     {
-        std::cout << BOLD_TEXT_START << pair.first << BOLD_TEXT_END << pair.second << std::endl;
+        std::cout << BOLD_TEXT_START << pair.first << TEXT_FORMAT_CLEAR << pair.second << std::endl;
     }
 }
 
@@ -67,7 +67,7 @@ void DontDoThatExample()
 {
     LOG_START_FUNCTION();
 
-    std::cout << R"(        
+    std::cout << R"(
         TestObject *obj = new TestObject();
         std::shared_ptr<TestObject> first(obj);
         std::shared_ptr<TestObject> second(obj);)"
