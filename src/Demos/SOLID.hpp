@@ -26,15 +26,15 @@ public:
 
 inline void OpenClosedPrinciple()
 {
-    LOG_FUNCTION_NAME("35");
+    LOG_FUNCTION_NAME(RED);
     std::cout << std::endl
-              << GREEN_TEXT_COLOR << "Open for Extension:" << TEXT_COLOR_CLEAR << R"(
+              << BOLD_RED_TEXT_START << "Open for Extension:" << TEXT_COLOR_CLEAR << R"(
 This means that the behavior of a module, class, or function
 can be extended or enhanced.
 You should be able to add new functionality without altering existing code.)"
               << std::endl
               << std::endl
-              << GREEN_TEXT_COLOR << "Closed for Modification:" << TEXT_COLOR_CLEAR << "\n"
+              << BOLD_RED_TEXT_START << "Closed for Modification:" << TEXT_COLOR_CLEAR << "\n"
               << R"(
 This means that once a class or module has been developed and tested,
 you should not change its internal source code.
@@ -105,7 +105,7 @@ public:
 
 inline void LiskovSubstitutionPrinciple()
 {
-    LOG_FUNCTION_NAME("34");
+    LOG_FUNCTION_NAME(BLUE);
 
     std::cout << R"(
 "Objects of a superclass should be replaceable with objects of a subclass
@@ -154,7 +154,7 @@ public:
 
 inline void InterfaceSegregationPrinciple()
 {
-    LOG_FUNCTION_NAME("33");
+    LOG_FUNCTION_NAME(YELLOW);
 
     std::cout << "Clients should not be forced to depend on interfaces they do not use."
               << std::endl
@@ -216,7 +216,7 @@ public:
 
 inline void DependencyInversionPrinciple()
 {
-    LOG_FUNCTION_NAME("32");
+    LOG_FUNCTION_NAME(GREEN);
 
     std::cout
         << R"( "High-level modules should not depend on low-level modules. Both should depend on abstractions." )"
@@ -289,10 +289,13 @@ class SOLID_Demo : public DemoBase
     {
         PrintNotes();
 
-        std::cout << CYAN_TEXT_COLOR << "S" << TEXT_COLOR_CLEAR << RED_TEXT_COLOR << "O"
-                  << TEXT_COLOR_CLEAR << BLUE_TEXT_COLOR << "L" << TEXT_COLOR_CLEAR
-                  << YELLOW_TEXT_COLOR << "I" << TEXT_COLOR_CLEAR << GREEN_TEXT_COLOR << "D"
-                  << TEXT_COLOR_CLEAR;
+        // clang-format off
+        std::cout << CYAN_TEXT_COLOR <<   "S" << TEXT_COLOR_CLEAR 
+                  << RED_TEXT_COLOR <<    "O" << TEXT_COLOR_CLEAR 
+                  << BLUE_TEXT_COLOR <<   "L" << TEXT_COLOR_CLEAR
+                  << YELLOW_TEXT_COLOR << "I" << TEXT_COLOR_CLEAR 
+                  << GREEN_TEXT_COLOR <<  "D" << TEXT_COLOR_CLEAR;
+        // clang-format on
 
         SingleResponsibilityPrinciple();
         OpenClosedPrinciple();

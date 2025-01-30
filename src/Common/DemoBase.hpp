@@ -1,8 +1,10 @@
 #pragma once
 
 #include <iostream>
+#include <ostream>
 
 #include "Common.hpp"
+#include "Common/DemoFactory.hpp"
 
 class DemoBase
 {
@@ -11,8 +13,22 @@ class DemoBase
     NoteFormat mNotes;
 
    public:
-    DemoBase() = default;
-    virtual ~DemoBase(){};
+    DemoBase()
+    {
+        object_counter++;
+        std::cout<<"...................Base type construcor....................\n";
+        std::cout<<'\t'<<'\t'<<'\t'<< "Number of objects: " << object_counter << "\n";
+        std::cout<<"...........................................................\n";
+    }
+    virtual ~DemoBase()
+    {
+        object_counter--;
+
+        std::cout<<std::endl<<std::endl;
+        std::cout<<"...................Base type destrucor....................\n";
+        std::cout<<'\t'<<'\t'<<'\t'<< "Number of objects : " << object_counter << "\n";
+        std::cout<<"...........................................................\n";
+    };
 
     /*
     Print name of the demo.
@@ -42,4 +58,7 @@ class DemoBase
     {
         ShowExample();
     };
+
+    static long long object_counter;
 };
+long long DemoBase::object_counter = 0;

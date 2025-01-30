@@ -34,6 +34,10 @@
 #include "Demos/UniversalRefVsRValueRef.hpp"
 #include "Demos/VirtualDestructor.hpp"
 #include "Demos/WeakPtrVsSharedPtr.hpp"
+#include "Demos/EmptyDemo.hpp"
+
+//C++ 17
+#include "Demos/CPP17/AnyDemo.hpp"
 
 enum class Demos : int
 {
@@ -64,6 +68,8 @@ enum class Demos : int
     PimplDemo,
     UniversalRefVsRValueRefDemo,
     ForwardDemo,
+    EmptyDemo,
+    AnyDemo,
     Count
 };
 
@@ -142,7 +148,9 @@ class Demofactory
             {Demos::UniversalRefVsRValueRefDemo,
              ValuePair([]() { return std::make_unique<UniversalRefVsRValueRefDemo>(); },
                        "UniversalRefVsRValueRefDemo")},
-            {Demos::ForwardDemo, ValuePair([]() { return std::make_unique<ForwardDemo>(); }, "ForwardDemo")}};
+            {Demos::ForwardDemo, ValuePair([]() { return std::make_unique<ForwardDemo>(); }, "ForwardDemo")},
+            {Demos::EmptyDemo,ValuePair([](){return std::make_unique<EmptyDemo>(); },"EmptyDemo")},
+            {Demos::AnyDemo,ValuePair([](){return std::make_unique<AnyDemo>();},"AnyDemo")}};
         return demoMap;
     }
 };
