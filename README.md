@@ -30,13 +30,13 @@ make
 
 #### C++17:
 - variant 
-- any
 - string_view
 - charconv
 - execution
 - filesystem
 - memory_resource
 - optional
+- ~~any~~
 
 #### C++20:
 - bit
