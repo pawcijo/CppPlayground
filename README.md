@@ -25,17 +25,16 @@ cmake -DCMAKE_BUILD_TYPE=Release ../..
 make
 ```
 
-
 ## TODO:
 
 #### C++17:
-- variant 
 - string_view
 - charconv
 - execution
 - filesystem
 - memory_resource
 - optional
+- ~~variant~~ 
 - ~~any~~
 
 #### C++20:
@@ -54,7 +53,3 @@ make
 - latch
 - semaphore
 - stop_token 
-
- 
-
-
