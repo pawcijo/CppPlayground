@@ -1,14 +1,15 @@
 #pragma once
 
+#include <iostream>
+
 #include "Common/Common.hpp"
 #include "Common/DemoBase.hpp"
-#include <iostream>
 
 class FancyWidget
 {
     int mValue;
 
-public:
+   public:
     FancyWidget(int aValue) : mValue(aValue)
     {
         std::cout << "Param construcotr" << std::endl;
@@ -30,7 +31,7 @@ public:
 
         if (this == &other)
         {
-            return *this; // Self-assignment check
+            return *this;  // Self-assignment check
         }
         mValue = other.mValue;
         return *this;
@@ -40,7 +41,7 @@ public:
     {
         std::cout << "Move constructor" << std::endl;
         mValue = other.mValue;
-        other.mValue = 0; // clear previous
+        other.mValue = 0;  // clear previous
     }
 
     FancyWidget &operator=(FancyWidget &&other)
@@ -49,42 +50,22 @@ public:
 
         if (this == &other)
         {
-            return *this; // Self-assignment check
+            return *this;  // Self-assignment check
         }
         mValue = other.mValue;
-        other.mValue = 0; // Leave 'other' in a valid state
+        other.mValue = 0;  // Leave 'other' in a valid state
         return *this;
     }
 
-    int &Value() { return mValue; }
+    int &Value()
+    {
+        return mValue;
+    }
 };
-
-void AssigmentAndInitialization()
-{
-    LOG_START_FUNCTION();
-
-    FancyWidget aFancy;
-    FancyWidget bFancy = aFancy;
-    FancyWidget cFancy(1);
-
-    Show_address(aFancy);
-    Show_address(bFancy);
-    Show_address(cFancy);
-
-    cFancy = aFancy;
-    Show_address(cFancy);
-
-    cFancy = std::move(aFancy);
-    Show_address(cFancy);
-    Show_address(aFancy);
-
-    LOG_END_FUNCTION();
-}
-
 
 class AssigmentDemo : public DemoBase
 {
-public:
+   public:
     AssigmentDemo()
     {
         mName = "AssigmentDemo";
@@ -102,4 +83,27 @@ public:
     {
         ShowExample();
     };
+
+   private:
+    void AssigmentAndInitialization()
+    {
+        LOG_START_FUNCTION();
+
+        FancyWidget aFancy;
+        FancyWidget bFancy = aFancy;
+        FancyWidget cFancy(1);
+
+        Show_address(aFancy);
+        Show_address(bFancy);
+        Show_address(cFancy);
+
+        cFancy = aFancy;
+        Show_address(cFancy);
+
+        cFancy = std::move(aFancy);
+        Show_address(cFancy);
+        Show_address(aFancy);
+
+        LOG_END_FUNCTION();
+    }
 };

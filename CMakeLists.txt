@@ -15,7 +15,12 @@ include_directories(
     .
 )
 
+# ! ! ! !
+# Remember to clear cache if recursive glob does not work,
+# it will not pick up new files sometimes.
+
 file(GLOB_RECURSE SOURCES "src/*.cpp")
+message(STATUS "Found source files: ${SOURCES}")
 
 # Add the executable
 add_executable(ModernCpp 

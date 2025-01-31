@@ -4,7 +4,6 @@
 #include <ostream>
 
 #include "Common.hpp"
-#include "Common/DemoFactory.hpp"
 
 class DemoBase
 {
@@ -61,4 +60,4 @@ class DemoBase
 
     static long long object_counter;
 };
-long long DemoBase::object_counter = 0;
+
