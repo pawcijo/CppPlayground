@@ -24,7 +24,7 @@ class DemoBase
         object_counter--;
 
         std::cout<<std::endl<<std::endl;
-        std::cout<<"...................Base type destrucor....................\n";
+        std::cout<<"...................Base type destructor....................\n";
         std::cout<<'\t'<<'\t'<<'\t'<< "Number of objects : " << object_counter << "\n";
         std::cout<<"...........................................................\n";
     };
