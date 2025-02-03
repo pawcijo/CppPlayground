@@ -18,8 +18,20 @@ add_executable(runTests main_test.cpp ${SOURCES})
 enable_testing()
 add_test(NAME MyTests COMMAND runTests)
 
+# Set DYLD_LIBRARY_PATH to locate dynamic libraries on macOS
+if(APPLE)
+    set_property(TEST MyTests PROPERTY ENVIRONMENT "DYLD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/lib")
+endif()
+
+
 # Add a custom target to run tests after building
-add_custom_target(check ALL DEPENDS runTests COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure)
+
+add_custom_target(check
+    ALL
+    DEPENDS runTests
+    COMMAND ctest --output-on-failure --verbose
+    COMMENT "Running tests"
+)
 
 # Link GoogleTest to your test executable
-target_link_libraries(runTests gtest gtest_main)
+target_link_libraries(runTests GTest::gtest GTest::gtest_main)

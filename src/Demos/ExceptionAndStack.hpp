@@ -94,7 +94,8 @@ class ExceptionAndStackDemo : public DemoBase
         ExceptionAndStackExample();
 
         PrintStackUnwindingNotes();
-        ExceptionAndStackExampleNotCatch();
+        // uncomment to see the stack unwinding in action  
+        //ExceptionAndStackExampleNotCatch();
     }
 
     void ShowDemo() override
