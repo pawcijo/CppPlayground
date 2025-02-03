@@ -38,8 +38,13 @@
 
 // C++ 17
 #include "Demos/CPP17/AnyDemo.hpp"
-#include "Demos/CPP17/VariantDemo.hpp"
+#include "Demos/CPP17/CharConvDemo.hpp"
+#include "Demos/CPP17/ExecutionDemo.hpp"
+#include "Demos/CPP17/FileSystemDemo.hpp"
+#include "Demos/CPP17/MemoryResourceDemo.hpp"
+#include "Demos/CPP17/OptionalDemo.hpp"
 #include "Demos/CPP17/StringViewDemo.hpp"
+#include "Demos/CPP17/VariantDemo.hpp"
 
 enum class Demos : int
 {
@@ -74,6 +79,11 @@ enum class Demos : int
     AnyDemo,
     VariantDemo,
     StringViewDemo,
+    CharConvDemo,
+    ExecutionDemo,
+    FileSystemDemo,
+    MemoryResourceDemo,
+    OptionalDemo,
     Count
 };
 
@@ -82,7 +92,7 @@ enum class Demos : int
 This is also design pattern. :)
 Abstract factory as BaseDemo is form of abstraction.
 */
-class Demofactory
+class DemoFactory
 {
    public:
     using DemoCreator = std::function<std::unique_ptr<DemoBase>()>;
@@ -178,8 +188,19 @@ class Demofactory
             {Demos::AnyDemo, ValuePair([]() { return std::make_unique<AnyDemo>(); }, "AnyDemo")},
             {Demos::VariantDemo,
              ValuePair([]() { return std::make_unique<VariantDemo>(); }, "VariantDemo")},
-             {Demos::StringViewDemo,ValuePair([]() { return std::make_unique<StringViewDemo>(); }, "StringViewDemo")
-        }};
+            {Demos::StringViewDemo,
+             ValuePair([]() { return std::make_unique<StringViewDemo>(); }, "StringViewDemo")},
+            {Demos::CharConvDemo,
+             ValuePair([]() { return std::make_unique<CharConvDemo>(); }, "CharConvDemo")},
+            {Demos::ExecutionDemo,
+             ValuePair([]() { return std::make_unique<ExecutionDemo>(); }, "ExecutionDemo")},
+            {Demos::FileSystemDemo,
+             ValuePair([]() { return std::make_unique<FileSystemDemo>(); }, "FileSystemDemo")},
+            {Demos::MemoryResourceDemo,
+             ValuePair([]() { return std::make_unique<MemoryResourceDemo>(); },
+                       "MemoryResourceDemo")},
+            {Demos::OptionalDemo,
+             ValuePair([]() { return std::make_unique<OptionalDemo>(); }, "OptionalDemo")}};
         return demoMap;
     }
 };

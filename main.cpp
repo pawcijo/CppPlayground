@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     int DemoSize = static_cast<int>(Demos::Count);
     std::unique_ptr<DemoBase> demo;
 
-    auto demoMap = Demofactory::getDemoMap();
+    auto demoMap = DemoFactory::getDemoMap();
 
     if (argc < 2)
     {
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     cout << "\033[1;32m- - - - - - - - -Modern Cpp- - - - - - - - - - - \033[0m\n"
          << std::endl;
 
-    demo = Demofactory::createDemo(static_cast<Demos>(num));
+    demo = DemoFactory::createDemo(static_cast<Demos>(num));
 
     if (nullptr != demo)
     {

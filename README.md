@@ -28,12 +28,12 @@ make
 ## TODO:
 
 #### C++17:
-- string_view
 - charconv
 - execution
 - filesystem
 - memory_resource
 - optional
+- ~~string_view~~
 - ~~variant~~ 
 - ~~any~~
 

@@ -94,7 +94,8 @@ public:
     {
         PrintNotes();
         MoreAboutSharedPtrExample();
-        DontDoThatExample();
+        // Uncomment to see the example
+        //DontDoThatExample();
     }
 
     void ShowDemo() override
