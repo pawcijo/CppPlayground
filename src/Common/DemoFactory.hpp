@@ -39,6 +39,7 @@
 // C++ 17
 #include "Demos/CPP17/AnyDemo.hpp"
 #include "Demos/CPP17/VariantDemo.hpp"
+#include "Demos/CPP17/StringViewDemo.hpp"
 
 enum class Demos : int
 {
@@ -72,6 +73,7 @@ enum class Demos : int
     EmptyDemo,
     AnyDemo,
     VariantDemo,
+    StringViewDemo,
     Count
 };
 
@@ -175,9 +177,9 @@ class Demofactory
              ValuePair([]() { return std::make_unique<EmptyDemo>(); }, "EmptyDemo")},
             {Demos::AnyDemo, ValuePair([]() { return std::make_unique<AnyDemo>(); }, "AnyDemo")},
             {Demos::VariantDemo,
-             ValuePair([]() { return std::make_unique<VariantDemo>(); }, "VariantDemo")}
-
-        };
+             ValuePair([]() { return std::make_unique<VariantDemo>(); }, "VariantDemo")},
+             {Demos::StringViewDemo,ValuePair([]() { return std::make_unique<StringViewDemo>(); }, "StringViewDemo")
+        }};
         return demoMap;
     }
 };
