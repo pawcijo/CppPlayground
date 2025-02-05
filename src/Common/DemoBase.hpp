@@ -15,18 +15,24 @@ class DemoBase
     DemoBase()
     {
         object_counter++;
+        //Uncomment to see the number of objects created
+        /*
         std::cout<<"...................Base type construcor....................\n";
         std::cout<<'\t'<<'\t'<<'\t'<< "Number of objects: " << object_counter << "\n";
         std::cout<<"...........................................................\n";
+        */
     }
     virtual ~DemoBase()
     {
         object_counter--;
 
+    //Uncomment to see the number of objects destroyed
+    /*
         std::cout<<std::endl<<std::endl;
         std::cout<<"...................Base type destructor....................\n";
         std::cout<<'\t'<<'\t'<<'\t'<< "Number of objects : " << object_counter << "\n";
         std::cout<<"...........................................................\n";
+        */
     };
 
     /*
@@ -58,6 +64,7 @@ class DemoBase
         ShowExample();
     };
 
+    public:
     static long long object_counter;
 };
 

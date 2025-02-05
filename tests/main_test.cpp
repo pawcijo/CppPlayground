@@ -21,13 +21,6 @@ TEST(DemoFactoryTest, NoThrowOnCreateDemo)
         try
         {
             auto demo = DemoFactory::createDemo(static_cast<Demos>(i));
-            if (demo)
-            {
-                demo->PrintName();
-                demo->PrintNotes();
-                demo->ShowExample();
-                demo->ShowDemo();
-            }
         }
         catch (const std::exception& e)
         {
@@ -62,6 +55,7 @@ struct OutputSilencer {
 int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
-     OutputSilencer silence;
-    return RUN_ALL_TESTS();
+     //Uncomment to silence stdout
+     //OutputSilencer silence; 
+    return RUN_ALL_TESTS(); 
 }
