@@ -1,19 +1,23 @@
 #pragma once
 
+#include <chrono>
+#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
-#include <iostream>
+#include <functional>
 
 #define LOG_FUNCTION_NAME(color) printf("\n\033[1;%sm%s:\033[0m\n", color, __FUNCTION__)
 
-#define LOG_START_FUNCTION() printf("\n%s: - - - - - - - - - -  Start - - - - - - - - -\n", __FUNCTION__)
+#define LOG_START_FUNCTION() \
+    printf("\n%s: - - - - - - - - - -  Start - - - - - - - - -\n", __FUNCTION__)
 
-#define LOG_END_FUNCTION() printf("%s: - - - - - - - - - -  End - - - - - - - - - -\n\n", __FUNCTION__)
+#define LOG_END_FUNCTION() \
+    printf("%s: - - - - - - - - - -  End - - - - - - - - - -\n\n", __FUNCTION__)
 
 #define BOLD_TEXT_START "\033[1;37m"
-#define BOLD_RED_TEXT_START "\033[1;31m"  
+#define BOLD_RED_TEXT_START "\033[1;31m"
 
 #define ITALIC_TEXT_START "\033[3;37m"
 #define BOLD_ITALIC_TEXT_START "\033[1;3m"
@@ -32,7 +36,6 @@
 #define CYAN "36"
 #define GREEN "32"
 
-
 #define TEXT_COLOR_CLEAR "\033[0m"
 
 #define STRINGIFY(x) #x
@@ -46,7 +49,6 @@ inline bool is_string_only_numeric(const std::string &str)
 {
     return str.find_first_not_of("0123456789") == std::string::npos;
 }
-
 
 // Overload for lvalues
 template <typename T>
@@ -105,4 +107,36 @@ template <typename T>
 void Show_address(const char *name, T &param)
 {
     std::cout << "Address of " << name << ":" << std::addressof(param) << std::endl;
+}
+
+struct Timer
+{
+    const char *funcName;
+    std::chrono::high_resolution_clock::time_point start;
+
+    Timer(const char *name) : funcName(name), start(std::chrono::high_resolution_clock::now())
+    {
+    }
+
+    ~Timer()
+    {
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration<double, std::milli>(end - start).count();
+        std::cout << "Time taken by " << funcName << ": " << duration << " ms\n";
+    }
+};
+
+#define TIME_FUNCTION Timer _timer(__func__)
+
+
+template <typename Func, typename... Args>
+auto MeasureTime(Func&& func, Args&&... args) {
+    using ReturnType = decltype(func(std::forward<Args>(args)...)); // Get function return type
+
+    auto start = std::chrono::high_resolution_clock::now();
+    ReturnType result = func(std::forward<Args>(args)...);  // Execute function
+    auto end = std::chrono::high_resolution_clock::now();
+
+    double elapsed = std::chrono::duration<double, std::milli>(end - start).count();
+    return std::make_pair(result, elapsed);
 }

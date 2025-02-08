@@ -13,30 +13,20 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Common)
 include_directories(${CMAKE_SOURCE_DIR}/src/Demos/CPP17)
 include_directories(${CMAKE_SOURCE_DIR}/googletest/googletest/include)
 
-# Add the test executable
+# Add the test executable (ALWAYS BUILT)
 file(GLOB_RECURSE SOURCES "../src/*.cpp")
 add_executable(runTests main_test.cpp ${SOURCES})
+
+# Link GoogleTest to the test executable
+target_link_libraries(runTests GTest::gtest GTest::gtest_main)
 
 # Enable testing
 enable_testing()
 add_test(NAME MyTests COMMAND runTests)
 
-# Set DYLD_LIBRARY_PATH to locate dynamic libraries on macOS
-if(APPLE)
-    set_property(TEST MyTests PROPERTY ENVIRONMENT "DYLD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/lib")
-endif()
-
-
-
-
-# Add a custom target to run tests after building
-
+# Add 'check' target to run tests when explicitly called
 add_custom_target(check
-    ALL
-    DEPENDS runTests
     COMMAND ctest --output-on-failure --verbose
+    DEPENDS runTests
     COMMENT "Running tests"
 )
-
-# Link GoogleTest to your test executable
-target_link_libraries(runTests GTest::gtest GTest::gtest_main)
