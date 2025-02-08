@@ -37,6 +37,18 @@ making them faster and more lightweight than alternatives like std::stringstream
         BasicExample();
         FloatingPointBonus();
         ErrorHandlingDemo();
+        PerformanceTest();
+    }
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    }
+
+   private:
+    void PerformanceTest()
+    {
+        LOG_FUNCTION_NAME(CYAN);
 
         std::string str = "12345";
 
@@ -62,15 +74,18 @@ making them faster and more lightweight than alternatives like std::stringstream
         {
             if (time == minTime)
             {
-                std::cout << "\033[32m" << name << ": \033[1m" << time << " ns\033[0m" << std::endl;
+                std::cout << GREEN_TEXT_START << name << ": " << GREEN_BOLD_TEXT_START << time
+                          << " ns" << TEXT_FORMAT_CLEAR << std::endl;
             }
             else if (time == maxTime)
             {
-                std::cout << "\033[31m" << name << ": \033[1m" << time << " ns\033[0m" << std::endl;
+                std::cout << RED_TEXT_START << name << ": " << RED_BOLD_TEXT_START << time << " ns"
+                          << TEXT_FORMAT_CLEAR << std::endl;
             }
             else
             {
-                std::cout << "\033[33m" << name << ": \033[1m" << time << " ns\033[0m" << std::endl;
+                std::cout << YELLOW_TEXT_START << name << ": " << YELLOW_BOLD_TEXT_START << time
+                          << " ns" << TEXT_FORMAT_CLEAR << std::endl;
             }
         };
 
@@ -79,12 +94,6 @@ making them faster and more lightweight than alternatives like std::stringstream
         printTimeWithColor("from_chars", fromCharsTime, minTime, maxTime);
     }
 
-    void ShowDemo() override
-    {
-        ShowExample();
-    }
-
-   private:
     void FromCharsTimeTest(const std::string& str)
     {
         int value;
@@ -119,6 +128,7 @@ making them faster and more lightweight than alternatives like std::stringstream
 
     void BasicExample()
     {
+        LOG_FUNCTION_NAME(WHITE);
         std::string str = "12345";
         int value = 0;
 
@@ -138,6 +148,7 @@ making them faster and more lightweight than alternatives like std::stringstream
     // C++20 feature !!!
     void FloatingPointBonus()
     {
+        LOG_FUNCTION_NAME(WHITE);
         std::array<char, 32> buffer;
         double value = 3.14159;
 
@@ -151,6 +162,7 @@ making them faster and more lightweight than alternatives like std::stringstream
 
     void ErrorHandlingDemo()
     {
+        LOG_FUNCTION_NAME(WHITE);
         int value;
         // Invalid numeric input (this will cause an invalid_argument error)
         const char* input = "abc";  // Invalid number string

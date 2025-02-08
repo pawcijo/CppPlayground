@@ -28,13 +28,13 @@ inline void OpenClosedPrinciple()
 {
     LOG_FUNCTION_NAME(RED);
     std::cout << std::endl
-              << BOLD_RED_TEXT_START << "Open for Extension:" << TEXT_COLOR_CLEAR << R"(
+              << BOLD_RED_BOLD_TEXT_START << "Open for Extension:" << TEXT_COLOR_CLEAR << R"(
 This means that the behavior of a module, class, or function
 can be extended or enhanced.
 You should be able to add new functionality without altering existing code.)"
               << std::endl
               << std::endl
-              << BOLD_RED_TEXT_START << "Closed for Modification:" << TEXT_COLOR_CLEAR << "\n"
+              << BOLD_RED_BOLD_TEXT_START << "Closed for Modification:" << TEXT_COLOR_CLEAR << "\n"
               << R"(
 This means that once a class or module has been developed and tested,
 you should not change its internal source code.
@@ -290,11 +290,11 @@ class SOLID_Demo : public DemoBase
         PrintNotes();
 
         // clang-format off
-        std::cout << CYAN_TEXT_START <<   "S" << TEXT_COLOR_CLEAR 
-                  << RED_TEXT_START <<    "O" << TEXT_COLOR_CLEAR 
-                  << BLUE_TEXT_START <<   "L" << TEXT_COLOR_CLEAR
-                  << YELLOW_TEXT_START << "I" << TEXT_COLOR_CLEAR 
-                  << GREEN_TEXT_START <<  "D" << TEXT_COLOR_CLEAR;
+        std::cout << CYAN_BOLD_TEXT_START <<   "S" << TEXT_COLOR_CLEAR 
+                  << RED_BOLD_TEXT_START <<    "O" << TEXT_COLOR_CLEAR 
+                  << BLUE_BOLD_TEXT_START <<   "L" << TEXT_COLOR_CLEAR
+                  << YELLOW_BOLD_TEXT_START << "I" << TEXT_COLOR_CLEAR 
+                  << GREEN_BOLD_TEXT_START <<  "D" << TEXT_COLOR_CLEAR;
         // clang-format on
 
         SingleResponsibilityPrinciple();
