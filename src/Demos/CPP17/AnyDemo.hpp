@@ -123,7 +123,7 @@ inline void AnyDemo::CopyableExample()
 
     std::any a = Copyable{};
 
-    std::cout << RED_TEXT_COLOR << "Try to remove comment in function and compile"
+    std::cout << RED_TEXT_START << "Try to remove comment in function and compile"
               << TEXT_COLOR_CLEAR " \n";
 
     // This will not compile!

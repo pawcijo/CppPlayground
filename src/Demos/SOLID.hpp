@@ -290,11 +290,11 @@ class SOLID_Demo : public DemoBase
         PrintNotes();
 
         // clang-format off
-        std::cout << CYAN_TEXT_COLOR <<   "S" << TEXT_COLOR_CLEAR 
-                  << RED_TEXT_COLOR <<    "O" << TEXT_COLOR_CLEAR 
-                  << BLUE_TEXT_COLOR <<   "L" << TEXT_COLOR_CLEAR
-                  << YELLOW_TEXT_COLOR << "I" << TEXT_COLOR_CLEAR 
-                  << GREEN_TEXT_COLOR <<  "D" << TEXT_COLOR_CLEAR;
+        std::cout << CYAN_TEXT_START <<   "S" << TEXT_COLOR_CLEAR 
+                  << RED_TEXT_START <<    "O" << TEXT_COLOR_CLEAR 
+                  << BLUE_TEXT_START <<   "L" << TEXT_COLOR_CLEAR
+                  << YELLOW_TEXT_START << "I" << TEXT_COLOR_CLEAR 
+                  << GREEN_TEXT_START <<  "D" << TEXT_COLOR_CLEAR;
         // clang-format on
 
         SingleResponsibilityPrinciple();

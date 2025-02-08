@@ -2,6 +2,7 @@
 
 #include <charconv>  // Include for charconv
 
+#include "Common/Common.hpp"
 #include "Common/DemoBase.hpp"
 
 class CharConvDemo : public DemoBase
@@ -60,16 +61,22 @@ making them faster and more lightweight than alternatives like std::stringstream
         auto printTimeWithColor = [](const char* name, auto time, auto minTime, auto maxTime)
         {
             if (time == minTime)
-                std::cout << "\033[32m" << name << ": " << time << " ns\033[0m" << std::endl;
+            {
+                std::cout << "\033[32m" << name << ": \033[1m" << time << " ns\033[0m" << std::endl;
+            }
             else if (time == maxTime)
-                std::cout << "\033[31m" << name << ": " << time << " ns\033[0m" << std::endl;
+            {
+                std::cout << "\033[31m" << name << ": \033[1m" << time << " ns\033[0m" << std::endl;
+            }
             else
-                std::cout << "\033[33m" << name << ": " << time << " ns\033[0m" << std::endl;
+            {
+                std::cout << "\033[33m" << name << ": \033[1m" << time << " ns\033[0m" << std::endl;
+            }
         };
 
-        printTimeWithColor("from_chars", fromCharsTime, minTime, maxTime);
-        printTimeWithColor("stoi", stoiTime, minTime, maxTime);
         printTimeWithColor("stringstream", stringstreamTime, minTime, maxTime);
+        printTimeWithColor("stoi", stoiTime, minTime, maxTime);
+        printTimeWithColor("from_chars", fromCharsTime, minTime, maxTime);
     }
 
     void ShowDemo() override

@@ -24,11 +24,11 @@
 
 #define TEXT_FORMAT_CLEAR "\033[0m"
 
-#define YELLOW_TEXT_COLOR "\033[1;33m"
-#define BLUE_TEXT_COLOR "\033[1;34m"
-#define RED_TEXT_COLOR "\033[1;31m"
-#define CYAN_TEXT_COLOR "\033[1;36m"
-#define GREEN_TEXT_COLOR "\033[1;32m"
+#define YELLOW_TEXT_START "\033[1;33m"
+#define BLUE_TEXT_START "\033[1;34m"
+#define RED_TEXT_START "\033[1;31m"
+#define CYAN_TEXT_START "\033[1;36m"
+#define GREEN_TEXT_START "\033[1;32m"
 
 #define YELLOW "33"
 #define BLUE "34"
