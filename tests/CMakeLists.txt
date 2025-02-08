@@ -6,9 +6,12 @@ set(CMAKE_CXX_STANDARD 20)
 # Add GoogleTest submodule
 add_subdirectory(googletest)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Include directories for the project
 include_directories(${CMAKE_SOURCE_DIR}/src/Common)
 include_directories(${CMAKE_SOURCE_DIR}/src/Demos/CPP17)
+include_directories(${CMAKE_SOURCE_DIR}/googletest/googletest/include)
 
 # Add the test executable
 file(GLOB_RECURSE SOURCES "../src/*.cpp")
@@ -22,6 +25,8 @@ add_test(NAME MyTests COMMAND runTests)
 if(APPLE)
     set_property(TEST MyTests PROPERTY ENVIRONMENT "DYLD_LIBRARY_PATH=${CMAKE_INSTALL_PREFIX}/lib")
 endif()
+
+
 
 
 # Add a custom target to run tests after building
