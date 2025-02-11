@@ -28,14 +28,15 @@ make
 ## TODO:
 
 #### C++17:
-- charconv
-- execution
+
 - filesystem
 - memory_resource
 - optional
+- ~~execution~~
 - ~~string_view~~
 - ~~variant~~ 
 - ~~any~~
+- ~~charconv~~
 
 #### C++20:
 - bit
