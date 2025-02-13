@@ -27,17 +27,6 @@ make
 
 ## TODO:
 
-#### C++17:
-
-- memory_resource
-- optional
-- ~~execution~~
-- ~~string_view~~
-- ~~variant~~ 
-- ~~any~~
-- ~~charconv~~
-- ~~filesystem~~
-
 #### C++20:
 - bit
 - compare
