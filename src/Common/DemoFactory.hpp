@@ -22,6 +22,7 @@
 #include "Demos/ForwardValue.hpp"
 #include "Demos/HowToWeakPtr.hpp"
 #include "Demos/MoreAboutSharedPtr.hpp"
+#include "Demos/NeuralNetwork/NeuralNetwork.hpp"
 #include "Demos/OverloadingAndOverriding.hpp"
 #include "Demos/Patterns/Pimpl.hpp"
 #include "Demos/PtrDemo.hpp"
@@ -45,6 +46,9 @@
 #include "Demos/CPP17/OptionalDemo.hpp"
 #include "Demos/CPP17/StringViewDemo.hpp"
 #include "Demos/CPP17/VariantDemo.hpp"
+
+//Other
+#include "Demos/NeuralNetwork/NeuralNetworkDemo.hpp"
 
 enum class Demos : int
 {
@@ -84,6 +88,7 @@ enum class Demos : int
     FileSystemDemo,
     MemoryResourceDemo,
     OptionalDemo,
+    NeuralNetworkDemo,
     Count
 };
 
@@ -200,7 +205,9 @@ class DemoFactory
              ValuePair([]() { return std::make_unique<MemoryResourceDemo>(); },
                        "MemoryResourceDemo")},
             {Demos::OptionalDemo,
-             ValuePair([]() { return std::make_unique<OptionalDemo>(); }, "OptionalDemo")}};
+             ValuePair([]() { return std::make_unique<OptionalDemo>(); }, "OptionalDemo")},
+            {Demos::NeuralNetworkDemo,
+             ValuePair([]() { return std::make_unique<NeuralNetworkDemo>(); }, "NeuralNetworkDemo")}};
         return demoMap;
     }
 };
