@@ -7,7 +7,13 @@ You can find basic information about things like type deduction, smart pointers,
 
 All topics are numbered and you can run a demo that shows information about the code. <br />
 
-You can also debug the code to learn more and get additional details
+You can also debug the code to learn more and get additional details.
+
+Before running download submodules: 
+
+```
+git submodule update --init
+```
 
 Debug mode :
 ```
@@ -26,6 +32,29 @@ make
 ```
 
 ## TODO:
+
+### Design patterns:
+- singleton
+- builder
+- adapter
+- bridge
+- decorator
+- facade
+- flyweight
+- composite
+- proxy
+- chain of responsibility
+- command
+- iterator
+- mediator
+- memento
+- observer 
+- state
+- strategy
+- template
+- visitor
+
+
 
 #### C++20:
 - bit

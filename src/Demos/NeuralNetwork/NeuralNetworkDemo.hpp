@@ -1,12 +1,10 @@
 #pragma once
 
-#include <memory>
 #include <string>
 
 #include "Common/Common.hpp"
 #include "Common/DemoBase.hpp"
 #include "Demos/NeuralNetwork/NeuralNetwork.hpp"
-#include "Demos/VirtualDestructor.hpp"
 
 class NeuralNetworkDemo : public DemoBase
 {
