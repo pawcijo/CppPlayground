@@ -48,7 +48,7 @@
 // Other
 #include "Demos/NeuralNetwork/NeuralNetworkDemo.hpp"
 
-enum class Demos : int
+enum class DemoType : int
 {
   DeductingTypesDemo = 1,
   AutoDeductionDemo,
@@ -98,136 +98,162 @@ Abstract factory as BaseDemo is form of abstraction.
 class DemoFactory
 {
 public:
+  // This is a lambda function that creates a DemoBase object
+  // It creates a unique pointer to the object of the derived class
   using DemoCreator = std::function<std::unique_ptr<DemoBase>()>;
-  using ValuePair = std::pair<DemoCreator, std::string>;
+  // This is a pair of the lambda function and the name of the demo
+  using DemoCreatorWithName = std::pair<DemoCreator, std::string>;
 
-  static std::unique_ptr<DemoBase> createDemo(Demos chosenDemo)
+  static std::unique_ptr<DemoBase> createDemo(DemoType chosenDemo)
   {
     const auto& it = getDemoMap().find(chosenDemo);
-    if (it != getDemoMap().end()) {
+    if (it != getDemoMap().end())
+    {
       return it->second
         .first(); // Call the associated lambda function to create the object
     }
     return nullptr;
   }
 
-  static auto getDemoMap() -> std::map<Demos, ValuePair>&
+  static auto getDemoMap() -> std::map<DemoType, DemoCreatorWithName>&
   {
     // Initialize the map statically
-    static std::map<Demos, ValuePair> demoMap = {
-      { Demos::DeductingTypesDemo,
-        ValuePair([]() { return std::make_unique<DeductingTypesDemo>(); },
-                  "DeductingTypesDemo") },
-      { Demos::AutoDeductionDemo,
-        ValuePair([]() { return std::make_unique<AutoDeductionDemo>(); },
-                  "AutoDeductionDemo") },
-      { Demos::DeclareTypeDemo,
-        ValuePair([]() { return std::make_unique<DeclareTypeDemo>(); },
-                  "DeclareTypeDemo") },
-      { Demos::UndesiredTypesDemo,
-        ValuePair([]() { return std::make_unique<UndesiredTypesDemo>(); },
-                  "UndesiredTypesDemo") },
-      { Demos::AssigmentDemo,
-        ValuePair([]() { return std::make_unique<AssigmentDemo>(); },
-                  "AssigmentDemo") },
-      { Demos::OverloadingAndOverridingDemo,
-        ValuePair(
+    static std::map<DemoType, DemoCreatorWithName> demoMap = {
+      { DemoType::DeductingTypesDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<DeductingTypesDemo>(); },
+                            "DeductingTypesDemo") },
+      { DemoType::AutoDeductionDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<AutoDeductionDemo>(); },
+                            "AutoDeductionDemo") },
+      { DemoType::DeclareTypeDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<DeclareTypeDemo>(); },
+                            "DeclareTypeDemo") },
+      { DemoType::UndesiredTypesDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<UndesiredTypesDemo>(); },
+                            "UndesiredTypesDemo") },
+      { DemoType::AssigmentDemo,
+        DemoCreatorWithName([]() { return std::make_unique<AssigmentDemo>(); },
+                            "AssigmentDemo") },
+      { DemoType::OverloadingAndOverridingDemo,
+        DemoCreatorWithName(
           []() { return std::make_unique<OverloadingAndOverridingDemo>(); },
           "OverloadingAndOverridingDemo") },
-      { Demos::PtrDemo,
-        ValuePair([]() { return std::make_unique<PtrDemo>(); }, "PtrDemo") },
-      { Demos::ConstIteratorsDemo,
-        ValuePair([]() { return std::make_unique<ConstIteratorsDemo>(); },
-                  "ConstIteratorsDemo") },
-      { Demos::ThrowAndNoExceptDemo,
-        ValuePair([]() { return std::make_unique<ThrowAndNoExceptDemo>(); },
-                  "ThrowAndNoExceptDemo") },
-      { Demos::ConstExpressionDemo,
-        ValuePair([]() { return std::make_unique<ConstExpressionDemo>(); },
-                  "ConstExpressionDemo") },
-      { Demos::ConstMutableDemo,
-        ValuePair([]() { return std::make_unique<ConstMutableDemo>(); },
-                  "ConstMutableDemo") },
-      { Demos::RuleOfThreeDemo,
-        ValuePair([]() { return std::make_unique<RuleOfThreeDemo>(); },
-                  "RuleOfThreeDemo") },
-      { Demos::SOLID_Demo,
-        ValuePair([]() { return std::make_unique<SOLID_Demo>(); },
-                  "SOLID_Demo") },
-      { Demos::VirtualDestructorDemo,
-        ValuePair([]() { return std::make_unique<VirtualDestructorDemo>(); },
-                  "VirtualDestructorDemo") },
-      { Demos::ReferencePolymorphismDemo,
-        ValuePair(
+      { DemoType::PtrDemo,
+        DemoCreatorWithName([]() { return std::make_unique<PtrDemo>(); },
+                            "PtrDemo") },
+      { DemoType::ConstIteratorsDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<ConstIteratorsDemo>(); },
+                            "ConstIteratorsDemo") },
+      { DemoType::ThrowAndNoExceptDemo,
+        DemoCreatorWithName(
+          []() { return std::make_unique<ThrowAndNoExceptDemo>(); },
+          "ThrowAndNoExceptDemo") },
+      { DemoType::ConstExpressionDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<ConstExpressionDemo>(); },
+                            "ConstExpressionDemo") },
+      { DemoType::ConstMutableDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<ConstMutableDemo>(); },
+                            "ConstMutableDemo") },
+      { DemoType::RuleOfThreeDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<RuleOfThreeDemo>(); },
+                            "RuleOfThreeDemo") },
+      { DemoType::SOLID_Demo,
+        DemoCreatorWithName([]() { return std::make_unique<SOLID_Demo>(); },
+                            "SOLID_Demo") },
+      { DemoType::VirtualDestructorDemo,
+        DemoCreatorWithName(
+          []() { return std::make_unique<VirtualDestructorDemo>(); },
+          "VirtualDestructorDemo") },
+      { DemoType::ReferencePolymorphismDemo,
+        DemoCreatorWithName(
           []() { return std::make_unique<ReferencePolymorphismDemo>(); },
           "ReferencePolymorphismDemo") },
-      { Demos::StaticMemoryAllocationDemo,
-        ValuePair(
+      { DemoType::StaticMemoryAllocationDemo,
+        DemoCreatorWithName(
           []() { return std::make_unique<StaticMemoryAllocationDemo>(); },
           "StaticMemoryAllocationDemo") },
-      { Demos::DeepShallowCopyDemo,
-        ValuePair([]() { return std::make_unique<DeepShallowCopyDemo>(); },
-                  "DeepShallowCopyDemo") },
-      { Demos::WeakPtrVsSharedPtrDemo,
-        ValuePair([]() { return std::make_unique<WeakPtrVsSharedPtrDemo>(); },
-                  "WeakPtrVsSharedPtrDemo") },
-      { Demos::ExceptionAndStackDemo,
-        ValuePair([]() { return std::make_unique<ExceptionAndStackDemo>(); },
-                  "ExceptionAndStackDemo") },
-      { Demos::CompilationProcessDemo,
-        ValuePair([]() { return std::make_unique<CompilationProcessDemo>(); },
-                  "CompilationProcessDemo") },
-      { Demos::UniquePtrFactoryDemo,
-        ValuePair([]() { return std::make_unique<UniquePtrFactoryDemo>(); },
-                  "UniquePtrFactoryDemo") },
-      { Demos::MoreAboutSharedPtrDemo,
-        ValuePair([]() { return std::make_unique<MoreAboutSharedPtrDemo>(); },
-                  "MoreAboutSharedPtrDemo") },
-      { Demos::HowToWeakPtrDemo,
-        ValuePair([]() { return std::make_unique<HowToWeakPtrDemo>(); },
-                  "HowToWeakPtrDemo") },
-      { Demos::AllocateSharedDemo,
-        ValuePair([]() { return std::make_unique<AllocateSharedDemo>(); },
-                  "AllocateSharedDemo") },
-      { Demos::PimplDemo,
-        ValuePair([]() { return std::make_unique<PimplExample>(); },
-                  "PimplDemo") },
-      { Demos::UniversalRefVsRValueRefDemo,
-        ValuePair(
+      { DemoType::DeepShallowCopyDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<DeepShallowCopyDemo>(); },
+                            "DeepShallowCopyDemo") },
+      { DemoType::WeakPtrVsSharedPtrDemo,
+        DemoCreatorWithName(
+          []() { return std::make_unique<WeakPtrVsSharedPtrDemo>(); },
+          "WeakPtrVsSharedPtrDemo") },
+      { DemoType::ExceptionAndStackDemo,
+        DemoCreatorWithName(
+          []() { return std::make_unique<ExceptionAndStackDemo>(); },
+          "ExceptionAndStackDemo") },
+      { DemoType::CompilationProcessDemo,
+        DemoCreatorWithName(
+          []() { return std::make_unique<CompilationProcessDemo>(); },
+          "CompilationProcessDemo") },
+      { DemoType::UniquePtrFactoryDemo,
+        DemoCreatorWithName(
+          []() { return std::make_unique<UniquePtrFactoryDemo>(); },
+          "UniquePtrFactoryDemo") },
+      { DemoType::MoreAboutSharedPtrDemo,
+        DemoCreatorWithName(
+          []() { return std::make_unique<MoreAboutSharedPtrDemo>(); },
+          "MoreAboutSharedPtrDemo") },
+      { DemoType::HowToWeakPtrDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<HowToWeakPtrDemo>(); },
+                            "HowToWeakPtrDemo") },
+      { DemoType::AllocateSharedDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<AllocateSharedDemo>(); },
+                            "AllocateSharedDemo") },
+      { DemoType::PimplDemo,
+        DemoCreatorWithName([]() { return std::make_unique<PimplExample>(); },
+                            "PimplDemo") },
+      { DemoType::UniversalRefVsRValueRefDemo,
+        DemoCreatorWithName(
           []() { return std::make_unique<UniversalRefVsRValueRefDemo>(); },
           "UniversalRefVsRValueRefDemo") },
-      { Demos::ForwardDemo,
-        ValuePair([]() { return std::make_unique<ForwardDemo>(); },
-                  "ForwardDemo") },
-      { Demos::EmptyDemo,
-        ValuePair([]() { return std::make_unique<EmptyDemo>(); },
-                  "EmptyDemo") },
-      { Demos::AnyDemo,
-        ValuePair([]() { return std::make_unique<AnyDemo>(); }, "AnyDemo") },
-      { Demos::VariantDemo,
-        ValuePair([]() { return std::make_unique<VariantDemo>(); },
-                  "VariantDemo") },
-      { Demos::StringViewDemo,
-        ValuePair([]() { return std::make_unique<StringViewDemo>(); },
-                  "StringViewDemo") },
-      { Demos::CharConvDemo,
-        ValuePair([]() { return std::make_unique<CharConvDemo>(); },
-                  "CharConvDemo") },
-      { Demos::ExecutionDemo,
-        ValuePair([]() { return std::make_unique<ExecutionDemo>(); },
-                  "ExecutionDemo") },
-      { Demos::FileSystemDemo,
-        ValuePair([]() { return std::make_unique<FileSystemDemo>(); },
-                  "FileSystemDemo") },
-      { Demos::MemoryResourceDemo,
-        ValuePair([]() { return std::make_unique<MemoryResourceDemo>(); },
-                  "MemoryResourceDemo") },
-      { Demos::OptionalDemo,
-        ValuePair([]() { return std::make_unique<OptionalDemo>(); },
-                  "OptionalDemo") },
-      { Demos::NeuralNetworkDemo,
-        ValuePair([]() { return std::make_unique<NeuralNetworkDemo>(); },
-                  "NeuralNetworkDemo") }
+      { DemoType::ForwardDemo,
+        DemoCreatorWithName([]() { return std::make_unique<ForwardDemo>(); },
+                            "ForwardDemo") },
+      { DemoType::EmptyDemo,
+        DemoCreatorWithName([]() { return std::make_unique<EmptyDemo>(); },
+                            "EmptyDemo") },
+      { DemoType::AnyDemo,
+        DemoCreatorWithName([]() { return std::make_unique<AnyDemo>(); },
+                            "AnyDemo") },
+      { DemoType::VariantDemo,
+        DemoCreatorWithName([]() { return std::make_unique<VariantDemo>(); },
+                            "VariantDemo") },
+      { DemoType::StringViewDemo,
+        DemoCreatorWithName([]() { return std::make_unique<StringViewDemo>(); },
+                            "StringViewDemo") },
+      { DemoType::CharConvDemo,
+        DemoCreatorWithName([]() { return std::make_unique<CharConvDemo>(); },
+                            "CharConvDemo") },
+      { DemoType::ExecutionDemo,
+        DemoCreatorWithName([]() { return std::make_unique<ExecutionDemo>(); },
+                            "ExecutionDemo") },
+      { DemoType::FileSystemDemo,
+        DemoCreatorWithName([]() { return std::make_unique<FileSystemDemo>(); },
+                            "FileSystemDemo") },
+      { DemoType::MemoryResourceDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<MemoryResourceDemo>(); },
+                            "MemoryResourceDemo") },
+      { DemoType::OptionalDemo,
+        DemoCreatorWithName([]() { return std::make_unique<OptionalDemo>(); },
+                            "OptionalDemo") },
+      { DemoType::NeuralNetworkDemo,
+        DemoCreatorWithName([]()
+                            { return std::make_unique<NeuralNetworkDemo>(); },
+                            "NeuralNetworkDemo") }
     };
     return demoMap;
   }

@@ -15,11 +15,11 @@ TEST(DemoFactoryTestTest, BasicAssertions)
 TEST(DemoFactoryTest, NoThrowOnCreateDemo)
 {
     // Test all demo types to ensure no exceptions are thrown
-    for (int i = 0; i < static_cast<int>(Demos::Count); ++i)
+    for (int i = 0; i < static_cast<int>(DemoType::Count); ++i)
     {
         try
         {
-            auto demo = DemoFactory::createDemo(static_cast<Demos>(i));
+            auto demo = DemoFactory::createDemo(static_cast<DemoType>(i));
         }
         catch (const std::exception& e)
         {
