@@ -5,6 +5,8 @@
 #include <string>
 #include <utility>
 
+
+
 #include "Common/DemoBase.hpp"
 #include "Demos/AllocateShared.hpp"
 #include "Demos/AssigmentAndInitialization.hpp"
@@ -22,7 +24,6 @@
 #include "Demos/HowToWeakPtr.hpp"
 #include "Demos/MoreAboutSharedPtr.hpp"
 #include "Demos/OverloadingAndOverriding.hpp"
-#include "Demos/Patterns/Pimpl.hpp"
 #include "Demos/PtrDemo.hpp"
 #include "Demos/ReferencePolymorphism.hpp"
 #include "Demos/RuleOfThree.hpp"
@@ -34,6 +35,10 @@
 #include "Demos/UniversalRefVsRValueRef.hpp"
 #include "Demos/VirtualDestructor.hpp"
 #include "Demos/WeakPtrVsSharedPtr.hpp"
+
+// Design patterns
+#include "Demos/Patterns/Singleton/SingletonDemo.hpp"
+#include "Demos/Patterns/Pimpl.hpp"
 
 // C++ 17
 #include "Demos/CPP17/AnyDemo.hpp"
@@ -87,6 +92,7 @@ enum class DemoType : int
   MemoryResourceDemo,
   OptionalDemo,
   NeuralNetworkDemo,
+  SingletonDemo,
   Count
 };
 
@@ -253,7 +259,11 @@ public:
       { DemoType::NeuralNetworkDemo,
         DemoCreatorWithName([]()
                             { return std::make_unique<NeuralNetworkDemo>(); },
-                            "NeuralNetworkDemo") }
+                            "NeuralNetworkDemo") },
+      { DemoType::SingletonDemo,
+                              DemoCreatorWithName([]()
+                                                  { return std::make_unique<SingletonDemo>(); },
+                                                  "SingletonDemo") }
     };
     return demoMap;
   }

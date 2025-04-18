@@ -9,6 +9,7 @@ All topics are numbered and you can run a demo that shows information about the 
 
 You can also debug the code to learn more and get additional details.
 
+
 Before running download submodules: 
 
 ```
@@ -34,7 +35,6 @@ make
 ## TODO:
 
 ### Design patterns:
-- singleton
 - builder
 - adapter
 - bridge
