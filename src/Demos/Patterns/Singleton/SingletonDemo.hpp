@@ -1,7 +1,8 @@
+#pragma once
+
 #include "Common/Common.hpp"
 #include "Common/DemoBase.hpp"
 #include "Demos/Patterns/Singleton/Singleton.hpp"
-
 
 class SingletonDemo : public DemoBase
 {
@@ -32,5 +33,8 @@ Attributed to Scott Meyers, this singleton pattern exploits three important prop
     Singleton::getInstance().doSomething();
   }
 
-  void ShowDemo() override { ShowExample(); };
+  void ShowDemo() override
+  {
+    ShowExample();
+  };
 };

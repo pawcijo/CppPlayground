@@ -5,8 +5,6 @@
 #include <string>
 #include <utility>
 
-
-
 #include "Common/DemoBase.hpp"
 #include "Demos/AllocateShared.hpp"
 #include "Demos/AssigmentAndInitialization.hpp"
@@ -24,6 +22,7 @@
 #include "Demos/HowToWeakPtr.hpp"
 #include "Demos/MoreAboutSharedPtr.hpp"
 #include "Demos/OverloadingAndOverriding.hpp"
+#include "Demos/Patterns/Builder/BuilderDemo.hpp"
 #include "Demos/PtrDemo.hpp"
 #include "Demos/ReferencePolymorphism.hpp"
 #include "Demos/RuleOfThree.hpp"
@@ -37,8 +36,9 @@
 #include "Demos/WeakPtrVsSharedPtr.hpp"
 
 // Design patterns
-#include "Demos/Patterns/Singleton/SingletonDemo.hpp"
 #include "Demos/Patterns/Pimpl.hpp"
+#include "Demos/Patterns/Singleton/SingletonDemo.hpp"
+#include "Demos/Patterns/Builder/BuilderDemo.hpp"
 
 // C++ 17
 #include "Demos/CPP17/AnyDemo.hpp"
@@ -93,6 +93,7 @@ enum class DemoType : int
   OptionalDemo,
   NeuralNetworkDemo,
   SingletonDemo,
+  BuilderDemo,
   Count
 };
 
@@ -261,9 +262,11 @@ public:
                             { return std::make_unique<NeuralNetworkDemo>(); },
                             "NeuralNetworkDemo") },
       { DemoType::SingletonDemo,
-                              DemoCreatorWithName([]()
-                                                  { return std::make_unique<SingletonDemo>(); },
-                                                  "SingletonDemo") }
+        DemoCreatorWithName([]() { return std::make_unique<SingletonDemo>(); },
+                            "SingletonDemo") },
+      { DemoType::BuilderDemo,
+        DemoCreatorWithName([]() { return std::make_unique<BuilderDemo>(); },
+                            "BuilderDemo") }
     };
     return demoMap;
   }

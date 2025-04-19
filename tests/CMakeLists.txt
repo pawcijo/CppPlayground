@@ -13,7 +13,9 @@ include_directories(${CMAKE_SOURCE_DIR}/src/Common)
 include_directories(${CMAKE_SOURCE_DIR}/src/Demos/CPP17)
 include_directories(${CMAKE_SOURCE_DIR}/googletest/googletest/include)
 
-# Add the test executable (ALWAYS BUILT)
+# Add the test executable (ALWAYS REBUILD TO GENERATE)
+# Find all source files in the src directory
+# and its subdirectories
 file(GLOB_RECURSE SOURCES "../src/*.cpp")
 add_executable(runTests main_test.cpp ${SOURCES})
 
