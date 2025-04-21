@@ -39,6 +39,7 @@
 #include "Demos/Patterns/Pimpl.hpp"
 #include "Demos/Patterns/Singleton/SingletonDemo.hpp"
 #include "Demos/Patterns/Builder/BuilderDemo.hpp"
+#include "Demos/Patterns/Adapter/AdapterDemo.hpp"
 
 // C++ 17
 #include "Demos/CPP17/AnyDemo.hpp"
@@ -94,6 +95,7 @@ enum class DemoType : int
   NeuralNetworkDemo,
   SingletonDemo,
   BuilderDemo,
+  AdapterDemo,
   Count
 };
 
@@ -266,7 +268,10 @@ public:
                             "SingletonDemo") },
       { DemoType::BuilderDemo,
         DemoCreatorWithName([]() { return std::make_unique<BuilderDemo>(); },
-                            "BuilderDemo") }
+                            "BuilderDemo") },
+      { DemoType::AdapterDemo,
+        DemoCreatorWithName([]() { return std::make_unique<AdapterDemo>(); },
+                            "AdapterDemo") }
     };
     return demoMap;
   }

@@ -35,7 +35,6 @@ make
 ## TODO:
 
 ### Design patterns:
-- adapter
 - bridge
 - decorator
 - facade
