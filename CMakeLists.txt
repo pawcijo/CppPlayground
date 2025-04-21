@@ -13,27 +13,20 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Werror")
 # Debug flags
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
 
-# add include directories
-include_directories(
-    src/
-    .
+add_subdirectory(PlaygroundLib)
+
+include_directories(ModernCpp PUBLIC
+	PlayGroundLib/
 )
-
-# ----------------------------
-# Build Main Application
-# ----------------------------
-
-# ! ! ! !
-# Remember to clear cache if recursive glob does not work,
-# it will not pick up new files sometimes.
-
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-message(STATUS "Found source files: ${SOURCES}")
 
 add_subdirectory(tests)
 
 # Add the executable
 add_executable(ModernCpp 
     main.cpp
-    ${SOURCES}
+)
+
+# Link the static library
+target_link_libraries(ModernCpp
+    PlaygroundLib
 )

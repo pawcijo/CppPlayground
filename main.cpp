@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Common/DemoBase.hpp"
-#include "Common/DemoFactory.hpp"
+#include "DemosFactory/DemoFactory.hpp"
 
 #include <memory>
 #include <ostream>

@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <iostream>
 
-#include "Common/DemoFactory.hpp"  // Include the necessary header for DemoFactory
+#include "DemosFactory/DemoFactory.hpp"  // Include the necessary header for DemoFactory
 
 TEST(DemoFactoryTestTest, BasicAssertions)
 {
