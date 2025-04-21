@@ -1,3 +1,30 @@
+#include "VulkanSrc/Vulkan/VulkanApp.hpp"
+#include "VulkanSrc/Vulkan/VulkanPipeline.hpp"
+
+#include <stdexcept>
+// #include <print>
+
+int main()
+{
+  VulkanPipeLine appWindow(1280, 720);
+  VulkanApp app(appWindow);
+
+  try
+  {
+    app.Run();
+  }
+  catch (const std::exception& e)
+  {
+    printf("Exception %s \n.", e.what());
+    return EXIT_FAILURE;
+  }
+
+  return EXIT_SUCCESS;
+
+  return 0;
+}
+
+/*
 #include <iostream>
 
 #include "Common/DemoBase.hpp"
@@ -76,3 +103,5 @@ int main(int argc, char* argv[])
 
   return 0;
 }
+
+*/

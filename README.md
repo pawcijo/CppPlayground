@@ -32,6 +32,14 @@ cmake -DCMAKE_BUILD_TYPE=Release ../..
 make
 ```
 
+UI_NOTES:
+
+Requirements:
+- make sure all submodules are initialised
+- vulkan sdk is installed and configured correctly
+- shaders are compilled
+
+
 ## TODO:
 
 ### Design patterns:
