@@ -14,11 +14,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic ")
 # Debug flags
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
 
-
 add_subdirectory (external)
+add_subdirectory(PlaygroundLib)
+add_subdirectory(tests)
 
 # add include directories
 include_directories(
+	PlayGroundLib/
 	VulkanSrc/Vulkan
 	src/
 	external/imgui/
@@ -32,24 +34,18 @@ include_directories(
 find_package(Vulkan REQUIRED)
 find_package(glfw3 REQUIRED)
 
+
+
 set(ALL_LIBS
+PlaygroundLib
 	Vulkan::Vulkan
 	glfw
 	pthread
 )
 
-# ----------------------------
-# Build Main Application
-# ----------------------------
-
-# ! ! ! !
-# Remember to clear cache if recursive glob does not work,
-# it will not pick up new files sometimes.
-
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-message(STATUS "Found source files: ${SOURCES}")
-
-add_subdirectory(tests)
+include_directories(ModernCpp PUBLIC
+	PlayGroundLib/
+)
 
 set(IMGUI_DIR external/ImGui/)
 
@@ -69,6 +65,5 @@ add_executable(ModernCpp
 	${IMGUI_DIR}/imgui_widgets.cpp
     ${SOURCES}
 )
-
 
 target_link_libraries(ModernCpp ${ALL_LIBS})
