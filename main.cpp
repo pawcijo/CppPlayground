@@ -1,9 +1,6 @@
 #include "VulkanSrc/Vulkan/VulkanApp.hpp"
 #include "VulkanSrc/Vulkan/VulkanPipeline.hpp"
 
-#include <stdexcept>
-// #include <print>
-
 int main()
 {
   VulkanPipeLine appWindow(1280, 720);

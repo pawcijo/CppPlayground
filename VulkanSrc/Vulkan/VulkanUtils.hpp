@@ -8,11 +8,7 @@
 #include <glm/gtx/hash.hpp>
 
 #include <array>
-#include <fstream>
-#include <string>
 #include <vector>
-
-#include <unordered_map>
 
 struct VulkanContext
 {

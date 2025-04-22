@@ -1,8 +1,8 @@
 #pragma once
 
 #include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_vulkan.h"
+#include "imgui_impl_glfw.h" // IWYU pragma: keep
+#include "imgui_impl_vulkan.h" // IWYU pragma: keep
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
