@@ -7,12 +7,15 @@ project(ModernCpp VERSION 1.0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Add extra warnings and treat warnings as errors
 #TODO set this for static lib  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Werror")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic ")
 # Debug flags
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
+
+
 
 add_subdirectory (external)
 add_subdirectory(PlaygroundLib)
@@ -34,17 +37,11 @@ include_directories(
 find_package(Vulkan REQUIRED)
 find_package(glfw3 REQUIRED)
 
-
-
 set(ALL_LIBS
-PlaygroundLib
+	PlaygroundLib
 	Vulkan::Vulkan
 	glfw
 	pthread
-)
-
-include_directories(ModernCpp PUBLIC
-	PlayGroundLib/
 )
 
 set(IMGUI_DIR external/ImGui/)

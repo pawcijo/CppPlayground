@@ -8,26 +8,22 @@
 
 #define _GLFW_VULKAN_LIBRARY
 
-
 #include "VulkanApp.hpp"
 #include "VulkanShader.hpp"
 #include "VulkanValidation.hpp"
 
-
 #include <algorithm>
-#include <chrono>
 #include <cstdint>
 #include <cstring>
-#include <fstream>
-#include <iostream>
 #include <memory>
 #include <set>
 #include <string>
-#include <unordered_map>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
-static void framebufferResizeCallback(GLFWwindow* window, int width, int height)
+static void framebufferResizeCallback(GLFWwindow* window,
+                                      int /*width*/,
+                                      int /*height*/)
 {
   auto app =
     reinterpret_cast<VulkanPipeLine*>(glfwGetWindowUserPointer(window));
@@ -1035,7 +1031,7 @@ void VulkanPipeLine::setupImgui()
   init_info.ImageCount = imageCount;
   init_info.MSAASamples = getMaxUsableSampleCount();
   init_info.Allocator = mVulkanContext.g_Allocator;
-  // init_info.CheckVkResultFn = check_vk_result;
+  init_info.CheckVkResultFn = check_vk_result;
 
   ImGui_ImplVulkan_Init(&init_info);
 }
@@ -1314,7 +1310,7 @@ void VulkanPipeLine::recreateSwapChain()
 void VulkanPipeLine::updateUniformBuffer(uint32_t currentImage)
 {
   UniformBufferObject ubo{};
-  ubo.proj[1][1] *= -1;  // OpenGl to Vulkan transition
+  ubo.proj[1][1] *= -1; // OpenGl to Vulkan transition
 
   memcpy(mVulkanContext.mUniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
 }
@@ -1352,8 +1348,8 @@ void VulkanPipeLine::DrawFrame()
 
   vkResetCommandBuffer(mVulkanContext.mCommandBuffers[mCurrentFrame],
                        /*VkCommandBufferResetFlagBits*/ 0);
-  recordCommandBuffer(
-    mVulkanContext.mCommandBuffers[mCurrentFrame], imageIndex);
+  recordCommandBuffer(mVulkanContext.mCommandBuffers[mCurrentFrame],
+                      imageIndex);
 
   VkSubmitInfo submitInfo{};
   submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
@@ -1418,7 +1414,7 @@ void VulkanPipeLine::createDescriptorPool(unsigned aNumberOfModels)
 {
   std::vector<VkDescriptorPoolSize> poolSizes{};
   poolSizes.resize(2 * aNumberOfModels);
-  for (int i = 0; i < aNumberOfModels; i++)
+  for (unsigned i = 0; i < aNumberOfModels; i++)
   {
     poolSizes[i * 2].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
     poolSizes[i * 2].descriptorCount =
@@ -1511,19 +1507,14 @@ void VulkanPipeLine::drawImgui(VkCommandBuffer commandBuffer)
 
   ImGuiIO& io = ImGui::GetIO();
 
-  const char* scenePath = "Scene.xml";
-
   // 2. Show a simple window that we create ourselves. We use a Begin/End pair
   // to create a named window.
   {
-    static float f = 0.0f;
-    static int counter = 0;
 
     ImGui::Begin("Hello, world!"); // Create a window called "Hello, world!" and
                                    // append into it.
     ImGui::Text("This is some useful text."); // Display some text (you can use
                                               // a format strings too)
-
 
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
                 1000.0f / io.Framerate,
@@ -1654,7 +1645,6 @@ void VulkanPipeLine::CleanUp()
     mVulkanContext.mDevice, mVulkanContext.mImguiDescriptorPool, nullptr);
   vkDestroyDescriptorPool(
     mVulkanContext.mDevice, mVulkanContext.mDescriptorPool, nullptr);
-
 
   vkDestroyDescriptorSetLayout(
     mVulkanContext.mDevice, mVulkanContext.mDescriptorSetLayout, nullptr);

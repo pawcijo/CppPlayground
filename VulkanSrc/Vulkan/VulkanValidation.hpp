@@ -1,11 +1,11 @@
 #pragma once
 
-#include "VulkanApp.hpp"
+#include "GLFW/glfw3.h"
+#include <vulkan/vulkan.h>
 
 #include <cstdlib>
 #include <cstring>
 #include <vector>
-////#include <print>
 
 const std::vector<const char*> validationLayers = {
   "VK_LAYER_KHRONOS_validation"
@@ -18,16 +18,16 @@ const bool enableValidationLayers = true;
 #endif
 
 static VKAPI_ATTR VkBool32 VKAPI_CALL
-debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
-              VkDebugUtilsMessageTypeFlagsEXT messageType,
+debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT /*messageSeverity*/,
+              VkDebugUtilsMessageTypeFlagsEXT /*messageType*/,
               const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
-              void* pUserData)
+              void* /*pUserData*/)
 {
   printf("validation layer: %s \n ", pCallbackData->pMessage);
   return VK_FALSE;
 }
 
-void populateDebugMessengerCreateInfo(
+inline void populateDebugMessengerCreateInfo(
   VkDebugUtilsMessengerCreateInfoEXT& createInfo)
 {
   createInfo = {};
@@ -41,7 +41,7 @@ void populateDebugMessengerCreateInfo(
   createInfo.pfnUserCallback = debugCallback;
 }
 
-VkResult CreateDebugUtilsMessengerEXT(
+inline VkResult CreateDebugUtilsMessengerEXT(
   VkInstance instance,
   const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
   const VkAllocationCallbacks* pAllocator,
@@ -59,7 +59,7 @@ VkResult CreateDebugUtilsMessengerEXT(
   }
 }
 
-std::vector<const char*> getRequiredExtensions()
+inline std::vector<const char*> getRequiredExtensions()
 {
   uint32_t glfwExtensionCount = 0;
   const char** glfwExtensions;
@@ -76,7 +76,7 @@ std::vector<const char*> getRequiredExtensions()
   return extensions;
 }
 
-bool checkValidationLayerSupport()
+inline bool checkValidationLayerSupport()
 {
   uint32_t layerCount;
   vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
@@ -106,7 +106,7 @@ bool checkValidationLayerSupport()
   return true;
 }
 
-void DestroyDebugUtilsMessengerEXT(VkInstance instance,
+inline void DestroyDebugUtilsMessengerEXT(VkInstance instance,
                                    VkDebugUtilsMessengerEXT debugMessenger,
                                    const VkAllocationCallbacks* pAllocator)
 {
