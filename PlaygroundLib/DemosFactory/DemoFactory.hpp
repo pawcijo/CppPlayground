@@ -99,6 +99,12 @@ enum class DemoType : int
   Count
 };
 
+ // This is a lambda function that creates a DemoBase object
+  // It creates a unique pointer to the object of the derived class
+  using DemoCreator = std::function<std::unique_ptr<DemoBase>()>;
+  // This is a pair of the lambda function and the name of the demo
+  using DemoCreatorWithName = std::pair<DemoCreator, std::string>;
+
 #define ENUM_TO_STRING(name) #name
 /*
 This is also design pattern. :)
@@ -107,11 +113,7 @@ Abstract factory as BaseDemo is form of abstraction.
 class DemoFactory
 {
 public:
-  // This is a lambda function that creates a DemoBase object
-  // It creates a unique pointer to the object of the derived class
-  using DemoCreator = std::function<std::unique_ptr<DemoBase>()>;
-  // This is a pair of the lambda function and the name of the demo
-  using DemoCreatorWithName = std::pair<DemoCreator, std::string>;
+ 
 
   static std::unique_ptr<DemoBase> createDemo(DemoType chosenDemo)
   {

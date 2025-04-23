@@ -69,8 +69,10 @@ It separates the construction of a complex object from its representation, allow
     std::this_thread::sleep_for(std::chrono::seconds(1));
     pc_2->startPC();
     std::this_thread::sleep_for(std::chrono::seconds(3));
+    
     pc->stopPC();
     pc_2->stopPC();
+
   }
 
   void ShowDemo() override

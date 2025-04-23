@@ -6,8 +6,6 @@
 #include "Pimpl/LargeClass.hpp"
 
 #include <iostream>
-#include <memory>
-
 class PimplExample : public DemoBase
 {
 public:

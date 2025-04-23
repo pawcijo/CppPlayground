@@ -1,4 +1,5 @@
-#pragma once
+#pragma  once
+
 
 #include <atomic>
 #include <condition_variable>
@@ -6,21 +7,63 @@
 #include <string>
 #include <thread>
 #include <vector>
-
 #include <iostream>
-
-class PcBuilder;
 
 class PersonalComputer
 {
 private:
-  PersonalComputer() = default;
+  PersonalComputer() : stopFlag(false) {}  // Initialize stopFlag to false
 
 public:
-  ~PersonalComputer() = default;
+  ~PersonalComputer() {
+    if (workerThread.joinable()) {
+      stopPC();
+      join();  // Ensure the thread is joined in the destructor
+    }
+  }
 
   PersonalComputer(const PersonalComputer& other) = delete;
   PersonalComputer& operator=(const PersonalComputer& other) = delete;
+
+  PersonalComputer(PersonalComputer&& other) noexcept {
+    // Move constructor should transfer ownership
+    mName = std::move(other.mName);
+    mCpu = std::move(other.mCpu);
+    mMotherboard = std::move(other.mMotherboard);
+    mGpu = std::move(other.mGpu);
+    mRamList = std::move(other.mRamList);
+    mStorageList = std::move(other.mStorageList);
+    mPowerSupply = std::move(other.mPowerSupply);
+    mCase = std::move(other.mCase);
+    mCooling = std::move(other.mCooling);
+
+    if (other.workerThread.joinable()) {
+      other.workerThread.detach();  // Detach the thread in the moved object to avoid double join.
+    }
+  }
+
+  PersonalComputer& operator=(PersonalComputer&& other) noexcept {
+    if (this != &other) {
+      mName = std::move(other.mName);
+      mCpu = std::move(other.mCpu);
+      mMotherboard = std::move(other.mMotherboard);
+      mGpu = std::move(other.mGpu);
+      mRamList = std::move(other.mRamList);
+      mStorageList = std::move(other.mStorageList);
+      mPowerSupply = std::move(other.mPowerSupply);
+      mCase = std::move(other.mCase);
+      mCooling = std::move(other.mCooling);
+
+      if (workerThread.joinable()) {
+        workerThread.join();  // Ensure the current thread finishes before transferring ownership
+      }
+
+      if (other.workerThread.joinable()) {
+        other.workerThread.detach();  // Detach the thread from the moved object to avoid double join
+      }
+    }
+    return *this;
+  }
 
   void showConfiguration()
   {
@@ -52,11 +95,7 @@ public:
     std::cout << mName << "::Sending stop message to PC..." << std::endl;
     {
       std::lock_guard<std::mutex> lock(mtx);
-      stopFlag = true;
-    }
-    {
-      std::lock_guard<std::mutex> lock(mtx);
-      stopFlag = true;
+      stopFlag = true;  // Only need to lock once
     }
     cv.notify_one();
   }
@@ -65,36 +104,6 @@ public:
   {
     if (workerThread.joinable())
       workerThread.join();
-  }
-
-  PersonalComputer(const PersonalComputer&& other)
-  {
-    mName = other.mName;
-    mCpu = other.mCpu;
-    mMotherboard = other.mMotherboard;
-    mGpu = other.mGpu;
-    mRamList = other.mRamList;
-    mStorageList = other.mStorageList;
-    mPowerSupply = other.mPowerSupply;
-    mCase = other.mCase;
-    mCooling = other.mCooling;
-  }
-
-  PersonalComputer& operator=(const PersonalComputer&& other)
-  {
-    if (this != &other)
-    {
-      mName = other.mName;
-      mCpu = other.mCpu;
-      mMotherboard = other.mMotherboard;
-      mGpu = other.mGpu;
-      mRamList = other.mRamList;
-      mStorageList = other.mStorageList;
-      mPowerSupply = other.mPowerSupply;
-      mCase = other.mCase;
-      mCooling = other.mCooling;
-    }
-    return *this;
   }
 
 private:
@@ -114,7 +123,7 @@ private:
       // 🔁 Do your regular work here
       std::cout << mName << "::Working..." << std::endl;
     }
-    std::cout << mName << "::Pc turned off(Worker thread exiting.)" << std::endl;
+    std::cout << mName << "::PC turned off (Worker thread exiting.)" << std::endl;
   }
 
   void setName(const std::string& name)
@@ -152,14 +161,6 @@ private:
   void setCooling(const std::string& cooling)
   {
     mCooling = cooling;
-  }
-  void setRamList(const std::vector<std::string>& ramList)
-  {
-    mRamList = ramList;
-  }
-  void setStorageList(const std::vector<std::string>& storageList)
-  {
-    mStorageList = storageList;
   }
 
   std::thread workerThread;
