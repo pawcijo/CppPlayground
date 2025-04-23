@@ -26,16 +26,16 @@ include_directories(
 	PlayGroundLib/
 	VulkanSrc/Vulkan
 	src/
-	external/imgui/
+	external/ImGui/
+	external/ImGui/backends
 	external/glm/
-	external/imgui/backends/
 	external/glfw/include/
 	${Vulkan_INCLUDE_DIRS}
 	.
 )
 
 find_package(Vulkan REQUIRED)
-find_package(glfw3 REQUIRED)
+#find_package(glfw3 REQUIRED)
 
 set(ALL_LIBS
 	PlaygroundLib

@@ -38,6 +38,7 @@ Requirements:
 - make sure all submodules are initialised
 - vulkan sdk is installed and configured correctly
 - shaders are compilled
+- use clang++ if g++ creates any problem
 
 
 ## TODO:
