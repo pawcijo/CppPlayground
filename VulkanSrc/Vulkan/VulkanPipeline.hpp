@@ -1,5 +1,6 @@
 #pragma once
 
+#include "PlaygroundLib/Common/DemoBase.hpp"
 #include "imgui.h"
 #include "imgui_impl_glfw.h" // IWYU pragma: keep
 #include "imgui_impl_vulkan.h" // IWYU pragma: keep
@@ -13,6 +14,9 @@
 
 #include <optional>
 #include <vector>
+
+
+#include "PlaygroundLib/DemosFactory/DemoFactory.hpp"
 
 const int MAX_FRAMES_IN_FLIGHT = 2;
 
@@ -51,13 +55,19 @@ private:
 
   // Imgui
   //  Setup Dear ImGui context
+  
 
   bool show_demo_window = true;
   bool show_another_window = false;
   ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
   uint32_t mCurrentFrame = 0;
 
+  //Demos
+  std::map<DemoType, DemoCreatorWithName> demoMap;
+  std::vector<std::string> demoNames;
+  int demoSelectionValue; // Index of the selected item
+  
+  //Vulkan stuff
   QueueFamilyIndices findQueueFamilies(VkPhysicalDevice aDevice);
   bool isDeviceSuitable(VkPhysicalDevice aDevice);
   VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);

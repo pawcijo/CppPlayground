@@ -1,4 +1,6 @@
 #include "VulkanPipeline.hpp"
+#include "PlaygroundLib/Common/DemoBase.hpp"
+#include "external/ImGui/imgui.h"
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -14,10 +16,138 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <cstdio>
 #include <cstring>
+#include <fcntl.h>
 #include <memory>
 #include <set>
 #include <string>
+#include <thread>
+#include <unistd.h>
+
+static std::vector<std::string> logBuffer;
+
+class ImGuiStreamBuf : public std::streambuf
+{
+public:
+  std::string buffer;
+
+protected:
+  int overflow(int c) override
+  {
+    if (c == '\n')
+    {
+      logBuffer.push_back(buffer);
+      buffer.clear();
+    }
+    else
+    {
+      buffer += static_cast<char>(c);
+    }
+    return c;
+  }
+
+  int sync() override
+  {
+    if (!buffer.empty())
+    {
+      logBuffer.push_back(buffer);
+      buffer.clear();
+    }
+    return 0;
+  }
+};
+
+// Global instance
+static ImGuiStreamBuf imguiBuf;
+static std::streambuf* oldCoutBuf = nullptr;
+static std::streambuf* oldCerrBuf = nullptr;
+
+void RedirectCppStreams()
+{
+  oldCoutBuf = std::cout.rdbuf(&imguiBuf);
+  oldCerrBuf = std::cerr.rdbuf(&imguiBuf);
+}
+
+void RestoreCppStreams()
+{
+  std::cout.rdbuf(oldCoutBuf);
+  std::cerr.rdbuf(oldCerrBuf);
+}
+
+// Buffer where we'll store logs
+extern std::vector<std::string> logBuffer;
+std::string pendingLine;
+
+int pipefd[2];
+std::thread stdoutThread;
+
+void RedirectStdout()
+{
+  pipe(pipefd); // Create pipe: pipefd[0] = read, pipefd[1] = write
+
+  // Redirect stdout to the pipe's write end
+  dup2(pipefd[1], STDOUT_FILENO);
+  // Optional: redirect stderr too
+  // dup2(pipefd[1], STDERR_FILENO);
+
+  // Set non-blocking read from pipe
+  fcntl(pipefd[0], F_SETFL, O_NONBLOCK);
+
+  // Background thread to read from pipe and push to ImGui buffer
+  stdoutThread = std::thread(
+    []()
+    {
+      char buffer[512];
+      while (true)
+      {
+        ssize_t bytesRead = read(pipefd[0], buffer, sizeof(buffer) - 1);
+        if (bytesRead > 0)
+        {
+          buffer[bytesRead] = '\0';
+          std::string output(buffer);
+
+          size_t pos = 0;
+          while ((pos = output.find('\n')) != std::string::npos)
+          {
+            std::string line = output.substr(0, pos);
+            logBuffer.push_back(pendingLine + line);
+            pendingLine.clear();
+            output.erase(0, pos + 1);
+          }
+
+          if (!output.empty())
+          {
+            pendingLine += output;
+          }
+        }
+        else
+        {
+          std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+      }
+    });
+}
+
+// Then call RedirectOutputToImGui(); early in your app (before your main loop).
+// 🪄 Use in Your Console Window
+
+void ShowConsoleWindow()
+{
+  ImGui::Begin("Console");
+
+  ImGui::BeginChild("scroll",
+                    ImVec2(0, -ImGui::GetFrameHeightWithSpacing()),
+                    true,
+                    ImGuiWindowFlags_HorizontalScrollbar);
+  for (const auto& line : logBuffer)
+  {
+    ImGui::TextUnformatted(line.c_str());
+  }
+  ImGui::EndChild();
+
+  ImGui::End();
+}
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -1100,7 +1230,17 @@ void VulkanPipeLine::SetAppPtr(VulkanApp* aApp)
 VulkanPipeLine::VulkanPipeLine(unsigned int width, unsigned int height)
   : mWidth(width)
   , mHeight(height)
+  , demoSelectionValue(1)
+
 {
+  RedirectCppStreams();
+  RedirectStdout();
+
+  demoMap = DemoFactory::getDemoMap();
+  for (auto& demo : demoMap)
+  {
+    demoNames.push_back(demo.second.second);
+  }
   initWindow(width, height);
   initVulkan();
 }
@@ -1498,6 +1638,11 @@ void VulkanPipeLine::createUniformBuffers()
   }
 }
 
+void ClearConsole()
+{
+  logBuffer.clear();
+}
+
 void VulkanPipeLine::drawImgui(VkCommandBuffer commandBuffer)
 {
 
@@ -1519,6 +1664,69 @@ void VulkanPipeLine::drawImgui(VkCommandBuffer commandBuffer)
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
                 1000.0f / io.Framerate,
                 io.Framerate);
+    ImGui::End();
+
+    // Demo Selection window
+    ImGui::Begin("Demo Window");
+    ImGui::Text("Choose a demo:");
+    if (!demoNames.empty())
+    {
+      const char* preview = demoNames[demoSelectionValue - 1].empty()
+                              ? "Unnamed"
+                              : demoNames[demoSelectionValue - 1].c_str();
+      // Combo box
+      ImGui::PushItemWidth(200); // optional: fix width
+      if (ImGui::BeginCombo("Select Option##demo_combo", preview))
+      {
+        for (int i = 0; i < demoNames.size(); ++i)
+        {
+          bool is_selected = (demoSelectionValue == i);
+          const char* item_label =
+            demoNames[i].empty() ? "Unnamed" : demoNames[i].c_str();
+
+          if (ImGui::Selectable(item_label, is_selected))
+          {
+            demoSelectionValue = i + 1;
+          }
+          if (is_selected)
+            ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndCombo();
+      }
+      ImGui::PopItemWidth();
+      ImGui::SameLine(); // <-- place button next to combo
+      if (ImGui::Button("Run"))
+      {
+        auto demo =
+          DemoFactory::createDemo(static_cast<DemoType>(demoSelectionValue));
+        // Call your function here
+        demo->ShowDemo();
+      }
+
+      ImGui::Text("You selected: %s", preview);
+    }
+    else
+    {
+      ImGui::Text("No demos available.");
+    }
+    ImGui::End();
+
+    ImGui::Begin("Console");
+    ImGui::BeginChild("scroll",
+                      ImVec2(0, -ImGui::GetFrameHeightWithSpacing()),
+                      true,
+                      ImGuiWindowFlags_HorizontalScrollbar);
+    for (const auto& line : logBuffer)
+    {
+      ImGui::TextUnformatted(line.c_str());
+    }
+    ImGui::EndChild();
+    // Clear button
+    if (ImGui::Button("Clear"))
+    {
+      ClearConsole();
+    }
+
     ImGui::End();
   }
 
