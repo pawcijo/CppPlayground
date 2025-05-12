@@ -1,5 +1,6 @@
 #pragma once
 
+//incliude from Qt Core
 #include <QMainWindow>
 #include <memory>
 #include <map>

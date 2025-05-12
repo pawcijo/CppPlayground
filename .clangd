@@ -1,0 +1,6 @@
+CompileFlags:
+  Add:
+    - -I/opt/homebrew/opt/qt/include
+    - -I/opt/homebrew/opt/qt/include/QtCore
+    - -I/opt/homebrew/opt/qt/include/QtWidgets
+    - -I./Build/ModernCppQTApp/ModernCppQTApp_autogen/include

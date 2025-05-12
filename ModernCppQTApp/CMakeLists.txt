@@ -4,6 +4,7 @@ project(ModernCppQTApp VERSION 1.0)
 #Find Qt6
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Multimedia)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 #Enable moc for Qt6 so it can generate the necessary files
 set(CMAKE_AUTOUIC ON)
