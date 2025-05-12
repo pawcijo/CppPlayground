@@ -48,7 +48,7 @@ public:
     std::string stringValue() const { return someString; }
 };
 
-void PrintCustomNotes()
+inline void PrintCustomNotes()
 {
     for (const auto &pair : controlBlockNotes)
     {
@@ -56,14 +56,14 @@ void PrintCustomNotes()
     }
 }
 
-void MoreAboutSharedPtrExample()
+inline void MoreAboutSharedPtrExample()
 {
     LOG_START_FUNCTION();
     PrintCustomNotes();
     LOG_END_FUNCTION();
 }
 
-void DontDoThatExample()
+inline void DontDoThatExample()
 {
     LOG_START_FUNCTION();
 
