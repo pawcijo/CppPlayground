@@ -133,7 +133,20 @@ class DeductingTypesDemo : public DemoBase
     DeductingTypesDemo()
     {
         mName = "DeductingTypesDemo";
-        mNotes = {};
+        mNotes = {
+            {"Universal Type Deduction",
+             "This demo shows how universal type deduction works in C++. "
+             "It demonstrates how to use universal references and how they "
+             "deduct the type of the passed parameter."},
+            {"Decltype Demo",
+             "This demo shows how to use decltype to deduce the type of an "
+             "expression at compile time."},
+            {"Ptr Type Template Deduction",
+             "This demo shows how pointer types can be deduced and how they "
+             "behave with const qualifiers."},
+            {"Ptr vs Array Demo",
+             "This demo shows the difference between pointers and arrays in "
+             "C++ and how their types are deduced."}};
     };
     ~DeductingTypesDemo() = default;
 

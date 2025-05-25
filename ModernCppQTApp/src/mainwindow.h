@@ -20,6 +20,7 @@ public:
 
 private slots:
     void onRunClicked();
+    void onClearClicked(); // Add this line
 
 private:
     void writeNotesToTerminal(NoteFormat& notes);
