@@ -4,8 +4,8 @@
 #include "Common/DemoBase.hpp"
 #include "Demos/Patterns/Builder/PcBuilder.hpp"
 #include "Demos/Patterns/Builder/PersonalComputer.hpp"
-#include <memory>
 #include <thread>
+#include <memory>
 
 class BuilderDemo : public DemoBase
 {
@@ -26,16 +26,17 @@ It separates the construction of a complex object from its representation, allow
   };
   ~BuilderDemo() = default;
 
-  void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
+  void ShowExample(
+    std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
-      if (nullptr == printNotesCallback)
-        {
-            PrintNotes();
-        }
-        else
-        {
-            printNotesCallback(mNotes);
-        }
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+    }
 
     std::string name = "PC 1";
     std::string name2 = "PC 2";
@@ -50,40 +51,45 @@ It separates the construction of a complex object from its representation, allow
 
     PcBuilder pcBuilder;
 
-    std::unique_ptr<PersonalComputer> pc = pcBuilder.setName(name)
-                                             .setCpu(cpu)
-                                             .setMotherboard(motherboard)
-                                             .setRam(ramList)
-                                             .setGpu(gpu)
-                                             .setStorage(storageList)
-                                             .setPowerSupply(powerSupply)
-                                             .setCase(pcCase)
-                                             .setCooling(cooling)
-                                             .build();
+    auto pc = pcBuilder.setName(name)
+        .setCpu(cpu)
+        .setMotherboard(motherboard)
+        .setRam(ramList)
+        .setGpu(gpu)
+        .setStorage(storageList)
+        .setPowerSupply(powerSupply)
+        .setCase(pcCase)
+        .setCooling(cooling)
+        .build();
 
-    std::unique_ptr<PersonalComputer> pc_2 = pcBuilder.setName(name2)
-                                               .setCpu(cpu)
-                                               .setMotherboard(motherboard)
-                                               .setRam(ramList)
-                                               .setGpu(gpu)
-                                               .setStorage(storageList)
-                                               .setPowerSupply(powerSupply)
-                                               .setCase(pcCase)
-                                               .setCooling(cooling)
-                                               .build();
+    auto pc_2 = pcBuilder.setName(name2)
+        .setCpu(cpu)
+        .setMotherboard(motherboard)
+        .setRam(ramList)
+        .setGpu(gpu)
+        .setStorage(storageList)
+        .setPowerSupply(powerSupply)
+        .setCase(pcCase)
+        .setCooling(cooling)
+        .build();
 
+    // Start pc in the main thread (original order)
     pc->startPC();
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-    pc_2->startPC();
-    std::this_thread::sleep_for(std::chrono::seconds(3));
-    pc->stopPC();
-    pc_2->stopPC();
 
-    pc->join();
-    pc_2->join();
+    // Move unique_ptrs into the thread to keep them alive
+    std::thread([pc = std::move(pc), pc_2 = std::move(pc_2)]() mutable {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        pc_2->startPC();
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+        pc->stopPC();
+        pc_2->stopPC();
+        pc->join();
+        pc_2->join();
+    }).detach();
   }
 
-  void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
+  void ShowDemo(
+    std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     ShowExample(printNotesCallback);
   };
