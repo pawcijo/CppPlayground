@@ -31,7 +31,7 @@ void printAddressCopy(const char *name, T param)
            name, static_cast<void *>(&param));
 }
 
-void UniveralTypeDemo()
+inline void UniveralTypeDemo()
 {
     LOG_START_FUNCTION();
     int x = 25;
@@ -46,7 +46,7 @@ void UniveralTypeDemo()
     LOG_END_FUNCTION();
 }
 
-void DecltypeDemo()
+inline void DecltypeDemo()
 {
     LOG_START_FUNCTION();
     int x = 3;
@@ -61,7 +61,7 @@ void DecltypeDemo()
     LOG_END_FUNCTION();
 }
 
-void PtrTypeTemplateDeductionDemo()
+inline void PtrTypeTemplateDeductionDemo()
 {
 
     LOG_START_FUNCTION();
@@ -100,7 +100,7 @@ constexpr std::size_t arraySize(T (&)[N]) noexcept // below on
     return N; // and
 }
 
-void PtrVsArrayDemo()
+inline void PtrVsArrayDemo()
 {
     LOG_START_FUNCTION();
     const char name[] = "J. P. Briggs";

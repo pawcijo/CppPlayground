@@ -23,7 +23,7 @@ const std::vector<std::pair<std::string, std::string>> StackUnwindingNotes = {
       "This ensures that resources like memory or file handles are properly released,\n"
       "avoiding memory leaks or resource leaks, even when an error occurs.\n"}}};
 
-void PrintNote()
+inline void PrintNote()
 {
     for (const auto &pair : Notes)
     {
@@ -32,7 +32,7 @@ void PrintNote()
     }
 }
 
-void PrintStackUnwindingNotes()
+inline void PrintStackUnwindingNotes()
 {
     for (const auto &pair : StackUnwindingNotes)
     {
