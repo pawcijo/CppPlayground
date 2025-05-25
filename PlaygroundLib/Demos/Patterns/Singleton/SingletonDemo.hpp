@@ -27,9 +27,16 @@ Attributed to Scott Meyers, this singleton pattern exploits three important prop
   };
   ~SingletonDemo() = default;
 
-  void ShowExample() override
+  void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
   {
-    PrintNotes();
+      if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
     Singleton::getInstance().doSomething();
   }
 

@@ -25,7 +25,7 @@ message(STATUS "Building static library from: ${SOURCES}")
 # Build static library
 add_library(PlaygroundLib STATIC ${SOURCES})
 
-target_compile_definitions(PlaygroundLib PUBLIC CONSOLE_LOG_FORMATTER=1)
+#target_compile_definitions(PlaygroundLib PUBLIC CONSOLE_LOG_FORMATTER=1)
 
 target_include_directories(PlaygroundLib PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}

@@ -73,9 +73,16 @@ class AssigmentDemo : public DemoBase
     };
     ~AssigmentDemo() = default;
 
-    void ShowExample() override
+    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        PrintNotes();
+          if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
         AssigmentAndInitialization();
     }
 

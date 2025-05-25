@@ -57,9 +57,16 @@ when forwarding them, because they’re only sometimes bound to rvalues." -  Eff
         LOG_END_FUNCTION();
     }
 
-    void ShowExample() override
+    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        PrintNotes();
+          if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
 
         MoveEmaple(std::make_unique<std::string>("Test"));
 

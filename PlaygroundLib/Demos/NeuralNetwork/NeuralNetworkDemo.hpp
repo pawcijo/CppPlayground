@@ -23,9 +23,16 @@ The network is trained to learn the XOR function.)"}}};
     };
     ~NeuralNetworkDemo() = default;
 
-    void ShowExample() override
+    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        PrintNotes();
+          if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
         NeuralNetwork nn(inputSize, hiddenSize, learningRate);
         std::vector<std::vector<double>> training_data = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
 

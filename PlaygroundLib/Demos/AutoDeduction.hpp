@@ -43,9 +43,16 @@ public:
     };
     ~AutoDeductionDemo() = default;
 
-    void ShowExample() override
+    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        PrintNotes();
+          if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
         LOG_START_FUNCTION();
     
         func_for_T("27", 27);

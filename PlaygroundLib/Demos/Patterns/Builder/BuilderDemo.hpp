@@ -26,9 +26,16 @@ It separates the construction of a complex object from its representation, allow
   };
   ~BuilderDemo() = default;
 
-  void ShowExample() override
+  void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
   {
-    PrintNotes();
+      if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
 
     std::string name = "PC 1";
     std::string name2 = "PC 2";

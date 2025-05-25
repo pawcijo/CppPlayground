@@ -1,9 +1,11 @@
 #pragma once
 
+#include <cstddef>
 #include <iostream>
 #include <ostream>
 
 #include "Common.hpp"
+
 
 class DemoBase
 {
@@ -60,7 +62,7 @@ public:
     }
   }
 
-  virtual void ShowExample() = 0;
+  virtual void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) = 0;
 
   virtual void ShowDemo()  = 0;
 

@@ -36,9 +36,16 @@ a C-style string) without making a copy, improving performance in many scenarios
         }
     }
 
-    void ShowExample() override
+    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        PrintNotes();
+          if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
         BasicExample();
         StringViewOperationsExample();
     }

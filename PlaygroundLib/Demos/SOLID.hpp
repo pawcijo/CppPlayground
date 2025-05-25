@@ -285,9 +285,16 @@ class SOLID_Demo : public DemoBase
     };
     ~SOLID_Demo() = default;
 
-    void ShowExample() override
+    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        PrintNotes();
+          if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
 
         // clang-format off
         std::cout << CYAN_BOLD_TEXT_START <<   "S" << TEXT_COLOR_CLEAR 

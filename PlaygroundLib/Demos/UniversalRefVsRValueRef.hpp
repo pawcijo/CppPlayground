@@ -32,9 +32,16 @@ Widget&& var1 = Widget(); // no type deduction;
                           // var1 is an rvalue reference
 )"}}};
     }
-    void ShowExample() override
+    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        PrintNotes();
+        if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);
+        }
     }
 
     void ShowDemo() override

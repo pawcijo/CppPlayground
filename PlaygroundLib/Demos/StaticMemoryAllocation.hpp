@@ -4,44 +4,64 @@
 #include "Common/DemoBase.hpp"
 
 #include <iostream>
-#include <vector>
 #include <utility>
+#include <vector>
 
 class StaticMemoryAllocationDemo : public DemoBase
 {
 public:
-    StaticMemoryAllocationDemo()
-    {
-        mName = "StaticMemoryAllocationDemo";
-        mNotes = {
-            {"Global Variables", "Variables declared outside of any function or class, accessible from any part of the program."},
-            {"Static Variables", "Variables declared with the static keyword inside a function or class. "
-                                 "These variables retain their value between function calls and are not reinitialized each time the function is called."},
-            {"Static Members of Classes", "In object-oriented languages like C++, static class members (both data and functions) are stored in the static memory area. "
-                                          "These members are shared across all instances of the class."},
-            {"String Literals and Constant Data", "In some programming languages, string literals and other constant data are also stored in the static memory area."}};
+  StaticMemoryAllocationDemo()
+  {
+    mName = "StaticMemoryAllocationDemo";
+    mNotes = {
+      { "Global Variables",
+        "Variables declared outside of any function or class, accessible from "
+        "any part of the program." },
+      { "Static Variables",
+        "Variables declared with the static keyword inside a function or "
+        "class. "
+        "These variables retain their value between function calls and are not "
+        "reinitialized each time the function is called." },
+      { "Static Members of Classes",
+        "In object-oriented languages like C++, static class members (both "
+        "data and functions) are stored in the static memory area. "
+        "These members are shared across all instances of the class." },
+      { "String Literals and Constant Data",
+        "In some programming languages, string literals and other constant "
+        "data are also stored in the static memory area." }
     };
-    ~StaticMemoryAllocationDemo() = default;
+  };
+  ~StaticMemoryAllocationDemo() = default;
 
-    void PrintNotes() override
+  void PrintNotes() override
+  {
+    PrintName();
+
+    for (const auto& pair : mNotes)
     {
-        PrintName();
-
-        for (const auto &pair : mNotes)
-        {
-            std::cout << BOLD_TEXT_START << pair.first << TEXT_FORMAT_CLEAR << std::endl
-                      << pair.second << std::endl
-                      << std::endl;
-        }
+      std::cout << BOLD_TEXT_START << pair.first << TEXT_FORMAT_CLEAR
+                << std::endl
+                << pair.second << std::endl
+                << std::endl;
     }
+  }
 
-    void ShowExample() override
+  void ShowExample(
+    void (*printNotesCallback)(NoteFormat& notes) = nullptr) override
+  {
+    if (nullptr == printNotesCallback)
     {
-        PrintNotes();
+      PrintNotes();
     }
-
-    void ShowDemo() override
+    else
     {
-        ShowExample();
-    };
+      printNotesCallback(mNotes);
+      ;
+    }
+  }
+
+  void ShowDemo() override
+  {
+    ShowExample(nullptr);
+  };
 };

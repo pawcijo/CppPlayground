@@ -22,7 +22,8 @@ public:
   {
     PrintName();
 
-    for (const auto& pair : mNotes) {
+    for (const auto& pair : mNotes)
+    {
       std::cout << BOLD_TEXT_START << pair.first << TEXT_FORMAT_CLEAR
                 << std::endl
                 << pair.second << std::endl
@@ -30,7 +31,20 @@ public:
     }
   }
 
-  void ShowExample() override { PrintNotes(); }
+  void ShowExample(void (*printNotesCallback)() = nullptr) override
+  {
+      if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
+  }
 
-  void ShowDemo() override { ShowExample(); };
+  void ShowDemo() override
+  {
+    ShowExample();
+  };
 };

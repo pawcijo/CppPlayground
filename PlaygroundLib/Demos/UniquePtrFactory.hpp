@@ -94,9 +94,16 @@ class UniquePtrFactoryDemo : public DemoBase
         mNotes = {{{"TODO write some notes"}, {}}};
     }
 
-    void ShowExample() override
+    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        PrintNotes();
+          if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
         UniquePtrFactoryExample();
     }
 

@@ -20,9 +20,18 @@ public:
     };
   }
 
-  void ShowExample() override
+  void ShowExample(
+    void (*printNotesCallback)(NoteFormat& notes) = nullptr) override
   {
-    PrintNotes();
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+      ;
+    }
 
     Example();
   }
@@ -35,10 +44,10 @@ private:
   void Example()
   {
     std::unique_ptr<MyOldClass> oldClass = std::make_unique<MyOldClass>();
-    std::unique_ptr<OldClassAdapter> adapter = std::make_unique<OldClassAdapter>(std::move(oldClass));
+    std::unique_ptr<OldClassAdapter> adapter =
+      std::make_unique<OldClassAdapter>(std::move(oldClass));
 
     ClientInterface& interface = *adapter;
     interface.doSomethingCool();
-
   }
 };

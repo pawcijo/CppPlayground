@@ -31,9 +31,16 @@ making them faster and more lightweight than alternatives like std::stringstream
         }
     }
 
-    void ShowExample() override
+    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        PrintNotes();
+          if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
         BasicExample();
         FloatingPointBonus();
         ErrorHandlingDemo();

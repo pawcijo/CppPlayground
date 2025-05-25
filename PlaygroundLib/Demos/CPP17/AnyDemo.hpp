@@ -52,9 +52,16 @@ at runtime without needing to specify a fixed type beforehand.)"}};
         }
     }
 
-    void ShowExample() override
+    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        PrintNotes();
+          if (nullptr == printNotesCallback)
+        {
+            PrintNotes();
+        }
+        else
+        {
+            printNotesCallback(mNotes);;
+        }
         BasicUsage();
         CheckValue();
         CastingError();
