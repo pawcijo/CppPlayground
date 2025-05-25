@@ -87,7 +87,7 @@ class ExceptionAndStackDemo : public DemoBase
     };
     ~ExceptionAndStackDemo() = default;
 
-    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
     if (nullptr == printNotesCallback)
     {
@@ -105,7 +105,7 @@ class ExceptionAndStackDemo : public DemoBase
         //ExceptionAndStackExampleNotCatch();
     }
 
-    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
         ShowExample(printNotesCallback);
     };

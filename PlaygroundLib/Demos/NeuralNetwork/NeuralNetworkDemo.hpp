@@ -23,7 +23,7 @@ The network is trained to learn the XOR function.)"}}};
     };
     ~NeuralNetworkDemo() = default;
 
-    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
     if (nullptr == printNotesCallback)
     {
@@ -58,7 +58,7 @@ The network is trained to learn the XOR function.)"}}};
             std::cout << data[0] << " " << data[1] << " => " << nn.feedforward(data) << "\n";
     }
 
-    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
         ShowExample(printNotesCallback);
     };

@@ -33,7 +33,7 @@ standard algorithms should be executed, enabling parallel and vectorized executi
         }
     }
 
-    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
     if (nullptr == printNotesCallback)
     {
@@ -46,7 +46,7 @@ standard algorithms should be executed, enabling parallel and vectorized executi
         BasicExample();
     }
 
-    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
         ShowExample(printNotesCallback);
     }

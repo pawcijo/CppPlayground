@@ -43,7 +43,7 @@ R"(1.Performance Overhead(std::unique_ptr and Memory locality is disrupted)
         }
     }
 
-    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
     if (nullptr == printNotesCallback)
     {
@@ -57,7 +57,7 @@ R"(1.Performance Overhead(std::unique_ptr and Memory locality is disrupted)
         LargeClass largeClass;
     }
 
-    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
         ShowExample(printNotesCallback);
     };

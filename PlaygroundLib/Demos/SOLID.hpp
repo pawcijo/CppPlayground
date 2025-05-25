@@ -285,7 +285,7 @@ class SOLID_Demo : public DemoBase
     };
     ~SOLID_Demo() = default;
 
-    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
     if (nullptr == printNotesCallback)
     {
@@ -311,7 +311,7 @@ class SOLID_Demo : public DemoBase
         DependencyInversionPrinciple();
     }
 
-    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
         ShowExample(printNotesCallback);
     };

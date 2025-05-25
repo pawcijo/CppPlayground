@@ -22,6 +22,7 @@ private slots:
     void onRunClicked();
 
 private:
+    void writeNotesToTerminal(NoteFormat& notes);
     Ui::MainWindow *ui;
     std::map<int, std::pair<DemoType, std::string>> demoMap;
     std::unique_ptr<DemoBase> demoInstance;

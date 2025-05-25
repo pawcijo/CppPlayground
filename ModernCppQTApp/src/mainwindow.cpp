@@ -3,6 +3,9 @@
 
 #include <QMessageBox>
 #include <QString>
+#include <QTextEdit>
+#include <QTextCursor>
+#include <QTextCharFormat>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -37,8 +40,28 @@ void MainWindow::onRunClicked() {
 
     demoInstance = DemoFactory::createDemo(type);
     if (demoInstance) {
-        demoInstance->ShowDemo();
+        // Pass the callback
+        demoInstance->ShowDemo([this](NoteFormat& notes) { writeNotesToTerminal(notes); });
     } else {
         QMessageBox::information(this, "Not Implemented", "This demo is not implemented yet.");
     }
+}
+
+void MainWindow::writeNotesToTerminal(NoteFormat& notes) {
+
+    std::cout<< "Writing notes to terminal output." << std::endl;
+    ui->terminalOutput->clear();
+    QTextCursor cursor(ui->terminalOutput->document());
+    for (const auto& pair : notes) {
+        // Bold for title
+        QTextCharFormat boldFormat;
+        boldFormat.setFontWeight(QFont::Bold);
+        cursor.insertText(QString::fromStdString(pair.first + "\n"), boldFormat);
+
+        // Color for description
+        QTextCharFormat descFormat;
+        descFormat.setForeground(QColor("#007acc")); // Example: blue
+        cursor.insertText(QString::fromStdString(pair.second + "\n\n"), descFormat);
+    }
+    ui->terminalOutput->moveCursor(QTextCursor::Start);
 }

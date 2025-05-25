@@ -27,7 +27,7 @@ Attributed to Scott Meyers, this singleton pattern exploits three important prop
   };
   ~SingletonDemo() = default;
 
-  void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+  void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
       if (nullptr == printNotesCallback)
         {
@@ -40,7 +40,7 @@ Attributed to Scott Meyers, this singleton pattern exploits three important prop
     Singleton::getInstance().doSomething();
   }
 
-  void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+  void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     ShowExample(printNotesCallback);
   };

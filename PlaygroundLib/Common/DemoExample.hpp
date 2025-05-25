@@ -43,8 +43,7 @@ public:
     }
   }
 
-  void ShowDemo(
-    void (*printNotesCallback)(NoteFormat& notes) = nullptr) override
+  void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     ShowExample(printNotesCallback);
   };

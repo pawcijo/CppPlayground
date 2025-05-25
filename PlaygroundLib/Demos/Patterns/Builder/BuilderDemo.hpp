@@ -26,7 +26,7 @@ It separates the construction of a complex object from its representation, allow
   };
   ~BuilderDemo() = default;
 
-  void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+  void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
       if (nullptr == printNotesCallback)
         {
@@ -83,7 +83,7 @@ It separates the construction of a complex object from its representation, allow
     pc_2->join();
   }
 
-  void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+  void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     ShowExample(printNotesCallback);
   };

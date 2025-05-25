@@ -5,6 +5,7 @@
 #include <ostream>
 
 #include "Common.hpp"
+#include <functional>
 
 
 class DemoBase
@@ -62,9 +63,9 @@ public:
     }
   }
 
-  virtual void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) = 0;
+  virtual void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) = 0;
 
-  virtual void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr)  = 0;
+  virtual void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr)  = 0;
 
 public:
   static long long object_counter;

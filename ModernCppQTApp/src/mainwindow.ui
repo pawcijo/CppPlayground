@@ -13,6 +13,19 @@
       <property name="text"><string>Run Selected Demo</string></property>
      </widget>
     </item>
+    <item>
+     <widget class="QTextEdit" name="terminalOutput">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="font">
+       <font>
+        <family>Monospace</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>

@@ -57,7 +57,7 @@ when forwarding them, because they’re only sometimes bound to rvalues." -  Eff
         LOG_END_FUNCTION();
     }
 
-    void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
     if (nullptr == printNotesCallback)
     {
@@ -86,7 +86,7 @@ when forwarding them, because they’re only sometimes bound to rvalues." -  Eff
                   << " call: " << someString << std::endl;
     }
 
-    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
+    void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
     {
         ShowExample(printNotesCallback);
     }
