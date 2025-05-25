@@ -31,20 +31,21 @@ public:
     }
   }
 
-  void ShowExample(void (*printNotesCallback)() = nullptr) override
+  void ShowExample(void (*printNotesCallback)(NoteFormat& notes) = nullptr) override
   {
-      if (nullptr == printNotesCallback)
-        {
-            PrintNotes();
-        }
-        else
-        {
-            printNotesCallback(mNotes);;
-        }
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+    }
   }
 
-  void ShowDemo() override
+  void ShowDemo(
+    void (*printNotesCallback)(NoteFormat& notes) = nullptr) override
   {
-    ShowExample();
+    ShowExample(printNotesCallback);
   };
 };

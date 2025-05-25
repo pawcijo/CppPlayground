@@ -38,21 +38,21 @@ a C-style string) without making a copy, improving performance in many scenarios
 
     void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-          if (nullptr == printNotesCallback)
-        {
-            PrintNotes();
-        }
-        else
-        {
-            printNotesCallback(mNotes);;
-        }
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+    }
         BasicExample();
         StringViewOperationsExample();
     }
 
-    void ShowDemo() override
+    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        ShowExample();
+        ShowExample(printNotesCallback);
     };
 
    private:

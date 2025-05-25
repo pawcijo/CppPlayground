@@ -92,21 +92,21 @@ public:
 
     void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-          if (nullptr == printNotesCallback)
-        {
-            PrintNotes();
-        }
-        else
-        {
-            printNotesCallback(mNotes);;
-        }
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+    }
         MoreAboutSharedPtrExample();
         // Uncomment to see the example
         //DontDoThatExample();
     }
 
-    void ShowDemo() override
+    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        ShowExample();
+        ShowExample(printNotesCallback);
     };
 };

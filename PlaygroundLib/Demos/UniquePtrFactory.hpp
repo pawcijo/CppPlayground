@@ -96,19 +96,19 @@ class UniquePtrFactoryDemo : public DemoBase
 
     void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-          if (nullptr == printNotesCallback)
-        {
-            PrintNotes();
-        }
-        else
-        {
-            printNotesCallback(mNotes);;
-        }
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+    }
         UniquePtrFactoryExample();
     }
 
-    void ShowDemo() override
+    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        ShowExample();
+        ShowExample(printNotesCallback);
     }
 };

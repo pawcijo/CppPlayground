@@ -34,7 +34,7 @@ It separates the construction of a complex object from its representation, allow
         }
         else
         {
-            printNotesCallback(mNotes);;
+            printNotesCallback(mNotes);
         }
 
     std::string name = "PC 1";
@@ -83,8 +83,8 @@ It separates the construction of a complex object from its representation, allow
     pc_2->join();
   }
 
-  void ShowDemo() override
+  void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
   {
-    ShowExample();
+    ShowExample(printNotesCallback);
   };
 };

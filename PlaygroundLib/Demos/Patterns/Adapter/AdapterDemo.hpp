@@ -30,14 +30,13 @@ public:
     else
     {
       printNotesCallback(mNotes);
-      ;
     }
 
     Example();
   }
-  void ShowDemo() override
+  void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
   {
-    ShowExample();
+    ShowExample(printNotesCallback);
   }
 
 private:

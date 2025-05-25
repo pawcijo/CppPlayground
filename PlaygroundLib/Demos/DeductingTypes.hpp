@@ -150,22 +150,22 @@ class DeductingTypesDemo : public DemoBase
 
     void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-          if (nullptr == printNotesCallback)
-        {
-            PrintNotes();
-        }
-        else
-        {
-            printNotesCallback(mNotes);;
-        }
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+    }
         UniveralTypeDemo();
         DecltypeDemo();
         PtrTypeTemplateDeductionDemo();
         PtrVsArrayDemo();
     }
 
-    void ShowDemo() override
+    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        ShowExample();
+        ShowExample(printNotesCallback);
     };
 };

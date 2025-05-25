@@ -64,7 +64,7 @@ public:
 
   virtual void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) = 0;
 
-  virtual void ShowDemo()  = 0;
+  virtual void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr)  = 0;
 
 public:
   static long long object_counter;

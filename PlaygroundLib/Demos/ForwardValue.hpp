@@ -59,14 +59,14 @@ when forwarding them, because they’re only sometimes bound to rvalues." -  Eff
 
     void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-          if (nullptr == printNotesCallback)
-        {
-            PrintNotes();
-        }
-        else
-        {
-            printNotesCallback(mNotes);;
-        }
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+    }
 
         MoveEmaple(std::make_unique<std::string>("Test"));
 
@@ -86,8 +86,8 @@ when forwarding them, because they’re only sometimes bound to rvalues." -  Eff
                   << " call: " << someString << std::endl;
     }
 
-    void ShowDemo() override
+    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        ShowExample();
+        ShowExample(printNotesCallback);
     }
 };

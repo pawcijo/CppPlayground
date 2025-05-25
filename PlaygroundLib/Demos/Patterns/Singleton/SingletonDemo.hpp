@@ -35,13 +35,13 @@ Attributed to Scott Meyers, this singleton pattern exploits three important prop
         }
         else
         {
-            printNotesCallback(mNotes);;
+            printNotesCallback(mNotes);
         }
     Singleton::getInstance().doSomething();
   }
 
-  void ShowDemo() override
+  void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
   {
-    ShowExample();
+    ShowExample(printNotesCallback);
   };
 };

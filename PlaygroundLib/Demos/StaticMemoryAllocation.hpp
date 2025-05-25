@@ -56,12 +56,12 @@ public:
     else
     {
       printNotesCallback(mNotes);
-      ;
     }
   }
 
-  void ShowDemo() override
+  void ShowDemo(
+    void (*printNotesCallback)(NoteFormat& notes) = nullptr) override
   {
-    ShowExample(nullptr);
+    ShowExample(printNotesCallback);
   };
 };

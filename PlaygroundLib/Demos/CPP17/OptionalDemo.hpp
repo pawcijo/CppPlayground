@@ -25,19 +25,19 @@ std::optional clearly expresses the absence of a value)"}};
 
     void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override {
        
-          if (nullptr == printNotesCallback)
-        {
-            PrintNotes();
-        }
-        else
-        {
-            printNotesCallback(mNotes);;
-        }
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+    }
         BasicExample();
     }
 
-    void ShowDemo() override {
-        ShowExample();
+    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override {
+        ShowExample(printNotesCallback);
     }
 
     private:

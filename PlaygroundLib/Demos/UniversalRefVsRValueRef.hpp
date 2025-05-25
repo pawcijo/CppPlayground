@@ -44,8 +44,8 @@ Widget&& var1 = Widget(); // no type deduction;
         }
     }
 
-    void ShowDemo() override
+    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        ShowExample();
+        ShowExample(printNotesCallback);
     }
 };

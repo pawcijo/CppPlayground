@@ -32,14 +32,14 @@ code that depends on them.)"}};
 
     void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-          if (nullptr == printNotesCallback)
-        {
-            PrintNotes();
-        }
-        else
-        {
-            printNotesCallback(mNotes);;
-        }
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+    }
         BasicExample();
         ShowMemoryResource();
         ManuallyResetMemoryResource();
@@ -51,9 +51,9 @@ code that depends on them.)"}};
         DemoMultithreading();              // Demonstr
     }
 
-    void ShowDemo() override
+    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        ShowExample();
+        ShowExample(printNotesCallback);
     }
 
     void BasicExample()

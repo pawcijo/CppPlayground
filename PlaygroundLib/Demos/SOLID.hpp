@@ -287,14 +287,14 @@ class SOLID_Demo : public DemoBase
 
     void ShowExample(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-          if (nullptr == printNotesCallback)
-        {
-            PrintNotes();
-        }
-        else
-        {
-            printNotesCallback(mNotes);;
-        }
+    if (nullptr == printNotesCallback)
+    {
+      PrintNotes();
+    }
+    else
+    {
+      printNotesCallback(mNotes);
+    }
 
         // clang-format off
         std::cout << CYAN_BOLD_TEXT_START <<   "S" << TEXT_COLOR_CLEAR 
@@ -311,8 +311,8 @@ class SOLID_Demo : public DemoBase
         DependencyInversionPrinciple();
     }
 
-    void ShowDemo() override
+    void ShowDemo(void(*printNotesCallback)(NoteFormat& notes) = nullptr) override
     {
-        ShowExample();
+        ShowExample(printNotesCallback);
     };
 };
