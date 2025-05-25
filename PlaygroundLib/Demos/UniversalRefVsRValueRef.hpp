@@ -36,4 +36,9 @@ Widget&& var1 = Widget(); // no type deduction;
     {
         PrintNotes();
     }
+
+    void ShowDemo() override
+    {
+        ShowExample();
+    }
 };

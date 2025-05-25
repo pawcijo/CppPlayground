@@ -42,7 +42,7 @@ public:
   */
   virtual void PrintName()
   {
-    std::cout << "\033[1;35m" << mName << "\033[0m "
+    std::cout << MAGENTA_BOLD_TEXT_START << mName << "\033[0m "
               << ": \n"
               << std::endl;
   }
@@ -62,7 +62,7 @@ public:
 
   virtual void ShowExample() = 0;
 
-  virtual void ShowDemo() { ShowExample(); };
+  virtual void ShowDemo()  = 0;
 
 public:
   static long long object_counter;

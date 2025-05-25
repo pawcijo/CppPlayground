@@ -8,13 +8,14 @@
 #include <vector>
 #include <functional>
 
-#define LOG_FUNCTION_NAME(color) printf("\n\033[1;%sm%s:\033[0m\n", color, __FUNCTION__)
-
 #define LOG_START_FUNCTION() \
     printf("\n%s: - - - - - - - - - -  Start - - - - - - - - -\n", __FUNCTION__)
 
 #define LOG_END_FUNCTION() \
     printf("%s: - - - - - - - - - -  End - - - - - - - - - -\n\n", __FUNCTION__)
+
+#ifdef CONSOLE_LOG_FORMATTER
+#define LOG_FUNCTION_NAME(color) printf("\n\033[1;%sm%s:\033[0m\n", color, __FUNCTION__)
 
 #define BOLD_TEXT_START "\033[1;37m"
 #define BOLD_RED_BOLD_TEXT_START "\033[1;31m"
@@ -29,6 +30,7 @@
 #define RED_BOLD_TEXT_START "\033[1;31m"
 #define CYAN_BOLD_TEXT_START "\033[1;36m"
 #define GREEN_BOLD_TEXT_START "\033[1;32m"
+#define MAGENTA_BOLD_TEXT_START "\033[1;35m"
 
 #define YELLOW_TEXT_START "\033[33m"
 #define BLUE_TEXT_START "\033[34m"
@@ -36,15 +38,46 @@
 #define CYAN_TEXT_START "\033[36m"
 #define GREEN_TEXT_START "\033[32m"
 
-
 #define YELLOW "33"
 #define BLUE "34"
 #define RED "31"
 #define CYAN "36"
 #define GREEN "32"
 #define WHITE "37"
-
 #define TEXT_COLOR_CLEAR "\033[0m"
+#else
+#define LOG_FUNCTION_NAME(color) printf("\n%s\n", __FUNCTION__)
+
+#define BOLD_TEXT_START ""
+#define BOLD_RED_BOLD_TEXT_START ""
+
+#define ITALIC_TEXT_START ""
+#define BOLD_ITALIC_TEXT_START ""
+
+#define TEXT_FORMAT_CLEAR ""
+
+#define YELLOW_BOLD_TEXT_START ""
+#define BLUE_BOLD_TEXT_START ""
+#define RED_BOLD_TEXT_START ""
+#define CYAN_BOLD_TEXT_START ""
+#define GREEN_BOLD_TEXT_START ""
+#define MAGENTA_BOLD_TEXT_START ""
+
+#define YELLOW_TEXT_START ""
+#define BLUE_TEXT_START ""
+#define RED_TEXT_START ""
+#define CYAN_TEXT_START ""
+#define GREEN_TEXT_START ""
+
+#define YELLOW ""
+#define BLUE ""
+#define RED ""
+#define CYAN ""
+#define GREEN ""
+#define WHITE ""
+#define TEXT_COLOR_CLEAR ""
+
+#endif// CONSOLE_LOG_FORMATTER
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
