@@ -10,6 +10,8 @@
 // This variant
 #include <variant>
 
+#include  <cstring>
+
 // TODO
 class VariantDemo : public DemoBase
 {
