@@ -9,6 +9,53 @@
      <widget class="QComboBox" name="demoSelector"/>
     </item>
     <item>
+     <widget class="QGroupBox" name="tagGroupBox">
+      <property name="title">
+       <string>Filter by Tag</string>
+      </property>
+      <layout class="QHBoxLayout">
+       <item>
+        <widget class="QCheckBox" name="tagCommon">
+         <property name="text">
+          <string>Common</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="tagDesignPatterns">
+         <property name="text">
+          <string>DesignPatterns</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="tagCPP17">
+         <property name="text">
+          <string>CPP17</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="tagCPP20">
+         <property name="text">
+          <string>CPP20</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="tagNeuralNetwork">
+         <property name="text">
+          <string>NeuralNetwork</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="runButton">
       <property name="text"><string>Run Selected Demo</string></property>
      </widget>

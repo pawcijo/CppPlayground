@@ -20,11 +20,14 @@ public:
 
 private slots:
     void onRunClicked();
-    void onClearClicked(); // Add this line
+    void onClearClicked();
+    void onTagFilterChanged(); // Add this line
 
 private:
     void writeNotesToTerminal(NoteFormat& notes);
+    void updateDemoSelector(); // Add this line
     Ui::MainWindow *ui;
     std::map<int, std::pair<DemoType, std::string>> demoMap;
     std::unique_ptr<DemoBase> demoInstance;
+    std::map<int, std::pair<DemoType, std::string>> filteredDemoMap; // Add this line
 };
