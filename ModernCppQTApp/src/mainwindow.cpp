@@ -18,8 +18,8 @@ MainWindow::MainWindow(QWidget* parent)
   int id = 1;
   for (const auto& [demoType, pair] : rawMap)
   {
-    demoMap[id] = { demoType, pair.second };
-    ui->demoSelector->addItem(QString::fromStdString(pair.second), id);
+    demoMap[id] = { demoType, std::get<1>(pair) };
+    ui->demoSelector->addItem(QString::fromStdString(std::get<1>(pair)), id);
     ++id;
   }
 

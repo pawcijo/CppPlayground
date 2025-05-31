@@ -5,7 +5,6 @@
 
 #include <iostream>
 #include <utility>
-#include <vector>
 
 const NoteFormat controlBlockNotes = {
   { { "when Control block is created:" }, {} },
