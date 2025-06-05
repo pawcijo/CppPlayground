@@ -8,6 +8,7 @@
 #include "CommonDemos.h" // IWYU pragma: keep
 
 // Design patterns
+#include "Demos/CPP20/SemaphoreDemo.hpp"
 #include "Demos/Patterns/Adapter/AdapterDemo.hpp"
 #include "Demos/Patterns/Builder/BuilderDemo.hpp"
 #include "Demos/Patterns/Pimpl.hpp"
@@ -25,6 +26,7 @@
 
 // C++ 20
 #include "Demos/CPP20/BitDemo.hpp"
+#include "Demos/CPP20/SemaphoreDemo.hpp"
 
 // Other
 #include "Demos/NeuralNetwork/NeuralNetworkDemo.hpp"
@@ -72,6 +74,7 @@ enum class DemoType : int
   BuilderDemo,
   AdapterDemo,
   BitDemo,
+  SemaphoreDemo,
   Count
 };
 
@@ -320,7 +323,12 @@ public:
           DemoCreatorWithNameAndTags([]()
                                      { return std::make_unique<BitDemo>(); },
                                      "BitDemo",
-                                     { DemoTag::CPP20 }) }
+                                     { DemoTag::CPP20 }) },
+        { DemoType::SemaphoreDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<SemaphoreDemo>(); },
+            "SemaphoreDemo",
+            { DemoTag::CPP20 }) }
       };
     return demoMap;
   }

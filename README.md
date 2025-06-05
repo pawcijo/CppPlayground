@@ -55,7 +55,7 @@ make
 
 
 #### C++20:
-- bit
+- ~~bit~~
 - compare
 - concepts
 - coroutine
@@ -68,5 +68,5 @@ make
 - version
 - barrier
 - latch
-- semaphore
+- ~~semaphore~~
 - stop_token 
