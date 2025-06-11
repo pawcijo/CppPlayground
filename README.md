@@ -57,6 +57,10 @@ make
 #### C++20:
 - ~~bit~~
 - compare
+    - ~~strong_ordering~~
+    - ~~weak_ordering~~
+    - ~~partial_ordering~~
+
 - concepts
 - coroutine
 - format
