@@ -28,6 +28,7 @@
 #include "Demos/CPP20/BitDemo.hpp"
 #include "Demos/CPP20/SemaphoreDemo.hpp"
 #include "Demos/CPP20/CompareDemo.hpp"
+#include "Demos/CPP20/PredicateDemo.hpp"
 
 // Other
 #include "Demos/NeuralNetwork/NeuralNetworkDemo.hpp"
@@ -77,6 +78,7 @@ enum class DemoType : int
   BitDemo,
   SemaphoreDemo,
   CompareDemo,
+  PredicateDemo,
   Count
 };
 
@@ -335,6 +337,11 @@ public:
           DemoCreatorWithNameAndTags(
             []() { return std::make_unique<CompareDemo>(); },
             "CompareDemo",
+            { DemoTag::CPP20 }) },
+        { DemoType::PredicateDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<PredicateDemo>(); },
+            "PredicateDemo",
             { DemoTag::CPP20 }) }
       };
     return demoMap;

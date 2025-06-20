@@ -60,8 +60,8 @@ make
     - ~~strong_ordering~~
     - ~~weak_ordering~~
     - ~~partial_ordering~~
-
 - concepts
+    - predicate
 - coroutine
 - format
 - numbers
