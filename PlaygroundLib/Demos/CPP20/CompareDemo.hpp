@@ -2,6 +2,7 @@
 #include "Common/Common.hpp"
 #include "Common/DemoBase.hpp"
 
+#include <cmath>
 #include <compare>
 
 class CompareDemo : public DemoBase
