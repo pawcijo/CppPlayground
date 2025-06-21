@@ -20,6 +20,9 @@
 #define LOG_END_FUNCTION()                                                     \
   printf("%s: - - - - - - - - - -  End - - - - - - - - - -\n\n", __FUNCTION__)
 
+  #define LOG_MSG_FUNCTION(msg)                                                     \
+  printf("%s:%s \n\n", __FUNCTION__, msg)
+
 // Function to demangle class names for better readability in logs
 #if defined(__GNUG__)
 #include <cstdlib>

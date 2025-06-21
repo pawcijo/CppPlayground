@@ -61,7 +61,7 @@ make
     - ~~weak_ordering~~
     - ~~partial_ordering~~
 - concepts
-    - predicate
+    - ~~predicate~~
 - coroutine
 - format
 - numbers

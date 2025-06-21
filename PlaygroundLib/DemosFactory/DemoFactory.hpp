@@ -8,7 +8,6 @@
 #include "CommonDemos.h" // IWYU pragma: keep
 
 // Design patterns
-#include "Demos/CPP20/SemaphoreDemo.hpp"
 #include "Demos/Patterns/Adapter/AdapterDemo.hpp"
 #include "Demos/Patterns/Builder/BuilderDemo.hpp"
 #include "Demos/Patterns/Pimpl.hpp"
@@ -26,9 +25,10 @@
 
 // C++ 20
 #include "Demos/CPP20/BitDemo.hpp"
-#include "Demos/CPP20/SemaphoreDemo.hpp"
 #include "Demos/CPP20/CompareDemo.hpp"
+#include "Demos/CPP20/CorutineDemo.hpp"
 #include "Demos/CPP20/PredicateDemo.hpp"
+#include "Demos/CPP20/SemaphoreDemo.hpp"
 
 // Other
 #include "Demos/NeuralNetwork/NeuralNetworkDemo.hpp"
@@ -79,6 +79,7 @@ enum class DemoType : int
   SemaphoreDemo,
   CompareDemo,
   PredicateDemo,
+  CorutineDemo,
   Count
 };
 
@@ -95,7 +96,7 @@ enum class DemoTag : int
 #define ENUM_TO_STRING(name) #name
 /*
 This is also design pattern. :)
-Abstract factory as BaseDemo is form of abstraction.
+Abstract factory as BaseDemo is a form of abstraction.
 */
 class DemoFactory
 {
@@ -112,7 +113,8 @@ public:
     const auto& it = getDemoMap().find(chosenDemo);
     if (it != getDemoMap().end())
     {
-      return std::get<0>(it->second)(); // Call the associated lambda function to create the object
+      return std::get<0>(it->second)(); // Call the associated lambda function
+                                        // to create the object
     }
     return nullptr;
   }
@@ -342,7 +344,12 @@ public:
           DemoCreatorWithNameAndTags(
             []() { return std::make_unique<PredicateDemo>(); },
             "PredicateDemo",
-            { DemoTag::CPP20 }) }
+            { DemoTag::CPP20 }) },
+        { DemoType::CorutineDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<CoroutineDemo>(); },
+            "CoroutineDemo",
+            { DemoTag::CPP20,DemoTag::DesignPatterns }) },
       };
     return demoMap;
   }
