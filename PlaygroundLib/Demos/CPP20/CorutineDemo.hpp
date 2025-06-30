@@ -5,6 +5,8 @@
 
 #include <coroutine>
 
+#include <cstdint>
+
 namespace
 {
 class Generator
@@ -15,8 +17,9 @@ public:
 
   struct promise_type
   {
-    int current_value;
-    std::suspend_always yield_value(int value)
+    unsigned long long current_value; // unsigned long long to hold the value 
+                                      // uint64_t could also work
+    std::suspend_always yield_value(unsigned long long value)
     {
       current_value = value;
       return {};
@@ -66,7 +69,7 @@ public:
     return !coro.done();
   }
 
-  int value() const
+  unsigned long long value() const
   {
     return coro.promise().current_value;
   }
@@ -100,9 +103,9 @@ public:
         "A type that always suspends the execution of a coroutine." },
       { "std::suspend_never",
         "A type that never suspends the execution of a coroutine." },
-        { "Why to use coroutines?",
-          "Coroutines allow writing asynchronous code in a more "
-          "synchronous style, making it easier to read and maintain."
+      { "Why to use coroutines?",
+        "Coroutines allow writing asynchronous code in a more "
+        "synchronous style, making it easier to read and maintain."
         "You could generate an infinite calls without using infinite memory." },
     };
   }
@@ -125,6 +128,7 @@ public:
     // Add coroutine examples here
     // For example, you can create a simple generator coroutine
     CoroutineExample();
+    FibonacciExample();
 
     LOG_END_FUNCTION_CLASS();
   }
@@ -160,4 +164,32 @@ public:
 
     LOG_END_FUNCTION();
   };
+
+  void FibonacciExample()
+  {
+    LOG_START_FUNCTION();
+    // Example of a Fibonacci coroutine
+    Generator fibonacci = [](int n) -> Generator
+    {
+      unsigned long long a = 0, b = 1;
+      for (int i = 0; i < n; ++i)
+      {
+        co_yield a;
+        unsigned long long next = a + b;
+        a = b;
+        b = next;
+      }
+    }(50);
+
+    int counter = 0;
+    while (fibonacci.next())
+    {
+
+      std::cout << "Fibonacci value for " << counter << ":" << fibonacci.value()
+                << '\n';
+      counter++;
+    }
+
+    LOG_END_FUNCTION();
+  }
 };
