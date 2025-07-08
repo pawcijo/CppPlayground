@@ -10,34 +10,10 @@
 
 namespace WeakPtrVsShared
 {
-const std::vector<std::pair<std::string, std::string>> Notes = {
-  { { "Purpose" },
-    "A std::weak_ptr is a smart pointer that does not own the object it points "
-    "to.\n"
-    "Instead, it provides a way to observe or temporarily access an object "
-    "that is\n"
-    "managed by one or more std::shared_ptrs, without contributing to the "
-    "reference count.\n" },
-  { { "No Reference Count" },
-    { "A std::weak_ptr does not affect the reference count of the shared_ptr "
-      "it refers to. This \n"
-      "helps avoid circular references (a situation where two or more "
-      "shared_ptrs reference each other, \n"
-      "preventing the reference count from ever reaching zero and causing "
-      "memory leaks). \n" } },
-  { { "Expiration" },
-    { "Since a std::weak_ptr does not own the object, it can become expired "
-      "when the last std::shared_ptr \n"
-      "holding the object is destroyed. Before accessing the object, you must "
-      "check if the weak_ptr \n"
-      "is valid (i.e., the object still exists) by using .lock(), which "
-      "returns \n"
-      "a shared_ptr if the object is still alive. \n" } }
-};
 
-inline void PrintCustomNote()
+inline void PrintCustomNote(auto& notes)
 {
-  for (const auto& pair : Notes)
+  for (const auto& pair : notes)
   {
     std::cout << BOLD_TEXT_START << pair.first << ": " << TEXT_FORMAT_CLEAR
               << pair.second << std::endl;
@@ -101,17 +77,45 @@ public:
   WeakPtrVsSharedPtrDemo()
   {
     mName = "WeakPtrVsSharedPtrDemo";
-    mNotes = {};
+    mNotes = {
+      { { "Purpose" },
+        "A std::weak_ptr is a smart pointer that does not own the object it "
+        "points "
+        "to.\n"
+        "Instead, it provides a way to observe or temporarily access an object "
+        "that is\n"
+        "managed by one or more std::shared_ptrs, without contributing to the "
+        "reference count.\n" },
+      { { "No Reference Count" },
+        { "A std::weak_ptr does not affect the reference count of the "
+          "shared_ptr "
+          "it refers to. This \n"
+          "helps avoid circular references (a situation where two or more "
+          "shared_ptrs reference each other, \n"
+          "preventing the reference count from ever reaching zero and causing "
+          "memory leaks). \n" } },
+      { { "Expiration" },
+        { "Since a std::weak_ptr does not own the object, it can become "
+          "expired "
+          "when the last std::shared_ptr \n"
+          "holding the object is destroyed. Before accessing the object, you "
+          "must "
+          "check if the weak_ptr \n"
+          "is valid (i.e., the object still exists) by using .lock(), which "
+          "returns \n"
+          "a shared_ptr if the object is still alive. \n" } }
+    };
   };
   ~WeakPtrVsSharedPtrDemo() = default;
 
   void PrintNotes() override
   {
     PrintName();
-    WeakPtrVsShared::PrintCustomNote();
+    WeakPtrVsShared::PrintCustomNote(mNotes);
   }
 
-  void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
+  void ShowExample(
+    std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     if (nullptr == printNotesCallback)
     {
@@ -124,7 +128,8 @@ public:
     WeakPtrVsSharedPtrExample();
   }
 
-  void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
+  void ShowDemo(
+    std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     ShowExample(printNotesCallback);
   };
