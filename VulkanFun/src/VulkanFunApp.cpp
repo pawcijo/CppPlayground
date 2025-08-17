@@ -1,8 +1,14 @@
 #include "VulkanFunApp.hpp"
 
-#include <iostream>
 #include <cstring>
 #include <cstdlib>
+
+#include "VulkanValidation.hpp"
+#include "temporary.hpp"
+
+#include <vector>
+#include <stdexcept>
+#include <chrono>
 
 VulkanFunApp::VulkanFunApp()
   : window(new VulkanWindow())

@@ -2,13 +2,7 @@
 
 #include "VulkanWindow.hpp"
 #include "VulkanPipeline.hpp"
-#include "VulkanValidation.hpp"
-#include "VulkanUtils.hpp"
-#include "temporary.hpp"
 
-#include <vector>
-#include <stdexcept>
-#include <chrono>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
