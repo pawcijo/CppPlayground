@@ -11,4 +11,5 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_subdirectory(PlaygroundLib)
 add_subdirectory(tests)
 add_subdirectory(ModernCppQTApp)
+add_subdirectory(VulkanFun)
 

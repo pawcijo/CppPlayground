@@ -4,3 +4,15 @@
 [submodule "external/ImGui"]
 	path = external/ImGui
 	url = https://github.com/ocornut/imgui.git
+[submodule "VulkanFun/external/glfw"]
+	path = VulkanFun/external/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "VulkanFun/external/glm"]
+	path = VulkanFun/external/glm
+	url = https://github.com/icaven/glm.git
+[submodule "VulkanFun/external/imgui"]
+	path = VulkanFun/external/imgui
+	url = https://github.com/ocornut/imgui
+[submodule "VulkanFun/external/tinyxml2"]
+	path = VulkanFun/external/tinyxml2
+	url = https://github.com/leethomason/tinyxml2.git
