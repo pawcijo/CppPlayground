@@ -59,6 +59,7 @@ add_executable(${PROJECT_NAME}
 	main.cpp
 	src/VulkanUtils.cpp
 	src/VulkanPipeline.cpp
+	src/VulkanWindow.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

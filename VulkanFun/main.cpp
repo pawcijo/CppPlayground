@@ -23,46 +23,29 @@
 #include "VulkanValidation.hpp"
 #include "temporary.hpp"
 
+#include "VulkanWindow.hpp"
 class VulkanFunApp
 {
 public:
+  VulkanFunApp()
+    : window(new VulkanWindow())
+    , pipeline(nullptr)
+  {
+  }
+
   void run()
   {
-    initWindow();
-    pipeline = new VulkanPipeline(*window);
+    pipeline = new VulkanPipeline(*window->window);
     initVulkan();
     mainLoop();
     cleanup();
   }
 
 private:
-  GLFWwindow* window;
+  VulkanWindow* window;
   VulkanPipeline* pipeline;
 
   uint32_t currentFrame = 0;
-
-  bool framebufferResized = false;
-
-  void initWindow()
-  {
-    glfwInit();
-
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-
-    window =
-      glfwCreateWindow(WIDTH, HEIGHT, "Vulkan fun app", nullptr, nullptr);
-    glfwSetWindowUserPointer(window, this);
-    glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
-  }
-
-  static void framebufferResizeCallback(GLFWwindow* window,
-                                        int width,
-                                        int height)
-  {
-    auto app =
-      reinterpret_cast<VulkanFunApp*>(glfwGetWindowUserPointer(window));
-    app->framebufferResized = true;
-  }
 
   void initVulkan()
   {
@@ -71,7 +54,7 @@ private:
 
   void mainLoop()
   {
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window->window))
     {
       glfwPollEvents();
       drawFrame();
@@ -136,19 +119,15 @@ private:
 
     vkDestroySurfaceKHR(pipeline->instance, pipeline->surface, nullptr);
     vkDestroyInstance(pipeline->instance, nullptr);
-
-    glfwDestroyWindow(window);
-
-    glfwTerminate();
   }
 
   void recreateSwapChain()
   {
     int width = 0, height = 0;
-    glfwGetFramebufferSize(window, &width, &height);
+    glfwGetFramebufferSize(window->window, &width, &height);
     while (width == 0 || height == 0)
     {
-      glfwGetFramebufferSize(window, &width, &height);
+      glfwGetFramebufferSize(window->window, &width, &height);
       glfwWaitEvents();
     }
 
@@ -351,9 +330,9 @@ private:
     result = vkQueuePresentKHR(pipeline->presentQueue, &presentInfo);
 
     if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
-        framebufferResized)
+        window->framebufferResized)
     {
-      framebufferResized = false;
+      window->framebufferResized = false;
       recreateSwapChain();
     }
     else if (result != VK_SUCCESS)
