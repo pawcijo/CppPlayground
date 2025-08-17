@@ -58,6 +58,7 @@ set(IMGUI_DIR external/imgui/)
 add_executable(${PROJECT_NAME} 
 	main.cpp
 	src/VulkanUtils.cpp
+	src/VulkanPipeline.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
