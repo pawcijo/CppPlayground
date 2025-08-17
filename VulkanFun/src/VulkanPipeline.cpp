@@ -11,7 +11,10 @@
 
 #include <string.h>
 
+#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+
+
 
 VkImageView VulkanPipeline::createImageView(VkImage image, VkFormat format)
 {
