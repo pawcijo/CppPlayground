@@ -4,3 +4,4 @@ CompileFlags:
     - -I/opt/homebrew/opt/qt/include/QtCore
     - -I/opt/homebrew/opt/qt/include/QtWidgets
     - -I./Build/ModernCppQTApp/ModernCppQTApp_autogen/include
+    - -I./VulkanFun/external/glm/glm

@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 find_package(Vulkan REQUIRED)
 
 set(CMAKE_LIBRARY_PATH ${CMAKE_INSTALL_PREFIX}/lib)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_DEBUG_POSTFIX d)
 
 add_subdirectory (external)
@@ -37,7 +38,6 @@ set(ALL_LIBS
 	${OPENGL_LIBRARY}
 	Vulkan::Vulkan
 	glfw
-	GLEW
 	${SDL2_LIBRARIES}
 	tinyxml2
 	pthread
@@ -49,7 +49,6 @@ add_definitions(
 	-DTW_STATIC
 	-DTW_NO_LIB_PRAGMA
 	-DTW_NO_DIRECT3D
-	-DGLEW_STATIC
 	-D_CRT_SECURE_NO_WARNINGS
 )
 
