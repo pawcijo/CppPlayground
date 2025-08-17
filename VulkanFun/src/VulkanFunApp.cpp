@@ -37,49 +37,7 @@ void VulkanFunApp::cleanup()
 {
   pipeline->cleanupSwapChain();
 
-  vkDestroyPipeline(pipeline->device, pipeline->graphicsPipeline, nullptr);
-  vkDestroyPipelineLayout(pipeline->device, pipeline->pipelineLayout, nullptr);
-  vkDestroyRenderPass(pipeline->device, pipeline->renderPass, nullptr);
-
-  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
-  {
-    vkDestroyBuffer(pipeline->device, pipeline->uniformBuffers[i], nullptr);
-    vkFreeMemory(pipeline->device, pipeline->uniformBuffersMemory[i], nullptr);
-  }
-
-  vkDestroyDescriptorPool(pipeline->device, pipeline->descriptorPool, nullptr);
-  vkDestroySampler(pipeline->device, pipeline->textureSampler, nullptr);
-  vkDestroyImageView(pipeline->device, pipeline->textureImageView, nullptr);
-
-  vkDestroyImage(pipeline->device, pipeline->textureImage, nullptr);
-  vkFreeMemory(pipeline->device, pipeline->textureImageMemory, nullptr);
-
-  vkDestroyDescriptorSetLayout(pipeline->device, pipeline->descriptorSetLayout, nullptr);
-
-  vkDestroyBuffer(pipeline->device, pipeline->indexBuffer, nullptr);
-  vkFreeMemory(pipeline->device, pipeline->indexBufferMemory, nullptr);
-
-  vkDestroyBuffer(pipeline->device, pipeline->vertexBuffer, nullptr);
-  vkFreeMemory(pipeline->device, pipeline->vertexBufferMemory, nullptr);
-
-  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
-  {
-    vkDestroySemaphore(pipeline->device, pipeline->renderFinishedSemaphores[i], nullptr);
-    vkDestroySemaphore(pipeline->device, pipeline->imageAvailableSemaphores[i], nullptr);
-    vkDestroyFence(pipeline->device, pipeline->inFlightFences[i], nullptr);
-  }
-
-  vkDestroyCommandPool(pipeline->device, pipeline->commandPool, nullptr);
-  vkDestroyDevice(pipeline->device, nullptr);
-
-  if (enableValidationLayers)
-  {
-    VulkanValidation::DestroyDebugUtilsMessengerEXT(
-      pipeline->instance, pipeline->debugMessenger, nullptr);
-  }
-
-  vkDestroySurfaceKHR(pipeline->instance, pipeline->surface, nullptr);
-  vkDestroyInstance(pipeline->instance, nullptr);
+  pipeline->DestroyPipeline();
 }
 
 void VulkanFunApp::recreateSwapChain()
