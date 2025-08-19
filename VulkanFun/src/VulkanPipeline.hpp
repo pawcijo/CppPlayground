@@ -3,12 +3,12 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
+#include "VulkanValidation.hpp"
 #include <vector>
 #include <vulkan/vulkan_core.h>
-#include "VulkanValidation.hpp"
 
-#include "temporary.hpp"
 #include "VulkanUtils.hpp"
+#include "temporary.hpp"
 
 class VulkanFunApp;
 class VulkanPipeline
@@ -23,50 +23,49 @@ public:
 
   void DestroyPipeline()
   {
-      vkDestroyPipeline( device,  graphicsPipeline, nullptr);
-  vkDestroyPipelineLayout( device,  pipelineLayout, nullptr);
-  vkDestroyRenderPass( device,  renderPass, nullptr);
+    vkDestroyPipeline(device, graphicsPipeline, nullptr);
+    vkDestroyPipelineLayout(device, pipelineLayout, nullptr);
+    vkDestroyRenderPass(device, renderPass, nullptr);
 
-  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
-  {
-    vkDestroyBuffer( device,  uniformBuffers[i], nullptr);
-    vkFreeMemory( device,  uniformBuffersMemory[i], nullptr);
-  }
+    for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+    {
+      vkDestroyBuffer(device, uniformBuffers[i], nullptr);
+      vkFreeMemory(device, uniformBuffersMemory[i], nullptr);
+    }
 
-  vkDestroyDescriptorPool( device,  descriptorPool, nullptr);
-  vkDestroySampler( device,  textureSampler, nullptr);
-  vkDestroyImageView( device,  textureImageView, nullptr);
+    vkDestroyDescriptorPool(device, descriptorPool, nullptr);
+    vkDestroySampler(device, textureSampler, nullptr);
+    vkDestroyImageView(device, textureImageView, nullptr);
 
-  vkDestroyImage( device,  textureImage, nullptr);
-  vkFreeMemory( device,  textureImageMemory, nullptr);
+    vkDestroyImage(device, textureImage, nullptr);
+    vkFreeMemory(device, textureImageMemory, nullptr);
 
-  vkDestroyDescriptorSetLayout( device,  descriptorSetLayout, nullptr);
+    vkDestroyDescriptorSetLayout(device, descriptorSetLayout, nullptr);
 
-  vkDestroyBuffer( device,  indexBuffer, nullptr);
-  vkFreeMemory( device,  indexBufferMemory, nullptr);
+    vkDestroyBuffer(device, indexBuffer, nullptr);
+    vkFreeMemory(device, indexBufferMemory, nullptr);
 
-  vkDestroyBuffer( device,  vertexBuffer, nullptr);
-  vkFreeMemory( device,  vertexBufferMemory, nullptr);
+    vkDestroyBuffer(device, vertexBuffer, nullptr);
+    vkFreeMemory(device, vertexBufferMemory, nullptr);
 
-  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
-  {
-    vkDestroySemaphore( device,  renderFinishedSemaphores[i], nullptr);
-    vkDestroySemaphore( device,  imageAvailableSemaphores[i], nullptr);
-    vkDestroyFence( device,  inFlightFences[i], nullptr);
-  }
+    for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+    {
+      vkDestroySemaphore(device, renderFinishedSemaphores[i], nullptr);
+      vkDestroySemaphore(device, imageAvailableSemaphores[i], nullptr);
+      vkDestroyFence(device, inFlightFences[i], nullptr);
+    }
 
-  vkDestroyCommandPool( device,  commandPool, nullptr);
-  vkDestroyDevice( device, nullptr);
+    vkDestroyCommandPool(device, commandPool, nullptr);
+    vkDestroyDevice(device, nullptr);
 
-  if (enableValidationLayers)
-  {
-    VulkanValidation::DestroyDebugUtilsMessengerEXT(
-       instance,  debugMessenger, nullptr);
-  }
+    if (enableValidationLayers)
+    {
+      VulkanValidation::DestroyDebugUtilsMessengerEXT(
+        instance, debugMessenger, nullptr);
+    }
 
-  vkDestroySurfaceKHR( instance,  surface, nullptr);
-  vkDestroyInstance( instance, nullptr);
-
+    vkDestroySurfaceKHR(instance, surface, nullptr);
+    vkDestroyInstance(instance, nullptr);
   }
 
   void cleanupSwapChain();
@@ -122,6 +121,11 @@ private:
   std::vector<VkSemaphore> renderFinishedSemaphores;
   std::vector<VkFence> inFlightFences;
 
+  // Depth buffer
+  VkImage depthImage;
+  VkDeviceMemory depthImageMemory;
+  VkImageView depthImageView;
+
   void createInstance();
 
   void setupDebugMessenger();
@@ -135,6 +139,7 @@ private:
   void createGraphicsPipeline();
   void createFramebuffers();
   void createCommandPool();
+  void createDepthResources();
   void createTextureImage();
   void createTextureImageView();
   void createTextureSampler();
@@ -146,7 +151,13 @@ private:
   void createCommandBuffers();
   void createSyncObjects();
 
-  VkImageView createImageView(VkImage image, VkFormat format);
+  VkImageView createImageView(VkImage image, VkFormat format,VkImageAspectFlags aspectFlags);
+
+  VkFormat findSupportedFormat(const std::vector<VkFormat>& candidates,
+                             VkImageTiling tiling,
+                             VkFormatFeatureFlags features);
+
+  VkFormat findDepthFormat();
 
   friend class VulkanFunApp;
 };

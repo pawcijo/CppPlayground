@@ -1,14 +1,14 @@
 #include "VulkanFunApp.hpp"
 
-#include <cstring>
 #include <cstdlib>
+#include <cstring>
 
 #include "VulkanValidation.hpp"
 #include "temporary.hpp"
 
-#include <vector>
-#include <stdexcept>
 #include <chrono>
+#include <stdexcept>
+#include <vector>
 
 VulkanFunApp::VulkanFunApp()
   : window(new VulkanWindow())
@@ -59,8 +59,10 @@ void VulkanFunApp::recreateSwapChain()
   vkDeviceWaitIdle(pipeline->device);
 
   pipeline->cleanupSwapChain();
+
   pipeline->createSwapChain();
   pipeline->createImageViews();
+  pipeline->createDepthResources();
   pipeline->createFramebuffers();
 }
 
@@ -69,17 +71,17 @@ void VulkanFunApp::populateDebugMessengerCreateInfo(
 {
   createInfo = {};
   createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
-  createInfo.messageSeverity =
-    VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
-    VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
-    VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
+  createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
+                               VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+                               VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT;
   createInfo.messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
                            VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
                            VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT;
   createInfo.pfnUserCallback = VulkanValidation::debugCallback;
 }
 
-void VulkanFunApp::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex)
+void VulkanFunApp::recordCommandBuffer(VkCommandBuffer commandBuffer,
+                                       uint32_t imageIndex)
 {
   VkCommandBufferBeginInfo beginInfo{};
   beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -96,13 +98,18 @@ void VulkanFunApp::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t i
   renderPassInfo.renderArea.offset = { 0, 0 };
   renderPassInfo.renderArea.extent = pipeline->swapChainExtent;
 
-  VkClearValue clearColor = { { { 0.0f, 0.0f, 0.0f, 1.0f } } };
-  renderPassInfo.clearValueCount = 1;
-  renderPassInfo.pClearValues = &clearColor;
+  std::array<VkClearValue, 2> clearValues{};
+  clearValues[0].color = { { 0.0f, 0.0f, 0.0f, 1.0f } };
+  clearValues[1].depthStencil = { 1.0f, 0 };
 
-  vkCmdBeginRenderPass(commandBuffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+  renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
+  renderPassInfo.pClearValues = clearValues.data();
 
-  vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->graphicsPipeline);
+  vkCmdBeginRenderPass(
+    commandBuffer, &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+  vkCmdBindPipeline(
+    commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, pipeline->graphicsPipeline);
 
   VkViewport viewport{};
   viewport.x = 0.0f;
@@ -122,7 +129,8 @@ void VulkanFunApp::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t i
   VkDeviceSize offsets[] = { 0 };
   vkCmdBindVertexBuffers(commandBuffer, 0, 1, vertexBuffers, offsets);
 
-  vkCmdBindIndexBuffer(commandBuffer, pipeline->indexBuffer, 0, VK_INDEX_TYPE_UINT16);
+  vkCmdBindIndexBuffer(
+    commandBuffer, pipeline->indexBuffer, 0, VK_INDEX_TYPE_UINT16);
 
   vkCmdBindDescriptorSets(commandBuffer,
                           VK_PIPELINE_BIND_POINT_GRAPHICS,
@@ -133,7 +141,8 @@ void VulkanFunApp::recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t i
                           0,
                           nullptr);
 
-  vkCmdDrawIndexed(commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
+  vkCmdDrawIndexed(
+    commandBuffer, static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 
   vkCmdEndRenderPass(commandBuffer);
 
