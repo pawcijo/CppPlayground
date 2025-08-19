@@ -2,9 +2,11 @@
 
 #include <cstdint>
 #include "Vertex.hpp"
+#include "glm/ext/scalar_constants.hpp"
 #include <glm/glm.hpp>
 #include <optional>
 #include <vector>
+
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
@@ -18,9 +20,8 @@ struct UniformBufferObject
   alignas(16) glm::mat4 proj;
 };
 
-constexpr float PI = 3.14159265359f;
-
-static std::vector<Vertex> makeSphereVertices(uint32_t sectorCount, uint32_t stackCount, float radius = 1.0f) {
+constexpr float PI = glm::pi<float>();
+constexpr std::vector<Vertex> makeSphereVertices(uint32_t sectorCount, uint32_t stackCount, float radius = 1.0f) {
     std::vector<Vertex> vertices;
     vertices.reserve((stackCount + 1) * (sectorCount + 1));
 
@@ -51,7 +52,7 @@ static std::vector<Vertex> makeSphereVertices(uint32_t sectorCount, uint32_t sta
     return vertices;
 }
 
-static std::vector<uint16_t> makeSphereIndices(uint32_t sectorCount, uint32_t stackCount) {
+constexpr std::vector<uint16_t> makeSphereIndices(uint32_t sectorCount, uint32_t stackCount) {
     std::vector<uint16_t> indices;
     indices.reserve(stackCount * sectorCount * 6);
 
