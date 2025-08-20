@@ -2,9 +2,10 @@
 cmake_minimum_required (VERSION 3.9.3)
 project (VulkanFun)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 find_package(Vulkan REQUIRED)
+find_package(SDL2 REQUIRED)
 
 set(CMAKE_LIBRARY_PATH ${CMAKE_INSTALL_PREFIX}/lib)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -56,11 +57,31 @@ set(IMGUI_DIR external/imgui/)
 
 
 add_executable(${PROJECT_NAME} 
-	main.cpp
-	src/VulkanUtils.cpp
-	src/VulkanPipeline.cpp
-	src/VulkanWindow.cpp
-	src/VulkanFunApp.cpp
+main.cpp
+	src/Vulkan/VulkanPipeLine.cpp
+	src/Vulkan/VulkanApp.cpp
+	src/Vulkan/VulkanShader.cpp
+	src/Vulkan/VulkanValidation.hpp
+	src/Vulkan/VulkanUtis.cpp
+
+	src/tiny_obj_loader.h
+
+	src/Common/Transform.cpp
+	src/Common/Camera.cpp
+	
+	src/Common/Scene.cpp
+	src/Common/SceneUtils.cpp
+	src/Common/SceneObject.cpp
+	src/Vulkan/Model.cpp
+	src/MyPhysics/PhysicsTimer.cpp
+
+	${IMGUI_DIR}/backends/imgui_impl_glfw.cpp 
+	${IMGUI_DIR}/backends/imgui_impl_vulkan.cpp 
+	${IMGUI_DIR}/imgui.cpp 
+	${IMGUI_DIR}/imgui_draw.cpp 
+	${IMGUI_DIR}/imgui_demo.cpp 
+	${IMGUI_DIR}/imgui_tables.cpp 
+	${IMGUI_DIR}/imgui_widgets.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

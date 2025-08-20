@@ -1,18 +1,26 @@
-#include "VulkanFunApp.hpp"
+#include "Vulkan/VulkanPipeLine.hpp"
+#include "Vulkan/VulkanApp.hpp"
+
+#include <stdexcept>
+#include <iostream>
+
 
 int main()
 {
-  VulkanFunApp app;
+    GPGVulkan::VulkanPipeLine appWindow(1920, 1080);
+    GPGVulkan::VulkanApp app(appWindow);
 
-  try
-  {
-    app.run();
-  }
-  catch (const std::exception& e)
-  {
-    std::cerr << e.what() << std::endl;
-    return EXIT_FAILURE;
-  }
+    try
+    {
+        app.Run();
+    }
+    catch (const std::exception &e)
+    {
+        std::cout<<"Exception: " <<e.what()<< std::endl;
+        return EXIT_FAILURE;
+    }
 
-  return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
+
+    return 0;
 }

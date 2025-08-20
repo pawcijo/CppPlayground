@@ -1,0 +1,27 @@
+<Scene>
+    <SceneObject Name="RootNode" ObjectId="1" ParentId="0">
+        <Transform>
+            <Position x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+            <Rotation x="0" y="0" z="0"/>
+        </Transform>
+        <ChildrenIds>
+            <ChildId>2</ChildId>
+        </ChildrenIds>
+        <SceneObject Name="CubeModel" ObjectId="2" ParentId="1">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+                <Rotation x="0" y="0" z="0"/>
+            </Transform>
+            <ChildrenIds/>
+            <ModelInfo ModelPath="models/Klocek.obj" TexturePath="textures/box.jpg">
+                <Transform>
+                    <Position x="0" y="0" z="0"/>
+                    <Scale x="1" y="1" z="1"/>
+                    <Rotation x="0" y="0" z="0"/>
+                </Transform>
+            </ModelInfo>
+        </SceneObject>
+    </SceneObject>
+</Scene>
