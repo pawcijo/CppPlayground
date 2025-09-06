@@ -13,8 +13,12 @@ Build/compile_commands.json
 
 *.spv
 *.cmake
+*.DS_Store
+*.cache/
 Build/lib/
 Build/tests/
 Build/VulkanFun/Makefile
 Build/VulkanFun/VulkanFun
 Build/VulkanFun/external/
+Build/VulkanFun/resources/models/viking_room.obj
+Build/VulkanFun/resources/imgui.ini

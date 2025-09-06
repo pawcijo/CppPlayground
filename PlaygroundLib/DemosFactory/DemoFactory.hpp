@@ -30,6 +30,10 @@
 #include "Demos/CPP20/PredicateDemo.hpp"
 #include "Demos/CPP20/SemaphoreDemo.hpp"
 
+// C++ Grebosz
+#include "Demos/C++Grebosz/HelloWorld2025.hpp"
+#include "Demos/C++Grebosz/TypeLimits.hpp"
+
 // Other
 #include "Demos/NeuralNetwork/NeuralNetworkDemo.hpp"
 
@@ -80,6 +84,8 @@ enum class DemoType : int
   CompareDemo,
   PredicateDemo,
   CorutineDemo,
+  HelloWorld2025Demo,
+  TypeLimitsDemo,
   Count
 };
 
@@ -90,6 +96,7 @@ enum class DemoTag : int
   CPP17,
   CPP20,
   NeuralNetwork,
+  GreboszCPP,
   Count
 };
 
@@ -350,6 +357,16 @@ public:
             []() { return std::make_unique<CoroutineDemo>(); },
             "CoroutineDemo",
             { DemoTag::CPP20,DemoTag::DesignPatterns }) },
+        { DemoType::HelloWorld2025Demo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<HelloWorld2025Demo>(); },
+            "HelloWorld2025Demo",
+            { DemoTag::GreboszCPP }) },
+        { DemoType::TypeLimitsDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<TypeLimitsDemo>(); },
+            "TypeLimitsDemo",
+            { DemoTag::GreboszCPP }) },
       };
     return demoMap;
   }

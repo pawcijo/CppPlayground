@@ -46,6 +46,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="tagGreboszCPP">
+         <property name="text">
+          <string>GreboszCPP</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="tagNeuralNetwork">
          <property name="text">
           <string>NeuralNetwork</string>

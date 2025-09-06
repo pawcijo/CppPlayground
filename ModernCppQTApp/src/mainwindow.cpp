@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget* parent)
   connect(ui->tagDesignPatterns, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
   connect(ui->tagCPP17, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
   connect(ui->tagCPP20, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
+  connect(ui->tagGreboszCPP, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
   connect(ui->tagNeuralNetwork, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
 
   connect(
@@ -57,6 +58,7 @@ void MainWindow::updateDemoSelector()
   if (ui->tagDesignPatterns->isChecked()) selectedTags.push_back(DemoTag::DesignPatterns);
   if (ui->tagCPP17->isChecked()) selectedTags.push_back(DemoTag::CPP17);
   if (ui->tagCPP20->isChecked()) selectedTags.push_back(DemoTag::CPP20);
+  if (ui->tagGreboszCPP->isChecked()) selectedTags.push_back(DemoTag::GreboszCPP);
   if (ui->tagNeuralNetwork->isChecked()) selectedTags.push_back(DemoTag::NeuralNetwork);
 
   // Clear selector and filtered map
@@ -132,7 +134,7 @@ void MainWindow::writeNotesToTerminal(NoteFormat& notes)
     QTextCharFormat descFormat;
     descFormat.setForeground(QColor("#007acc")); // Example: blue
     descFormat.setFontPointSize(fontSize);
-    cursor.insertText(QString::fromStdString(pair.second + "\n\n"), descFormat);
+    cursor.insertText(QString::fromStdString(pair.second + "\n"), descFormat);
   }
   ui->terminalOutput->moveCursor(QTextCursor::Start);
 }

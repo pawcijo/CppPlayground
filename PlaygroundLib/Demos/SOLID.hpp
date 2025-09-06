@@ -7,8 +7,8 @@
 
 inline void SingleResponsibilityPrinciple()
 {
-    LOG_FUNCTION_NAME("36");
-    std::cout << R"(
+  LOG_FUNCTION_NAME("36");
+  std::cout << R"(
 "There should never be more than one reason for a class to change."
 In other words, every class should have only one responsibility.
 
@@ -26,27 +26,29 @@ public:
 
 inline void OpenClosedPrinciple()
 {
-    LOG_FUNCTION_NAME(RED);
-    std::cout << std::endl
-              << BOLD_RED_BOLD_TEXT_START << "Open for Extension:" << TEXT_COLOR_CLEAR << R"(
+  LOG_FUNCTION_NAME(RED);
+  std::cout << std::endl
+            << BOLD_RED_BOLD_TEXT_START
+            << "Open for Extension:" << TEXT_COLOR_CLEAR << R"(
 This means that the behavior of a module, class, or function
 can be extended or enhanced.
 You should be able to add new functionality without altering existing code.)"
-              << std::endl
-              << std::endl
-              << BOLD_RED_BOLD_TEXT_START << "Closed for Modification:" << TEXT_COLOR_CLEAR << "\n"
-              << R"(
+            << std::endl
+            << std::endl
+            << BOLD_RED_BOLD_TEXT_START
+            << "Closed for Modification:" << TEXT_COLOR_CLEAR << "\n"
+            << R"(
 This means that once a class or module has been developed and tested,
 you should not change its internal source code.
 Modifications should be avoided to prevent introducing bugs or
 breaking existing functionality.
 )" << std::endl
 
-              << BOLD_TEXT_START << "Inheritance and Polymorphism " << TEXT_FORMAT_CLEAR
-              << std::endl
-              << "//Base class"
-              <<
-        R"(class Shape {
+            << BOLD_TEXT_START << "Inheritance and Polymorphism "
+            << TEXT_FORMAT_CLEAR << std::endl
+            << "//Base class"
+            <<
+    R"(class Shape {
 public:
     virtual void draw() const = 0; // Pure virtual function
 };
@@ -68,9 +70,9 @@ public:
 };
 )" << std::endl
 
-              << BOLD_TEXT_START << "Or Composition" << TEXT_FORMAT_CLEAR << "\n"
+            << BOLD_TEXT_START << "Or Composition" << TEXT_FORMAT_CLEAR << "\n"
 
-              << R"(
+            << R"(
 class Logger {
 public:
     virtual void log(const std::string& message) = 0;
@@ -105,15 +107,15 @@ public:
 
 inline void LiskovSubstitutionPrinciple()
 {
-    LOG_FUNCTION_NAME(BLUE);
+  LOG_FUNCTION_NAME(BLUE);
 
-    std::cout << R"(
+  std::cout << R"(
 "Objects of a superclass should be replaceable with objects of a subclass
 without affecting the correctness of the program.")"
-              << std::endl
-              << std::endl
-              << BOLD_TEXT_START << "Breaking the principle exaple : \n\n"
-              << TEXT_FORMAT_CLEAR << R"(class Bird {
+            << std::endl
+            << std::endl
+            << BOLD_TEXT_START << "Breaking the principle exaple : \n\n"
+            << TEXT_FORMAT_CLEAR << R"(class Bird {
 public:
     virtual void fly() {
         std::cout << "Flying!" << std::endl;
@@ -128,9 +130,9 @@ public:
     }
 };)" << std::endl
 
-              << "\033[1;37mApplying the principle:\033[0m \n"
+            << "\033[1;37mApplying the principle:\033[0m \n"
 
-              << R"(
+            << R"(
 class Bird {
 public:
     virtual void move() = 0; // Pure virtual function
@@ -154,14 +156,16 @@ public:
 
 inline void InterfaceSegregationPrinciple()
 {
-    LOG_FUNCTION_NAME(YELLOW);
+  LOG_FUNCTION_NAME(YELLOW);
 
-    std::cout << "Clients should not be forced to depend on interfaces they do not use."
-              << std::endl
-              << std::endl;
-    std::cout << BOLD_TEXT_START << "Breaking the principle exaple : \n" << TEXT_FORMAT_CLEAR;
+  std::cout
+    << "Clients should not be forced to depend on interfaces they do not use."
+    << std::endl
+    << std::endl;
+  std::cout << BOLD_TEXT_START << "Breaking the principle exaple : \n"
+            << TEXT_FORMAT_CLEAR;
 
-    std::cout << R"(
+  std::cout << R"(
 class Worker {
 public:
     virtual void work() = 0;
@@ -185,9 +189,10 @@ public:
  
 )";
 
-    std::cout << BOLD_TEXT_START << "Applying the principle: : \n" << TEXT_COLOR_CLEAR;
+  std::cout << BOLD_TEXT_START << "Applying the principle: : \n"
+            << TEXT_COLOR_CLEAR;
 
-    std::cout << R"(
+  std::cout << R"(
 class Workable {
 public:
     virtual void work() = 0;
@@ -216,18 +221,18 @@ public:
 
 inline void DependencyInversionPrinciple()
 {
-    LOG_FUNCTION_NAME(GREEN);
+  LOG_FUNCTION_NAME(GREEN);
 
-    std::cout
-        << R"( "High-level modules should not depend on low-level modules. Both should depend on abstractions." )"
-        << std::endl;
-    std::cout
-        << R"( "Abstractions should not depend on details. Details should depend on abstractions." )"
-        << std::endl
-        << std::endl;
+  std::cout
+    << R"( "High-level modules should not depend on low-level modules. Both should depend on abstractions." )"
+    << std::endl;
+  std::cout
+    << R"( "Abstractions should not depend on details. Details should depend on abstractions." )"
+    << std::endl
+    << std::endl;
 
-    std::cout << "\033[1;37mBreaking the principle exaple :\033[0m \n\n";
-    std::cout << R"(
+  std::cout << "\033[1;37mBreaking the principle exaple :\033[0m \n\n";
+  std::cout << R"(
 class Database {
 public:
     void connect() { /* ... */ }
@@ -243,10 +248,11 @@ public:
         db.saveUser(user);
     }
 };)" << std::endl
-              << std::endl;
+            << std::endl;
 
-    std::cout << BOLD_TEXT_START << "Applying the principle: : \n\n" << TEXT_FORMAT_CLEAR;
-    std::cout << R"(
+  std::cout << BOLD_TEXT_START << "Applying the principle: : \n\n"
+            << TEXT_FORMAT_CLEAR;
+  std::cout << R"(
 // Abstraction
 class IDatabase {
 public:
@@ -277,16 +283,17 @@ public:
 
 class SOLID_Demo : public DemoBase
 {
-   public:
-    SOLID_Demo()
-    {
-        mName = "SOLID_Demo";
-        mNotes = {};
-    };
-    ~SOLID_Demo() = default;
+public:
+  SOLID_Demo()
+  {
+    mName = "SOLID_Demo";
+    mNotes = { { "Notes for this demo are in terminal.", "" } };
+  };
+  ~SOLID_Demo() = default;
 
-    void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
-    {
+  void ShowExample(
+    std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
+  {
     if (nullptr == printNotesCallback)
     {
       PrintNotes();
@@ -296,23 +303,24 @@ class SOLID_Demo : public DemoBase
       printNotesCallback(mNotes);
     }
 
-        // clang-format off
+    // clang-format off
         std::cout << CYAN_BOLD_TEXT_START <<   "S" << TEXT_COLOR_CLEAR 
                   << RED_BOLD_TEXT_START <<    "O" << TEXT_COLOR_CLEAR 
                   << BLUE_BOLD_TEXT_START <<   "L" << TEXT_COLOR_CLEAR
                   << YELLOW_BOLD_TEXT_START << "I" << TEXT_COLOR_CLEAR 
                   << GREEN_BOLD_TEXT_START <<  "D" << TEXT_COLOR_CLEAR;
-        // clang-format on
+    // clang-format on
 
-        SingleResponsibilityPrinciple();
-        OpenClosedPrinciple();
-        LiskovSubstitutionPrinciple();
-        InterfaceSegregationPrinciple();
-        DependencyInversionPrinciple();
-    }
+    SingleResponsibilityPrinciple();
+    OpenClosedPrinciple();
+    LiskovSubstitutionPrinciple();
+    InterfaceSegregationPrinciple();
+    DependencyInversionPrinciple();
+  }
 
-    void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
-    {
-        ShowExample(printNotesCallback);
-    };
+  void ShowDemo(
+    std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
+  {
+    ShowExample(printNotesCallback);
+  };
 };
