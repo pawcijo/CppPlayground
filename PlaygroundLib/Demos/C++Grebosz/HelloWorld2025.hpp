@@ -21,7 +21,7 @@ public:
             //ptinln vs std::cout
             #ifdef __APPLE__
             #else
-            std::println(BOLD_TEXT_START "{}" TEXT_FORMAT_CLEAR "\n{}\n", pair.first, pair.second);
+            std::println( "std::println:" BOLD_TEXT_START "{}" TEXT_FORMAT_CLEAR "\n{}\n", pair.first, pair.second);
             #endif
 
             std::cout << "\033[31mThis is red text\033[0m" << std::endl;

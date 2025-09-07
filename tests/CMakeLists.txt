@@ -1,10 +1,19 @@
 cmake_minimum_required(VERSION 3.10)
 project(MyTests)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 # Add GoogleTest submodule
 add_subdirectory(googletest)
+
+
+set_property(TARGET gtest PROPERTY CXX_STANDARD 23)
+set_property(TARGET gtest_main PROPERTY CXX_STANDARD 23)
+set_property(TARGET gtest PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET gtest_main PROPERTY CXX_STANDARD_REQUIRED ON)
+
+target_compile_options(gtest PUBLIC -stdlib=libc++)
+target_compile_options(gtest_main PUBLIC -stdlib=libc++)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -22,6 +31,15 @@ file(GLOB_RECURSE SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 # Add the test executable
 add_executable(runTests main_test.cpp ${SOURCES})
 
+# For runTests
+target_compile_options(runTests PRIVATE
+    -std=c++23       # ensure C++23
+    -stdlib=libc++   # use LLVM libc++ headers
+    -Wall -Wextra -pedantic -Werror
+    $<$<CONFIG:Debug>:-g -O0>
+)
+
+
 # Link GoogleTest and PlaygroundLib (ensure that PlaygroundLib is built first)
 add_dependencies(runTests PlaygroundLib)
 
@@ -30,6 +48,8 @@ target_link_libraries(runTests
     PlaygroundLib 
     GTest::gtest 
     GTest::gtest_main
+    c++         # libc++ runtime
+    c++abi      # libc++abi runtime
 )
 
 # Enable testing
