@@ -1,8 +1,5 @@
-
-
 #include "Common/DemoBase.hpp"
 #include <print>
-
 
 
 class HelloWorld2025Demo : public DemoBase
@@ -22,7 +19,11 @@ public:
         {
             //ptinln vs std::cout
 
+            #ifdef __APPLE__
+            
+            #else
             std::println(BOLD_TEXT_START "{}" TEXT_FORMAT_CLEAR "\n{}\n", pair.first, pair.second);
+            #endif
 
             std::cout << "\033[31mThis is red text\033[0m" << std::endl;
             std::cout << BOLD_TEXT_START << pair.first << TEXT_FORMAT_CLEAR << std::endl

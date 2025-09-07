@@ -19,8 +19,15 @@ public:
     PrintName();
     for (const auto& pair : mNotes)
     {
+      //Apple Clang does not support std::print yet
+      #ifdef __APPLE__
+      std::cout << BOLD_TEXT_START << pair.first << TEXT_FORMAT_CLEAR << std::endl
+                << pair.second << std::endl
+                << std::endl;
+      #else
       std::println(
         BOLD_TEXT_START "{}" TEXT_FORMAT_CLEAR "{}", pair.first, pair.second);
+      #endif
     }
   }
 
