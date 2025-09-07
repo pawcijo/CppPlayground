@@ -14,6 +14,17 @@
 #include <cxxabi.h>
 #endif
 
+#define CPP23_ENABLED (__cplusplus >= 202300L)
+
+#if CPP23_ENABLED
+    // C++23 or newer
+    #include <version> // optional
+    constexpr bool using_cpp23 = true;
+#else
+    // Older than C++23
+    constexpr bool using_cpp23 = false;
+#endif
+
 #define LOG_START_FUNCTION()                                                   \
   printf("\n%s: - - - - - - - - - -  Start - - - - - - - - -\n", __FUNCTION__)
 

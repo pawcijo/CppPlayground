@@ -1,6 +1,8 @@
 #include "Common/DemoBase.hpp"
-#include <print>
 
+#if CPP23_ENABLED
+#include <print>
+#endif
 
 class HelloWorld2025Demo : public DemoBase
 {
@@ -11,16 +13,13 @@ public:
         mNotes = {{"Hello World 2025", R"(A simple demonstration of the new print library in C++2025.)"}};
     }
     
-  
     void PrintNotes() override
     {
         PrintName();
         for (const auto& pair : mNotes)
         {
             //ptinln vs std::cout
-
             #ifdef __APPLE__
-            
             #else
             std::println(BOLD_TEXT_START "{}" TEXT_FORMAT_CLEAR "\n{}\n", pair.first, pair.second);
             #endif
