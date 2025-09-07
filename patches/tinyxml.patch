@@ -1,0 +1,25 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b7bdf86..1aec8d6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -125,10 +125,17 @@ install(
+ 
+ if (tinyxml2_INSTALL_PKGCONFIG)
+     configure_file(cmake/tinyxml2.pc.in tinyxml2.pc.gen @ONLY)
+-    file(GENERATE OUTPUT tinyxml2.pc INPUT "${CMAKE_CURRENT_BINARY_DIR}/tinyxml2.pc.gen")
++
++    # Generate a config-specific pc file
++    file(GENERATE 
++        OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/tinyxml2-$<CONFIG>.pc"
++        INPUT "${CMAKE_CURRENT_BINARY_DIR}/tinyxml2.pc.gen"
++    )
++
+     install(
+-        FILES "${CMAKE_CURRENT_BINARY_DIR}/tinyxml2.pc"
++        FILES "${CMAKE_CURRENT_BINARY_DIR}/tinyxml2-$<CONFIG>.pc"
+         DESTINATION "${tinyxml2_INSTALL_PKGCONFIGDIR}"
+         COMPONENT tinyxml2_development
++        RENAME tinyxml2.pc  # optional, so installed file is always tinyxml2.pc
+     )
+-endif ()
++endif()
