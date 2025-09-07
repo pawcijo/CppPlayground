@@ -56,7 +56,7 @@ class NeuralNetwork
         weights_hidden_output.resize(hidden_size);
 
         // Initialize weights and biases with random values
-        std::srand(std::time(nullptr));
+        std::srand(static_cast<unsigned>(std::time(nullptr)));
         for (auto &row : weights_input_hidden)
             for (auto &w : row) w = (std::rand() % 100) / 100.0;
 

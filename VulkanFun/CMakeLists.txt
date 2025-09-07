@@ -1,5 +1,5 @@
 # CMake entry point
-cmake_minimum_required (VERSION 3.9.3)
+cmake_minimum_required (VERSION 3.10)
 project (VulkanFun)
 
 set(CMAKE_CXX_STANDARD 23)

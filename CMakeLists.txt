@@ -8,6 +8,13 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Compiler settings for Xcode (only on macOS)
+if(APPLE)
+ set(CMAKE_C_COMPILER "/usr/bin/clang")
+ set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
+endif()
+
+
 add_subdirectory(PlaygroundLib)
 add_subdirectory(tests)
 add_subdirectory(ModernCppQTApp)
