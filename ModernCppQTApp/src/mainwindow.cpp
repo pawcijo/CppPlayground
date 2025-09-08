@@ -43,6 +43,10 @@ MainWindow::MainWindow(QWidget* parent)
           &QCheckBox::checkStateChanged,
           this,
           &MainWindow::onTagFilterChanged);
+  connect(ui->tagQuestionTask,
+          &QCheckBox::checkStateChanged,
+          this,
+          &MainWindow::onTagFilterChanged);
 
   connect(
     ui->runButton, &QPushButton::clicked, this, &MainWindow::onRunClicked);
@@ -78,6 +82,8 @@ void MainWindow::updateDemoSelector()
     selectedTags.push_back(DemoTag::GreboszCPP);
   if (ui->tagNeuralNetwork->isChecked())
     selectedTags.push_back(DemoTag::NeuralNetwork);
+  if (ui->tagQuestionTask->isChecked())
+    selectedTags.push_back(DemoTag::QuestionTask);
 
   // Clear selector and filtered map
   ui->demoSelector->clear();

@@ -34,6 +34,10 @@
 #include "Demos/C++Grebosz/HelloWorld2025.hpp"
 #include "Demos/C++Grebosz/TypeLimits.hpp"
 
+// Question tasks
+#include "QuestionTasks/LongestCharSequence.hpp"
+#include "QuestionTasks/StringToInt.hpp"
+
 // Other
 #include "Demos/NeuralNetwork/NeuralNetworkDemo.hpp"
 
@@ -87,6 +91,8 @@ enum class DemoType : int
   HelloWorld2025Demo,
   TypeLimitsDemo,
   OutOfRangeDemo,
+  LongestCharSequenceDemo,
+  StringToIntoDemo,
   Count
 };
 
@@ -98,6 +104,7 @@ enum class DemoTag : int
   CPP20,
   NeuralNetwork,
   GreboszCPP,
+  QuestionTask,
   Count
 };
 
@@ -374,9 +381,22 @@ public:
             []() { return std::make_unique<OutOfRangeDemo>(); },
             "OutOfRangeDemo",
             { DemoTag::Common }) },
+
+        { DemoType::LongestCharSequenceDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<LongestCharSequence>(); },
+            "LongestCharSequenceDemo",
+            { DemoTag::QuestionTask }) },
+
+        { DemoType::StringToIntoDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<StringToIntoDemo>(); },
+            "StringToIntoDemo",
+            { DemoTag::QuestionTask }) },
+
       };
-    std::cout << std::format("Demo map created. Size: {}.", sizeof(demoMap))
-              << std::endl;
+    // std::cout << std::format("Demo map created. Size: {}.", sizeof(demoMap))
+    //           << std::endl;
     return demoMap;
   }
 };
