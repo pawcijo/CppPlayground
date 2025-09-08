@@ -4,8 +4,10 @@
 #include "Common/DemoBase.hpp"
 #include <concepts>
 
+#include <algorithm>
 #include <iostream>
 #include <string>
+#include <type_traits>
 #include <utility>
 #include <variant>
 #include <vector>
@@ -124,7 +126,6 @@ public:
 
     LOG_END_FUNCTION();
   }
-
 
   template<typename T, std::predicate<T> Pred>
   auto filter(const std::vector<T>& vec, Pred pred)

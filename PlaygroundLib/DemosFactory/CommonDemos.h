@@ -30,3 +30,4 @@
 #include "Demos/UniversalRefVsRValueRef.hpp" // IWYU pragma: keep
 #include "Demos/VirtualDestructor.hpp" // IWYU pragma: keep
 #include "Demos/WeakPtrVsSharedPtr.hpp" // IWYU pragma: keep
+#include "Demos/OutOfRangeDemo.hpp" // IWYU pragma: keep

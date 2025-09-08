@@ -86,6 +86,7 @@ enum class DemoType : int
   CorutineDemo,
   HelloWorld2025Demo,
   TypeLimitsDemo,
+  OutOfRangeDemo,
   Count
 };
 
@@ -367,7 +368,13 @@ public:
             []() { return std::make_unique<TypeLimitsDemo>(); },
             "TypeLimitsDemo",
             { DemoTag::GreboszCPP }) },
+        { DemoType::OutOfRangeDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<OutOfRangeDemo>(); },
+            "OutOfRangeDemo",
+            { DemoTag::Common }) },
       };
+      std::cout<<"Demo map size:"<<sizeof(demoMap)<<std::endl;
     return demoMap;
   }
 };
