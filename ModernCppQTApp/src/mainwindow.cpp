@@ -17,12 +17,6 @@ MainWindow::MainWindow(QWidget* parent)
 
   // Load demo map
   rawMap = DemoFactory::getDemoMap();
-  int id = 1;
-  for (const auto& [demoType, pair] : rawMap)
-  {
-    demoMap[id] = { demoType, std::get<1>(pair) };
-    ++id;
-  }
 
   // Connect tag checkboxes
   connect(ui->tagCommon, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
