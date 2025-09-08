@@ -34,7 +34,7 @@ when forwarding them, because they’re only sometimes bound to rvalues." -  Eff
     void MoveEmaple(std::unique_ptr<std::string> str_ptr)
     {
         LOG_START_FUNCTION();
-         std::cout<<"\033[1;3m"<< "Duuupsko" << TEXT_COLOR_CLEAR <<"\n";
+         std::cout<<"\033[1;3m"<< "MoveEmaple" << TEXT_COLOR_CLEAR <<"\n";
         helper_variable = std::move(str_ptr);
         LOG_END_FUNCTION();
     }
