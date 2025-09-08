@@ -25,19 +25,21 @@ public:
     "\n";
     std::cout<<"...........................................................\n";
     */
+    
   }
   virtual ~DemoBase()
   {
     object_counter--;
 
     // Uncomment to see the number of objects destroyed
+    
     /*
         std::cout<<std::endl<<std::endl;
-        std::cout<<"...................Base type
-       destructor....................\n"; std::cout<<'\t'<<'\t'<<'\t'<< "Number
-       of objects : " << object_counter << "\n";
+        std::cout<<"...................Base type destructor....................\n";
+        std::cout<<'\t'<<'\t'<<'\t'<< "Number of objects : " << object_counter << "\n";
         std::cout<<"...........................................................\n";
-        */
+    */
+        
   };
 
   /*

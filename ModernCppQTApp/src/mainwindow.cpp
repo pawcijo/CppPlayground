@@ -19,12 +19,30 @@ MainWindow::MainWindow(QWidget* parent)
   rawMap = DemoFactory::getDemoMap();
 
   // Connect tag checkboxes
-  connect(ui->tagCommon, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
-  connect(ui->tagDesignPatterns, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
-  connect(ui->tagCPP17, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
-  connect(ui->tagCPP20, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
-  connect(ui->tagGreboszCPP, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
-  connect(ui->tagNeuralNetwork, &QCheckBox::checkStateChanged, this, &MainWindow::onTagFilterChanged);
+  connect(ui->tagCommon,
+          &QCheckBox::checkStateChanged,
+          this,
+          &MainWindow::onTagFilterChanged);
+  connect(ui->tagDesignPatterns,
+          &QCheckBox::checkStateChanged,
+          this,
+          &MainWindow::onTagFilterChanged);
+  connect(ui->tagCPP17,
+          &QCheckBox::checkStateChanged,
+          this,
+          &MainWindow::onTagFilterChanged);
+  connect(ui->tagCPP20,
+          &QCheckBox::checkStateChanged,
+          this,
+          &MainWindow::onTagFilterChanged);
+  connect(ui->tagGreboszCPP,
+          &QCheckBox::checkStateChanged,
+          this,
+          &MainWindow::onTagFilterChanged);
+  connect(ui->tagNeuralNetwork,
+          &QCheckBox::checkStateChanged,
+          this,
+          &MainWindow::onTagFilterChanged);
 
   connect(
     ui->runButton, &QPushButton::clicked, this, &MainWindow::onRunClicked);
@@ -48,12 +66,18 @@ void MainWindow::updateDemoSelector()
 {
   // Get selected tags
   std::vector<DemoTag> selectedTags;
-  if (ui->tagCommon->isChecked()) selectedTags.push_back(DemoTag::Common);
-  if (ui->tagDesignPatterns->isChecked()) selectedTags.push_back(DemoTag::DesignPatterns);
-  if (ui->tagCPP17->isChecked()) selectedTags.push_back(DemoTag::CPP17);
-  if (ui->tagCPP20->isChecked()) selectedTags.push_back(DemoTag::CPP20);
-  if (ui->tagGreboszCPP->isChecked()) selectedTags.push_back(DemoTag::GreboszCPP);
-  if (ui->tagNeuralNetwork->isChecked()) selectedTags.push_back(DemoTag::NeuralNetwork);
+  if (ui->tagCommon->isChecked())
+    selectedTags.push_back(DemoTag::Common);
+  if (ui->tagDesignPatterns->isChecked())
+    selectedTags.push_back(DemoTag::DesignPatterns);
+  if (ui->tagCPP17->isChecked())
+    selectedTags.push_back(DemoTag::CPP17);
+  if (ui->tagCPP20->isChecked())
+    selectedTags.push_back(DemoTag::CPP20);
+  if (ui->tagGreboszCPP->isChecked())
+    selectedTags.push_back(DemoTag::GreboszCPP);
+  if (ui->tagNeuralNetwork->isChecked())
+    selectedTags.push_back(DemoTag::NeuralNetwork);
 
   // Clear selector and filtered map
   ui->demoSelector->clear();
@@ -66,7 +90,8 @@ void MainWindow::updateDemoSelector()
     bool matches = false;
     for (const auto& tag : tags)
     {
-      if (std::find(selectedTags.begin(), selectedTags.end(), tag) != selectedTags.end())
+      if (std::find(selectedTags.begin(), selectedTags.end(), tag) !=
+          selectedTags.end())
       {
         matches = true;
         break;
@@ -81,16 +106,17 @@ void MainWindow::updateDemoSelector()
   }
 }
 
-  std::unique_ptr<DemoBase> MainWindow::createDemo(DemoType chosenDemo)
+std::unique_ptr<DemoBase> MainWindow::createDemo(DemoType chosenDemo)
+{
+  const auto& it = rawMap.find(chosenDemo);
+  if (it != rawMap.end())
   {
-    const auto& it = rawMap.find(chosenDemo);
-    if (it != rawMap.end())
-    {
-      return std::get<0>(it->second)(); // Call the associated lambda function
-                                        // to create the object
-    }
-    return nullptr;
+    std::cout << "Creating demo: " << "\n";
+    return std::get<0>(it->second)(); // Call the associated lambda function
+                                      // to create the object
   }
+  return nullptr;
+}
 
 void MainWindow::onRunClicked()
 {
@@ -104,6 +130,13 @@ void MainWindow::onRunClicked()
   }
 
   auto [type, name] = filteredDemoMap[selectedId];
+
+
+  //clear previous object
+  if(demoInstance)
+  {
+      demoInstance.reset();
+  }
 
   demoInstance = createDemo(type);
   if (demoInstance)
