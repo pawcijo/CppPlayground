@@ -17,12 +17,12 @@
 #define CPP23_ENABLED (__cplusplus >= 202300L)
 
 #if CPP23_ENABLED
-    // C++23 or newer
-    #include <version> // optional
-    constexpr bool using_cpp23 = true;
+// C++23 or newer
+#include <version> // optional
+constexpr bool using_cpp23 = true;
 #else
-    // Older than C++23
-    constexpr bool using_cpp23 = false;
+// Older than C++23
+constexpr bool using_cpp23 = false;
 #endif
 
 #define LOG_START_FUNCTION()                                                   \
@@ -31,8 +31,7 @@
 #define LOG_END_FUNCTION()                                                     \
   printf("%s: - - - - - - - - - -  End - - - - - - - - - -\n\n", __FUNCTION__)
 
-  #define LOG_MSG_FUNCTION(msg)                                                     \
-  printf("%s:%s \n\n", __FUNCTION__, msg)
+#define LOG_MSG_FUNCTION(msg) printf("%s:%s \n\n", __FUNCTION__, msg)
 
 // Function to demangle class names for better readability in logs
 #if defined(__GNUG__)
@@ -142,6 +141,17 @@ inline const char* demangle_class_name(const std::type_info& ti)
 #define TOSTRING(x) STRINGIFY(x)
 
 using NoteFormat = std::vector<std::pair<std::string, std::string>>;
+
+inline NoteFormat CombineNoteFormat(NoteFormat& lhs, const NoteFormat& rhs, std::string seperator = "")
+{
+  NoteFormat result = lhs;
+  result.push_back({ seperator, "" });
+  for (const auto& pair : rhs)
+  {
+    result.push_back(pair);
+  }
+  return result;
+}
 
 inline bool is_string_only_numeric(const std::string& str)
 {

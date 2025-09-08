@@ -70,11 +70,13 @@ public:
   CompilationProcessDemo()
   {
     mName = "CompilationProcessDemo";
-    mNotes = {};
+    mNotes = CombineNoteFormat(
+      CompilationProcess::Notes, CompilationProcess::Summary, "Summary:");
   };
   ~CompilationProcessDemo() = default;
 
-  void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
+  void ShowExample(
+    std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     if (nullptr == printNotesCallback)
     {
@@ -87,7 +89,8 @@ public:
     CompilationProcessExplained();
   }
 
-  void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
+  void ShowDemo(
+    std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     ShowExample(printNotesCallback);
   };
