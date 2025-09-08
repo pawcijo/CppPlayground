@@ -26,7 +26,10 @@ private slots:
 private:
     void writeNotesToTerminal(NoteFormat& notes);
     void updateDemoSelector(); // Add this line
+
+    std::unique_ptr<DemoBase> createDemo(DemoType chosenDemo);
     Ui::MainWindow *ui;
+    std::unordered_map<DemoType, DemoFactory::DemoCreatorWithNameAndTags> rawMap;
     std::map<int, std::pair<DemoType, std::string>> demoMap;
     std::unique_ptr<DemoBase> demoInstance;
     std::map<int, std::pair<DemoType, std::string>> filteredDemoMap; // Add this line

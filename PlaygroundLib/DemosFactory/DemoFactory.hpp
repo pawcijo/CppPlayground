@@ -118,8 +118,9 @@ public:
 
   static std::unique_ptr<DemoBase> createDemo(DemoType chosenDemo)
   {
-    const auto& it = getDemoMap().find(chosenDemo);
-    if (it != getDemoMap().end())
+    const auto demoMap = getDemoMap();
+    const auto& it = demoMap.find(chosenDemo);
+    if (it != demoMap.end())
     {
       return std::get<0>(it->second)(); // Call the associated lambda function
                                         // to create the object
@@ -357,7 +358,7 @@ public:
           DemoCreatorWithNameAndTags(
             []() { return std::make_unique<CoroutineDemo>(); },
             "CoroutineDemo",
-            { DemoTag::CPP20,DemoTag::DesignPatterns }) },
+            { DemoTag::CPP20, DemoTag::DesignPatterns }) },
         { DemoType::HelloWorld2025Demo,
           DemoCreatorWithNameAndTags(
             []() { return std::make_unique<HelloWorld2025Demo>(); },
@@ -374,7 +375,8 @@ public:
             "OutOfRangeDemo",
             { DemoTag::Common }) },
       };
-      std::cout<<"Demo map size:"<<sizeof(demoMap)<<std::endl;
+    std::cout << std::format("Demo map created. Size: {}.", sizeof(demoMap))
+              << std::endl;
     return demoMap;
   }
 };

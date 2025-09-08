@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget* parent)
   ui->setupUi(this);
 
   // Load demo map
-  auto rawMap = DemoFactory::getDemoMap();
+  rawMap = DemoFactory::getDemoMap();
   int id = 1;
   for (const auto& [demoType, pair] : rawMap)
   {
@@ -66,7 +66,7 @@ void MainWindow::updateDemoSelector()
   filteredDemoMap.clear();
 
   int id = 1;
-  for (const auto& [demoType, tuple] : DemoFactory::getDemoMap())
+  for (const auto& [demoType, tuple] : rawMap)
   {
     const auto& tags = std::get<2>(tuple);
     bool matches = false;
@@ -87,6 +87,17 @@ void MainWindow::updateDemoSelector()
   }
 }
 
+  std::unique_ptr<DemoBase> MainWindow::createDemo(DemoType chosenDemo)
+  {
+    const auto& it = rawMap.find(chosenDemo);
+    if (it != rawMap.end())
+    {
+      return std::get<0>(it->second)(); // Call the associated lambda function
+                                        // to create the object
+    }
+    return nullptr;
+  }
+
 void MainWindow::onRunClicked()
 {
   int index = ui->demoSelector->currentIndex();
@@ -100,7 +111,7 @@ void MainWindow::onRunClicked()
 
   auto [type, name] = filteredDemoMap[selectedId];
 
-  demoInstance = DemoFactory::createDemo(type);
+  demoInstance = createDemo(type);
   if (demoInstance)
   {
     // Pass the callback
