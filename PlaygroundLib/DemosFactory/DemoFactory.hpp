@@ -37,6 +37,7 @@
 // Question tasks
 #include "QuestionTasks/LongestCharSequence.hpp"
 #include "QuestionTasks/StringToInt.hpp"
+#include "QuestionTasks/LongestUniqueSubstring.hpp"
 
 // Other
 #include "Demos/NeuralNetwork/NeuralNetworkDemo.hpp"
@@ -93,6 +94,7 @@ enum class DemoType : int
   OutOfRangeDemo,
   LongestCharSequenceDemo,
   StringToIntoDemo,
+  LongestUniqueSubstringDemo,
   Count
 };
 
@@ -392,6 +394,11 @@ public:
           DemoCreatorWithNameAndTags(
             []() { return std::make_unique<StringToIntoDemo>(); },
             "StringToIntoDemo",
+            { DemoTag::QuestionTask }) },
+        { DemoType::LongestUniqueSubstringDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<LongestUniqueSubstring>(); },
+            "LongestUniqueSubstringDemo",
             { DemoTag::QuestionTask }) },
 
       };
