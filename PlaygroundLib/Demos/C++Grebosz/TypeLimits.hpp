@@ -72,6 +72,10 @@ public:
 
     notes.push_back({ "Type Limits Demonstration", "" });
 
+    
+
+    AppendLimitsInfo<short int>(notes);
+    AppendLimitsInfo<int_least32_t>(notes);
     AppendLimitsInfo<int>(notes);
     AppendLimitsInfo<float>(notes);
     AppendLimitsInfo<double>(notes);

@@ -38,6 +38,7 @@
 #include "QuestionTasks/LongestCharSequence.hpp"
 #include "QuestionTasks/StringToInt.hpp"
 #include "QuestionTasks/LongestUniqueSubstring.hpp"
+#include "QuestionTasks/LongestPalindrom.hpp"
 
 // Other
 #include "Demos/NeuralNetwork/NeuralNetworkDemo.hpp"
@@ -95,6 +96,7 @@ enum class DemoType : int
   LongestCharSequenceDemo,
   StringToIntoDemo,
   LongestUniqueSubstringDemo,
+  LongestPalindromDemo,
   Count
 };
 
@@ -399,6 +401,11 @@ public:
           DemoCreatorWithNameAndTags(
             []() { return std::make_unique<LongestUniqueSubstring>(); },
             "LongestUniqueSubstringDemo",
+            { DemoTag::QuestionTask }) },
+        { DemoType::LongestPalindromDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<LongestPalindrom>(); },
+            "LongestPalindromDemo",
             { DemoTag::QuestionTask }) },
 
       };
