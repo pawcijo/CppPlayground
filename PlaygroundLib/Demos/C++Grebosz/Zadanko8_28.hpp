@@ -3,10 +3,13 @@
 #include "Common/Common.hpp"
 #include "Common/DemoBase.hpp"
 
+#include <algorithm>
 #include <cstddef>
+#include <functional>
 #include <map>
 #include <print>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -25,9 +28,14 @@ constexpr short DGF = 0b0001;
 
 // generate n random values with max value
 std::vector<unsigned short> RandomValuesGenerator(int size, short max_value);
-constexpr std::vector<std::pair<unsigned short, std::string>> Combination()
+short unsigned BitCounter(unsigned short n);
+
+constexpr std::vector<
+  std::tuple<std::pair<unsigned short, std::string>, unsigned int>>
+Combination()
 {
-  std::vector<std::pair<unsigned short, std::string>> combinations;
+  std::vector<std::tuple<std::pair<unsigned short, std::string>, unsigned int>>
+    combinations;
   for (auto i = 0; i < 16; ++i)
   {
     std::string combination;
@@ -49,48 +57,70 @@ constexpr std::vector<std::pair<unsigned short, std::string>> Combination()
         combination += "DGF ";
       }
     }
-    combinations.push_back(std::make_pair(i, combination));
+    auto para = std::make_pair(i, combination);
+    unsigned short count_of_bits = BitCounter(i);
+    combinations.push_back(std::tie(para, count_of_bits));
   }
   return combinations;
 }
 
+void SortByUsedBits(
+  std::vector<std::pair<unsigned short, size_t>>& combinations);
+
 using CombinationType = unsigned short;
 using Counted = size_t;
- std::map<CombinationType, Counted> GetCountedCombiations(
+std::map<CombinationType, Counted> GetCountedCombiations(
   const std::vector<unsigned short>& values);
 
 inline void Zadanko()
 {
-  auto random_values = RandomValuesGenerator(1000, 16);
+  auto random_values = RandomValuesGenerator(50, 16);
 
   // show combinations
   auto combinations = Combination();
 
   for (auto combination : combinations)
   {
-    std::println("{} {}", combination.first, combination.second);
+    std::println("{} {} usedbits:{}",
+                 std::get<0>(combination).first,
+                 std::get<0>(combination).second,
+                 std::get<1>(combination));
   }
 
-    auto counted_combinations = GetCountedCombiations(random_values);
-  
-  for(const auto& [combination, count] : counted_combinations)
+  auto counted_combinations = GetCountedCombiations(random_values);
+  std::vector<std::pair<unsigned short, size_t>> combinations_vec;
+  for (const auto& [combination, count] : counted_combinations)
   {
-    auto it = std::find_if(
-      combinations.begin(),
-      combinations.end(),
-      [combination](const auto& pair)
-      {
-        return pair.first == combination;
-      });
+    combinations_vec.push_back(std::make_pair(combination, count));
+  }
+
+  SortByUsedBits(combinations_vec);
+  std::reverse(combinations_vec.begin(), combinations_vec.end());
+
+  std::println("\nSorted by used bits:");
+  unsigned short value = 5;
+  for (const auto& [combination, count] : combinations_vec)
+  {
+
+    auto it = std::find_if(combinations.begin(),
+                           combinations.end(),
+                           [combination](const auto& pair)
+                           { return std::get<0>(pair).first == combination; });
+
+    if (value != std::get<1>(*it))
+    {
+      value = std::get<1>(*it);
+      std::println("---- Number of used bits: {} ----", value);
+    }
+
     if (it != combinations.end())
     {
-      std::println("Combination: {:<15} Count: {}", it->second, count);
+      std::println("{}: {}", std::get<0>(*it).second, count);
     }
     else
     {
-      std::println("Combination: {:<15} Count: {}", "Unknown", count);
+      std::println("{} - Unknown combination: {}", combination, count);
     }
-    
   }
 }
 }
