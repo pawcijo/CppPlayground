@@ -69,4 +69,6 @@ public:
     std::cout << "Should be 6 is " << FindLongestCharSequence("abbbbcdaaaaaa")
               << "(abbbbcdaaaaaa)\n";
   }
+
 };
+

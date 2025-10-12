@@ -15,8 +15,10 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
 file(GLOB_RECURSE SOURCES
     "Common/*.cpp"
     "Demos/*.cpp"
+    "Demos/C++Grebosz/*.cpp"
     "DemosFactory/*.cpp"
     "QuestionTasks/*.cpp"
+
 )
 
 message(STATUS "Building static library from: ${SOURCES}")

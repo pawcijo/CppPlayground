@@ -197,12 +197,12 @@ void detectValueCategoryImpl(T&& arg)
   // Check if the argument is a reference
   if (std::is_reference<T>::value)
   {
-    std::cout << "Argument is a reference and ";
+    std::cout << "Argument is a reference.";
     detectValueCategory(std::forward<T>(arg));
   }
   else
   {
-    std::cout << "Argument is not a reference and ";
+    std::cout << "Argument is not a reference.";
     // For non-references, we need to handle universal references and rvalues
     // separately.
     detectValueCategory(std::forward<T>(arg));

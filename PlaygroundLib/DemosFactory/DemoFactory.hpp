@@ -33,6 +33,8 @@
 // C++ Grebosz
 #include "Demos/C++Grebosz/HelloWorld2025.hpp"
 #include "Demos/C++Grebosz/TypeLimits.hpp"
+#include "Demos/C++Grebosz/Zadanko4_16III.hpp"
+#include "Demos/C++Grebosz/Zadanko8_28.hpp"
 
 // Question tasks
 #include "QuestionTasks/LongestCharSequence.hpp"
@@ -97,6 +99,8 @@ enum class DemoType : int
   StringToIntoDemo,
   LongestUniqueSubstringDemo,
   LongestPalindromDemo,
+  Zadanko4_16IIIDemo,
+  Zadanko8_28Demo,
   Count
 };
 
@@ -407,6 +411,16 @@ public:
             []() { return std::make_unique<LongestPalindrom>(); },
             "LongestPalindromDemo",
             { DemoTag::QuestionTask }) },
+        { DemoType::Zadanko4_16IIIDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<Zadanko4_16III>(); },
+            "Zadanko4_16IIIDemo",
+            { DemoTag::GreboszCPP }) },
+        { DemoType::Zadanko8_28Demo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<Zadanko8_28>(); },
+            "Zadanko8_28Demo",
+            { DemoTag::GreboszCPP }) },
 
       };
     // std::cout << std::format("Demo map created. Size: {}.", sizeof(demoMap))
