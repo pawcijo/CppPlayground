@@ -35,6 +35,7 @@
 #include "Demos/C++Grebosz/TypeLimits.hpp"
 #include "Demos/C++Grebosz/Zadanko4_16III.hpp"
 #include "Demos/C++Grebosz/Zadanko8_28.hpp"
+#include "Demos/C++Grebosz/Zadanko12_5_30.hpp"
 
 // Question tasks
 #include "QuestionTasks/LongestCharSequence.hpp"
@@ -101,6 +102,7 @@ enum class DemoType : int
   LongestPalindromDemo,
   Zadanko4_16IIIDemo,
   Zadanko8_28Demo,
+  Zadanko12_5_30Demo,
   Count
 };
 
@@ -420,6 +422,11 @@ public:
           DemoCreatorWithNameAndTags(
             []() { return std::make_unique<Zadanko8_28>(); },
             "Zadanko8_28Demo",
+            { DemoTag::GreboszCPP }) },
+        { DemoType::Zadanko12_5_30Demo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<Zadanko12_5_30>(); },
+            "Zadanko12_5_30Demo",
             { DemoTag::GreboszCPP }) },
 
       };
