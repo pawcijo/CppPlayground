@@ -75,7 +75,9 @@ void Zadanko()
       int column = symbol_map[current_row[j][0]] - 1;
       int pozycja = raw * 8 + column;
       long* wsk = reinterpret_cast<long*>(szachownica);
-      wsk[pozycja] = static_cast<long>(i * 8 + j);
+
+      //tak
+      wsk[pozycja] = static_cast<long>((i * 8) + j);
 
       std::cout << "Writing for position: " << current_row[j] << "<" << pozycja
                 << ">" << std::endl;
