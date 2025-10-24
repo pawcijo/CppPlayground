@@ -37,6 +37,7 @@
 #include "Demos/C++Grebosz/Zadanko8_28.hpp"
 #include "Demos/C++Grebosz/Zadanko12_5_30.hpp"
 #include "Demos/C++Grebosz/Zadanko13_9_10.hpp" 
+#include "Demos/C++Grebosz/Zadanko14_7_16.hpp"
 
 // Question tasks
 #include "QuestionTasks/LongestCharSequence.hpp"
@@ -105,6 +106,7 @@ enum class DemoType : int
   Zadanko8_28Demo,
   Zadanko12_5_30Demo,
   Zadanko13_9_10Demo,
+  Zadanko14_7_16Demo,
   Count
 };
 
@@ -434,7 +436,13 @@ public:
             DemoCreatorWithNameAndTags(
             []() { return std::make_unique<Zadanko13_9_10>(); },
             "Zadanko13_9_10Demo",
-            { DemoTag::GreboszCPP })}
+            { DemoTag::GreboszCPP })},
+            { DemoType::Zadanko14_7_16Demo,
+            DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<Zadanko14_7_16>(); },
+            "Zadanko14_7_16Demo",
+            { DemoTag::GreboszCPP })},
+
       };
     // std::cout << std::format("Demo map created. Size: {}.", sizeof(demoMap))
     //           << std::endl;

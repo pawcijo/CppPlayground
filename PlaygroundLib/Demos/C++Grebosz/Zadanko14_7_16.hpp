@@ -3,19 +3,18 @@
 #include "Common/Common.hpp"
 #include "Common/DemoBase.hpp"
 
-namespace Z_13_9_10
+class Zadanko14_7_16 : public DemoBase
 {
-void Zadanko();
-}
 
-class Zadanko13_9_10 : public DemoBase
-{
 public:
-  Zadanko13_9_10()
+  Zadanko14_7_16()
   {
-    mName = "Opis zadanka 12.9.10";
-    mNotes = { { "Zadanko 12.9.10", R"(Opis na stronie : 445)" } };
-  };
+    mName = "Opis zadanka 14.7.16";
+    mNotes = { { "Zadanko 14.7.16", R"(Opis na stronie : 469)" } };
+  }
+
+  void Zadanko();
+
   void ShowExample(
     std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
@@ -27,13 +26,13 @@ public:
     {
       printNotesCallback(mNotes);
     }
-
-    Z_13_9_10::Zadanko();
   }
 
   void ShowDemo(
     std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     ShowExample(printNotesCallback);
+
+    Zadanko();
   }
 };
