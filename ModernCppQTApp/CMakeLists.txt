@@ -16,16 +16,19 @@ set(CMAKE_AUTORCC ON)
 set(SOURCES
     src/main.cpp
     src/mainwindow.cpp
+    src/periodictablewindow.cpp
 )
 
 # Define header files
 set(HEADERS
     src/mainwindow.h
+    src/periodictablewindow.h
 )
 
 # Define UI files
 set(UI_FILES
     src/mainwindow.ui
+    src/periodictablewindow.ui
 )
 
 # Add Qt resources

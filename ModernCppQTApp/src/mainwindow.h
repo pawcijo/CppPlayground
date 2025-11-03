@@ -6,6 +6,7 @@
 #include <map>
 
 #include "DemosFactory/DemoFactory.hpp" // Your existing factory with DemoType, getDemoMap, createDemo
+#include "periodictablewindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +21,7 @@ public:
 
 private slots:
     void onRunClicked();
+    void onMendelejewClicked();
     void onClearClicked();
     void onTagFilterChanged(); // Add this line
 
@@ -29,6 +31,7 @@ private:
 
     std::unique_ptr<DemoBase> createDemo(DemoType chosenDemo);
     Ui::MainWindow *ui;
+    PeriodicTableWindow *periodicTableWindow = nullptr;
     std::unordered_map<DemoType, DemoFactory::DemoCreatorWithNameAndTags> rawMap;
     std::unique_ptr<DemoBase> demoInstance;
     std::map<int, std::pair<DemoType, std::string>> filteredDemoMap; // Add this line

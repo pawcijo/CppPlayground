@@ -1,5 +1,7 @@
 #include "mainwindow.h"
+#include "periodictablewindow.h"
 #include "ui_mainwindow.h"
+#include "ui_periodictablewindow.h"
 
 #include <QCheckBox>
 #include <QGroupBox>
@@ -50,6 +52,10 @@ MainWindow::MainWindow(QWidget* parent)
 
   connect(
     ui->runButton, &QPushButton::clicked, this, &MainWindow::onRunClicked);
+  connect(ui->openTableButton,
+          &QPushButton::clicked,
+          this,
+          &MainWindow::onMendelejewClicked);
   connect(
     ui->clearButton, &QPushButton::clicked, this, &MainWindow::onClearClicked);
 
@@ -137,11 +143,10 @@ void MainWindow::onRunClicked()
 
   auto [type, name] = filteredDemoMap[selectedId];
 
-
-  //clear previous object
-  if(demoInstance)
+  // clear previous object
+  if (demoInstance)
   {
-      demoInstance.reset();
+    demoInstance.reset();
   }
 
   demoInstance = createDemo(type);
@@ -156,6 +161,21 @@ void MainWindow::onRunClicked()
     QMessageBox::information(
       this, "Not Implemented", "This demo is not implemented yet.");
   }
+}
+
+void MainWindow::onMendelejewClicked()
+{
+
+  // Create the window if it doesn't exist
+  if (!periodicTableWindow)
+    periodicTableWindow = new PeriodicTableWindow(this);
+
+  // Show the window
+  periodicTableWindow->show();
+
+  // Bring it to the front
+  periodicTableWindow->raise();
+  periodicTableWindow->activateWindow();
 }
 
 void MainWindow::writeNotesToTerminal(NoteFormat& notes)

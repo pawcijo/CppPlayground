@@ -74,6 +74,11 @@
       <property name="text"><string>Run Selected Demo</string></property>
      </widget>
     </item>
+        <item>
+     <widget class="QPushButton" name="openTableButton">
+      <property name="text"><string>OpenTable</string></property>
+     </widget>
+    </item>
     <item>
      <widget class="QPushButton" name="clearButton">
       <property name="text">

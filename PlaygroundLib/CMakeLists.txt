@@ -18,6 +18,7 @@ file(GLOB_RECURSE SOURCES
     "Demos/C++Grebosz/*.cpp"
     "DemosFactory/*.cpp"
     "QuestionTasks/*.cpp"
+    "Mendelejew/*.cpp"
 
 )
 
