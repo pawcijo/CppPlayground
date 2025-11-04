@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>1200</width>
     <height>700</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>Periodic Table</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayoutMain">
     <item>
      <widget class="QLabel" name="titleLabel">
       <property name="text">
@@ -38,20 +38,78 @@
      </widget>
     </item>
     <item>
-     <widget class="QTableWidget" name="tablePeriodic">
-      <property name="rowCount">
-       <number>9</number>
-      </property>
-      <property name="columnCount">
-       <number>18</number>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
+     <!-- Horizontal layout: Table + Period Info Panel -->
+     <layout class="QHBoxLayout" name="horizontalLayoutTable">
+      <item>
+       <widget class="QTableWidget" name="tablePeriodic">
+        <property name="rowCount">
+         <number>10</number>
+        </property>
+        <property name="columnCount">
+         <number>18</number>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>3</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <!-- Right-side panel for period data -->
+       <layout class="QVBoxLayout" name="verticalLayoutPeriodInfo">
+        <item>
+         <widget class="QLabel" name="labelPeriodInfoTitle">
+          <property name="text">
+           <string>Period Information</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelPeriodInfoContent">
+          <property name="text">
+           <string>Select a period to view details here.</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignTop</set>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacerPeriodInfo">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>5</width>
+            <height>200</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

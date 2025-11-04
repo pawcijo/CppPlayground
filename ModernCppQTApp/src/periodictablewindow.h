@@ -1,5 +1,6 @@
 #pragma once
 #include <QMainWindow>
+#include <Mendelejew/Element.hpp>
 
 namespace Ui
 {
@@ -14,7 +15,11 @@ public:
   explicit PeriodicTableWindow(QWidget* parent = nullptr);
   ~PeriodicTableWindow();
 
+  private slots:
+    void onTableCellClicked(int row, int column);
+
 private:
   Ui::PeriodicTableWindow* ui;
+  std::vector<PlaygroundLib::Element> elements;
 
 };

@@ -1,11 +1,14 @@
 #include "ElementReader.hpp"
 #include "Element.hpp"
 
+#include <cstddef>
 #include <fstream>
+#include <map>
 #include <print>
 #include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 #include <vector>
 
 namespace PlaygroundLib
@@ -22,10 +25,17 @@ std::vector<Element> ElementReader::ReadElementsFromFile(
     throw std::runtime_error("Cannot open file: " + filePath.string());
 
   bool firstLine = true;
+  std::vector<std::string> names;
   while (std::getline(file, getString))
   {
     if (firstLine)
     {
+      std::istringstream iss(getString);
+      std::string value;
+      while (std::getline(iss, value, ','))
+      { // split by comma
+        names.push_back(value);
+      }
       // skip header line
       firstLine = false;
       continue;
@@ -58,7 +68,7 @@ std::vector<Element> ElementReader::ReadElementsFromFile(
 
     try
     {
-      atomicWeight = std::stoi(parts[3]);
+      atomicWeight = std::stod(parts[3]);
     }
     catch (std::invalid_argument& e)
     {
@@ -122,6 +132,12 @@ std::vector<Element> ElementReader::ReadElementsFromFile(
     std::string phaseAtSTP = parts[9];
     bool isRadioactive = parts[10].empty() ? false : true;
 
+    std::map<std::string, std::string> additionalProperties;
+    for (size_t i = 0; i < parts.size(); i++)
+    {
+      additionalProperties[names[i]] = parts[i]; // Placeholder logic
+    }
+
     Element element(atomicNumber,
                     symbol,
                     name,
@@ -132,7 +148,8 @@ std::vector<Element> ElementReader::ReadElementsFromFile(
                     period,
                     group,
                     phaseAtSTP,
-                    isRadioactive);
+                    isRadioactive,
+                    additionalProperties);
 
     std::println("Read element: {}", element.toString());
 

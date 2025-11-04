@@ -1,8 +1,8 @@
 #pragma once
-#include <fstream>
+#include <map>
 #include <ostream>
-#include <sstream>
 #include <string>
+#include <sstream>
 namespace PlaygroundLib
 {
 
@@ -21,6 +21,8 @@ class Element
   std::string mPhaseAtSTP;
   bool mIsRadioactive;
 
+  std::map<std::string, std::string> mAllProperties;
+
 public:
   explicit Element(int atomicNumber,
                    std::string symbol,
@@ -32,7 +34,8 @@ public:
                    int period,
                    int group,
                    std::string phaseAtSTP,
-                   bool isRadioactive)
+                   bool isRadioactive,
+                   std::map<std::string, std::string> properties = {})
     : mAtomicNumber(atomicNumber)
     , mSymbol(symbol)
     , mName(name)
@@ -44,6 +47,7 @@ public:
     , mGroup(group)
     , mPhaseAtSTP(phaseAtSTP)
     , mIsRadioactive(isRadioactive)
+    , mAllProperties(properties)
   {
   }
 
@@ -51,11 +55,11 @@ public:
   {
     return mAtomicNumber;
   }
-  std::string getSymbol() const
+  const std::string& getSymbol() const
   {
     return mSymbol;
   }
-  std::string getName() const
+  const std::string& getName() const
   {
     return mName;
   }
@@ -94,6 +98,11 @@ public:
   bool isRadioactive() const
   {
     return mIsRadioactive;
+  }
+
+  const std::map<std::string, std::string>& getAllProperties() const
+  {
+    return mAllProperties;
   }
 
   std::string toString() const
