@@ -1,106 +1,158 @@
 #pragma once
 #include <map>
 #include <ostream>
-#include <string>
+#include <print>
 #include <sstream>
+#include <stdexcept>
+#include <string>
+#include <unordered_map>
 namespace PlaygroundLib
 {
 
+namespace
+{
+
+constexpr std::string kElementPropertyAtomicNumber = "Atomic Number";
+constexpr std::string kElementPropertySymbol = "Symbol";
+constexpr std::string kElementPropertyName = "Element";
+constexpr std::string kElementPropertyAtomicWeight = "Atomic Mass";
+constexpr std::string kElementPropertyPeriod = "Period";
+constexpr std::string kElementPropertyGroup = "Group";
+constexpr std::string kElementPropertyPhaseAtSTP = "Phase";
+constexpr std::string kElementPropertyRadioactive = "Radioactive";
+constexpr std::string kElementPropertyNumberOfProtons = "Number of Protons";
+constexpr std::string kElementPropertyNumberOfNeutrons = "Number of Neutrons";
+constexpr std::string kElementPropertyNumberOfElectrons = "Number of Electrons";
+
+}
+
 class Element
 {
-  int mAtomicNumber;
-  std::string mSymbol;
-  std::string mName;
-  double mAtomicWeight;
-
-  int numberOfProtons;
-  int numberOfNeutrons;
-  int numberOfElectrons;
-  int mPeroid;
-  int mGroup;
-  std::string mPhaseAtSTP;
-  bool mIsRadioactive;
-
-  std::map<std::string, std::string> mAllProperties;
+  std::unordered_map<std::string, std::string> mAllProperties;
 
 public:
-  explicit Element(int atomicNumber,
-                   std::string symbol,
-                   std::string name,
-                   double atomicWeight,
-                   int protons,
-                   int neutrons,
-                   int electrons,
-                   int period,
-                   int group,
-                   std::string phaseAtSTP,
-                   bool isRadioactive,
-                   std::map<std::string, std::string> properties = {})
-    : mAtomicNumber(atomicNumber)
-    , mSymbol(symbol)
-    , mName(name)
-    , mAtomicWeight(atomicWeight)
-    , numberOfProtons(protons)
-    , numberOfNeutrons(neutrons)
-    , numberOfElectrons(electrons)
-    , mPeroid(period)
-    , mGroup(group)
-    , mPhaseAtSTP(phaseAtSTP)
-    , mIsRadioactive(isRadioactive)
-    , mAllProperties(properties)
+  explicit Element(std::unordered_map<std::string, std::string> properties = {})
+    : mAllProperties(properties)
   {
   }
 
   int getAtomicNumber() const
   {
-    return mAtomicNumber;
+    int value{};
+    try
+    {
+      value = std::stoi(mAllProperties.at(kElementPropertyAtomicNumber));
+    }
+    catch (std::invalid_argument& e)
+    {
+      std::println("invalid_argument exception, Invalid atomic number format.");
+    }
+    return value;
   }
   const std::string& getSymbol() const
   {
-    return mSymbol;
+    return mAllProperties.at(kElementPropertySymbol);
   }
+  
   const std::string& getName() const
   {
-    return mName;
+    return mAllProperties.at(kElementPropertyName);
   }
   double getAtomicWeight() const
   {
+    double mAtomicWeight{};
+    try
+    {
+      mAtomicWeight =
+        std::stod(mAllProperties.at(kElementPropertyAtomicWeight));
+    }
+    catch (std::invalid_argument& e)
+    {
+      std::println("invalid_argument exception, Invalid atomic weight format.");
+    }
     return mAtomicWeight;
   }
 
   int getNumberOfProtons() const
   {
-    return numberOfProtons;
+    int value{};
+    try
+    {
+      value = std::stoi(mAllProperties.at(kElementPropertyNumberOfProtons));
+    }
+    catch (std::invalid_argument& e)
+    {
+      std::println("invalid_argument exception, Invalid number of protons.");
+    }
+    return value;
   }
 
   int getNumberOfNeutrons() const
   {
-    return numberOfNeutrons;
+    int value{};
+    try
+    {
+      value = std::stoi(mAllProperties.at(kElementPropertyNumberOfNeutrons));
+    }
+    catch (std::invalid_argument& e)
+    {
+      std::println("invalid_argument exception, Invalid number of neutrons.");
+    }
+    return value;
   }
 
   int getNumberOfElectrons() const
   {
-    return numberOfElectrons;
+    int value{};
+    try
+    {
+      value = std::stoi(mAllProperties.at(kElementPropertyNumberOfElectrons));
+    }
+    catch (std::invalid_argument& e)
+    {
+      std::println("invalid_argument exception, Invalid number of electrons.");
+    }
+    return value;
   }
 
   int getPeriod() const
   {
-    return mPeroid;
+    int value{};
+    try
+    {
+      value = std::stoi(mAllProperties.at(kElementPropertyPeriod));
+    }
+    catch (std::invalid_argument& e)
+    {
+      std::println("invalid_argument exception, Invalid peroid number.");
+    }
+    return value;
   }
   int getGroup() const
   {
-    return mGroup;
+    int value{};
+    try
+    {
+      value = std::stoi(mAllProperties.at(kElementPropertyGroup));
+    }
+    catch (std::invalid_argument& e)
+    {
+      //std::println("invalid_argument exception, Invalid group number.");
+      return -1;
+    }
+    return value;
   }
   const std::string& getPhaseAtSTP() const
   {
-    return mPhaseAtSTP;
+    return mAllProperties.at(kElementPropertyPhaseAtSTP);
+    ;
   }
   bool isRadioactive() const
   {
-    return mIsRadioactive;
+    return mAllProperties.at(kElementPropertyRadioactive) == "yes" ? true : false;
   }
 
-  const std::map<std::string, std::string>& getAllProperties() const
+  const std::unordered_map<std::string, std::string>& getAllProperties() const
   {
     return mAllProperties;
   }
@@ -108,14 +160,14 @@ public:
   std::string toString() const
   {
     std::ostringstream oss;
-    oss << "Element: " << mName << " (" << mSymbol
-        << "), Atomic Number: " << mAtomicNumber
-        << ", Atomic Weight: " << mAtomicWeight
-        << ", Protons: " << numberOfProtons
-        << ", Neutrons: " << numberOfNeutrons
-        << ", Electrons: " << numberOfElectrons << ", Period: " << mPeroid
-        << ", Group: " << mGroup << ", Phase at STP: " << mPhaseAtSTP
-        << ", Radioactive: " << (mIsRadioactive ? "Yes" : "No");
+    oss << "Element: " << getName() << " (" << getSymbol()
+        << "), Atomic Number: " << getAtomicNumber()
+        << ", Atomic Weight: " << getAtomicWeight()
+        << ", Protons: " << getNumberOfProtons()
+        << ", Neutrons: " << getNumberOfNeutrons()
+        << ", Electrons: " << getNumberOfElectrons() << ", Period: " << getPeriod()
+        << ", Group: " << getGroup() << ", Phase at STP: " << getPhaseAtSTP()
+        << ", Radioactive: " << (isRadioactive() ? "Yes" : "No");
     return oss.str();
   }
 };

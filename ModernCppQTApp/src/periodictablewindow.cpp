@@ -6,6 +6,8 @@
 #include <QHelpEvent>
 #include <QTableWidgetItem>
 #include <QToolTip>
+#include <QVariantAnimation>
+#include <string>
 #include <vector>
 
 void fillPeriodicTable(QTableWidget* table,
@@ -54,6 +56,26 @@ void fillPeriodicTable(QTableWidget* table,
       "Neutrons: " + std::to_string(elem.getNumberOfNeutrons()) + "\n" +
       "Electrons: " + std::to_string(elem.getNumberOfElectrons()) + "\n"));
 
+    // set metals to light gray
+    if (elem.getPhaseAtSTP() == "solid")
+    {
+      item->setBackground(QBrush(Qt::lightGray));
+    }
+
+    // set gases to light yellow
+    if (elem.getPhaseAtSTP() == "gas")
+    {
+      item->setBackground(QBrush(QColor(255, 255, 150)));
+      item->setForeground(QBrush(QColor(0, 0, 0)));
+    }
+
+    // set liquids to light cyan
+    if (elem.getPhaseAtSTP() == "liq")
+    {
+      item->setBackground(QBrush(Qt::cyan));
+    }
+
+    // Highlight radioactive elements
     if (elem.isRadioactive())
     {
       item->setBackground(QBrush(Qt::green));
@@ -67,14 +89,13 @@ void fillPeriodicTable(QTableWidget* table,
 
   // for 3-6 and 3-7 put information about Lanthanides and Actinides
 
-
   QTableWidgetItem* lanthanides =
     new QTableWidgetItem(QString::fromStdString("Lan\n (57-71)"));
-  table->setItem(6-1, 3-1, lanthanides);
+  table->setItem(6 - 1, 3 - 1, lanthanides);
 
   QTableWidgetItem* actinides =
     new QTableWidgetItem(QString::fromStdString("Act\n (89-103)"));
-  table->setItem(7-1, 3-1, actinides);
+  table->setItem(7 - 1, 3 - 1, actinides);
 
   table->setMouseTracking(true);
   // table->resizeColumnsToContents();
@@ -107,50 +128,94 @@ PeriodicTableWindow::PeriodicTableWindow(QWidget* parent)
   ui->tablePeriodic->viewport()->installEventFilter(this);
   ui->tablePeriodic->viewport()->setMouseTracking(true);
 
-      connect(ui->tablePeriodic, &QTableWidget::cellClicked,
-            this, &PeriodicTableWindow::onTableCellClicked);
+  connect(ui->tablePeriodic,
+          &QTableWidget::cellClicked,
+          this,
+          &PeriodicTableWindow::onTableCellClicked);
 }
 
 void PeriodicTableWindow::onTableCellClicked(int row, int column)
 {
-  QTableWidgetItem *item = ui->tablePeriodic->item(row, column);
-    if (!item)
-        return;
+  QTableWidgetItem* item = ui->tablePeriodic->item(row, column);
+  if (!item)
+    return;
 
-    // Example: get element info (you can adapt this to your actual data)
-    QString elementSymbol = item->text();
-    auto it = std::find_if(elements.begin(), elements.end(),
-                           [&elementSymbol](const PlaygroundLib::Element& elem)
-                           {
-                               return QString::fromStdString(elem.getSymbol()) == elementSymbol;
-                           });
+  // Example: get element info (you can adapt this to your actual data)
+  QString elementSymbol = item->text();
+  auto it = std::find_if(
+    elements.begin(),
+    elements.end(),
+    [&elementSymbol](const PlaygroundLib::Element& elem)
+    { return QString::fromStdString(elem.getSymbol()) == elementSymbol; });
 
-    if(it == elements.end())
-        return;
+  if (it == elements.end())
+    return;
 
-    QString infoText = QString();
-    const auto& properties = it->getAllProperties();
-    for (const auto& [key, value] : properties)
-    {
-        infoText += QString("<b>%1:</b> %2<br>").arg(QString::fromStdString(key), QString::fromStdString(value));
-    }
-    // Fill the period info label
-    /*
-    QString infoText = QString(
-        "<b>Element:</b> %1<br>"
-        "<b>Period:</b> %2<br>"
-        "<b>Group:</b> %3<br>"
-        "<b>Group:</b> %3<br>")
-        .arg(it->getName())
-        .arg(it->getPeriod())
-        .arg(it->getGroup())
-        .arg(it->);
-        /
-        */
+  QString infoText = QString();
+  const auto& properties = it->getAllProperties();
+  for (const auto& [key, value] : properties)
+  {
+    if (key != "Element" &&
+        key != "Symbol") // Skip name and symbol as they are in title
+      infoText +=
+        QString("<b>%1:</b> %2<br>")
+          .arg(QString::fromStdString(key), QString::fromStdString(value));
+  }
+  ui->labelPeriodInfoContent->setText(infoText);
 
+  ui->labelPeriodInfoTitle->setText(
+    QString("%1 (%2)").arg(QString::fromStdString(it->getName()),
+                           QString::fromStdString(it->getSymbol())));
 
+  QVariantAnimation* anim = new QVariantAnimation(this);
+  anim->setDuration(600);
+  anim->setStartValue(QColor(255, 255, 180));
+  anim->setEndValue(QColorConstants::White);
+  anim->setEasingCurve(QEasingCurve::OutCubic);
 
-    ui->labelPeriodInfoContent->setText(infoText);
+  connect(anim,
+          &QVariantAnimation::valueChanged,
+          this,
+          [item](const QVariant& value)
+          { item->setBackground(value.value<QColor>()); });
+
+  bool isRadioactive = it->isRadioactive();
+  std::string phase = it->getPhaseAtSTP();
+  connect(anim,
+          &QVariantAnimation::finished,
+          this,
+          [item, isRadioactive, phase]()
+          {
+            if (isRadioactive)
+            {
+              item->setBackground(QBrush(Qt::green));
+              return;
+            }
+            else
+            {
+              item->setBackground(Qt::NoBrush);
+            }
+
+            if (phase == "solid")
+            {
+              item->setBackground(QBrush(Qt::lightGray));
+            }
+            else if (phase == "gas")
+            {
+              item->setBackground(QBrush(QColor(255, 255, 150)));
+              item->setForeground(QBrush(QColor(0, 0, 0)));
+            }
+            else if (phase == "liq")
+            {
+              item->setBackground(QBrush(Qt::cyan));
+            }
+            else
+            {
+              item->setBackground(Qt::NoBrush);
+            }
+          });
+
+  anim->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 PeriodicTableWindow::~PeriodicTableWindow()
