@@ -28,5 +28,13 @@ private:
     QVariantAnimation* m_rotationAnim;      // Animation for rotating the atom
 
     // Rotate the whole atom
+
+    void createElectronOrbitTube(Qt3DCore::QEntity* parent,
+                                                 float orbitRadius,
+                                                 float tubeRadius = 0.02f,
+                                                 int segments = 64,
+                                                 int tubeSides = 8,
+                                                 const QColor& color = Qt::red);
+
     void setRotation(float angle);
 };
