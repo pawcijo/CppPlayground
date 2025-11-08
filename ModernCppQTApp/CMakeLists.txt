@@ -2,7 +2,18 @@
 project(ModernCppQTApp VERSION 1.0)
 
 #Find Qt6
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Multimedia Quick QuickWidgets)
+find_package(Qt6 REQUIRED COMPONENTS 
+    Core 
+    Gui 
+    Widgets 
+    Multimedia 
+    Quick 
+    QuickControls2 
+    QuickWidgets  
+    3DCore
+    3DQuick
+    3DRender
+    3DExtras)
 find_package(Vulkan REQUIRED)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -24,7 +35,7 @@ set(SOURCES
 )
 
 if(APPLE)
-    list(APPEND SOURCES src/MacOS/MetalItem.cpp src/MacOS/MetalSphereItem.cpp src/MacOS/MetalSphereNode.cpp)
+    list(APPEND SOURCES src/MacOS/MetalItem.cpp )
 endif()
 
 # Define header files
@@ -34,7 +45,7 @@ set(HEADERS
 )
 
 if(APPLE)
-    list(APPEND HEADERS src/MacOS/MetalItem.h src/MacOS/MetalSphereItem.h src/MacOS/MetalSphereNode.h)
+    list(APPEND HEADERS src/MacOS/MetalItem.h )
 endif()
 
 # Define UI files
@@ -68,6 +79,11 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::Core
     Qt6::Gui
     Qt6::Widgets
-    Qt6::Quick
     Qt6::QuickWidgets
+    Qt6::Quick
+    Qt6::3DQuick
+    Qt6::QuickControls2
+    Qt6::3DCore
+    Qt6::3DRender
+    Qt6::3DExtras
 )

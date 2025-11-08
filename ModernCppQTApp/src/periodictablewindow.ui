@@ -23,12 +23,6 @@
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
       <property name="font">
        <font>
         <pointsize>16</pointsize>
@@ -38,7 +32,6 @@
      </widget>
     </item>
     <item>
-     <!-- Horizontal layout: Table + Period Info Panel -->
      <layout class="QHBoxLayout" name="horizontalLayoutTable">
       <item>
        <widget class="QTableWidget" name="tablePeriodic">
@@ -57,7 +50,6 @@
        </widget>
       </item>
       <item>
-       <!-- Right-side panel for element info and Vulkan visualization -->
        <layout class="QVBoxLayout" name="verticalLayoutPeriodInfo">
         <item>
          <widget class="QLabel" name="labelPeriodInfoTitle">
@@ -76,8 +68,7 @@
          </widget>
         </item>
         <item>
-         <!-- Vulkan rendering area placeholder -->
-         <widget class="QWidget" name="vulkanWidgetPlaceholder">
+         <widget class="QWidget" name="metalWidgetPlaceholder">
           <property name="minimumSize">
            <size>
             <width>300</width>
@@ -86,9 +77,6 @@
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: #222222; border: 1px solid #444;</string>
-          </property>
-          <property name="toolTip">
-           <string>Vulkan-rendered visualization will appear here.</string>
           </property>
          </widget>
         </item>

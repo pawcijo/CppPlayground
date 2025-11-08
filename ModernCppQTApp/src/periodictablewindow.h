@@ -20,6 +20,10 @@ private slots:
   void onTableCellClicked(int row, int column);
 
 private:
+#ifdef __APPLE__
+  void PrepereAppleScene(Ui::PeriodicTableWindow* ui);
+#endif
+
   Ui::PeriodicTableWindow* ui;
   QVulkanInstance m_vkInstance;
   std::vector<PlaygroundLib::Element> elements;

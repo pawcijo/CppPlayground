@@ -18,6 +18,19 @@
 #include <string>
 #include <vector>
 
+// Qt3D includes
+#include <Qt3DCore/QEntity>
+#include <Qt3DCore/QTransform>
+#include <Qt3DExtras/QCuboidMesh>
+#include <Qt3DExtras/QOrbitCameraController>
+#include <Qt3DExtras/QPhongMaterial>
+#include <Qt3DExtras/Qt3DWindow>
+#include <Qt3DRender/QDirectionalLight>
+
+#include <QForwardRenderer>
+#include <Qt3DRender/QCamera>
+#include <Qt3DRender/QCameraLens>
+
 // Local vulkan window includes
 
 #include <iostream>
@@ -124,28 +137,7 @@ PeriodicTableWindow::PeriodicTableWindow(QWidget* parent)
   ui->setupUi(this);
 
 #ifdef __APPLE__
-     // Register MetalItem for QML
-    qmlRegisterType<MetalItem>("MyMetal", 1, 0, "MetalItem");
-  auto* quickWidget = new QQuickWidget(this);
-  quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
-  quickWidget->setSource(QUrl(QStringLiteral("qrc:/MetalPanel.qml")));
-  quickWidget->setMinimumSize(300, 200);
-
-  if (quickWidget->status() != QQuickWidget::Ready) {
-    qWarning() << "QML failed to load:" << quickWidget->errors();
-}
-
-quickWidget->setClearColor(Qt::black);
-
-QTimer::singleShot(0, quickWidget, [quickWidget]{
-    quickWidget->update();
-});
-
-
-  ui->verticalLayoutPeriodInfo->replaceWidget(ui->vulkanWidgetPlaceholder,
-                                              quickWidget);
-  ui->vulkanWidgetPlaceholder->deleteLater();
-
+  PrepereAppleScene(ui);
 #endif
 
   // Read elements from
@@ -262,4 +254,76 @@ void PeriodicTableWindow::onTableCellClicked(int row, int column)
 PeriodicTableWindow::~PeriodicTableWindow()
 {
   delete ui;
+}
+
+void PeriodicTableWindow::PrepereAppleScene(Ui::PeriodicTableWindow* ui)
+{
+  // Create Qt3D window
+  auto* view3D = new Qt3DExtras::Qt3DWindow();
+  Qt3DExtras::QForwardRenderer* forwardRenderer =
+    static_cast<Qt3DExtras::QForwardRenderer*>(view3D->defaultFrameGraph());
+  if (forwardRenderer)
+    forwardRenderer->setClearColor(QColor(Qt::black));
+
+  QWidget* container = QWidget::createWindowContainer(view3D);
+  container->setMinimumSize(300, 200);
+  container->setMaximumHeight(250);
+  container->setFocusPolicy(Qt::StrongFocus);
+
+  // Replace placeholder inside verticalLayoutPeriodInfo
+  QVBoxLayout* infoLayout = ui->verticalLayoutPeriodInfo;
+  int index = infoLayout->indexOf(ui->metalWidgetPlaceholder);
+  if (index >= 0)
+  {
+    infoLayout->removeWidget(ui->metalWidgetPlaceholder);
+    ui->metalWidgetPlaceholder->deleteLater();
+    infoLayout->insertWidget(index, container);
+  }
+
+  // ---- Create scene ----
+  Qt3DCore::QEntity* rootEntity = new Qt3DCore::QEntity();
+
+  Qt3DCore::QEntity* cubeEntity = new Qt3DCore::QEntity(rootEntity);
+  auto* cubeMesh = new Qt3DExtras::QCuboidMesh();
+  cubeEntity->addComponent(cubeMesh);
+
+  auto* cubeMaterial = new Qt3DExtras::QPhongMaterial();
+  cubeMaterial->setDiffuse(QColor(Qt::red));
+  cubeEntity->addComponent(cubeMaterial);
+
+  auto* cubeTransform = new Qt3DCore::QTransform();
+  cubeEntity->addComponent(cubeTransform);
+
+  // Animate rotation
+  auto* animation = new QVariantAnimation(this);
+  animation->setStartValue(0.0f);
+  animation->setEndValue(360.0f);
+  animation->setDuration(4000);
+  animation->setLoopCount(-1);
+  connect(animation,
+          &QVariantAnimation::valueChanged,
+          [cubeTransform](const QVariant& v)
+          {
+            cubeTransform->setRotation(
+              QQuaternion::fromEulerAngles(0, v.toFloat(), 0));
+          });
+  animation->start();
+
+  Qt3DCore::QEntity* dirLightEntity = new Qt3DCore::QEntity(rootEntity);
+  auto* dirLight = new Qt3DRender::QDirectionalLight(dirLightEntity);
+  dirLight->setWorldDirection(QVector3D(-1.0f, -1.0f, -1.0f));
+  dirLight->setColor(Qt::white);
+  dirLight->setIntensity(1.0f); // brightness
+  dirLightEntity->addComponent(dirLight);
+
+  // Camera
+  Qt3DRender::QCamera* camera = view3D->camera();
+  camera->lens()->setPerspectiveProjection(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
+  camera->setPosition(QVector3D(0, 0, 5.0f));
+  camera->setViewCenter(QVector3D(0, 0, 0));
+
+  auto* camController = new Qt3DExtras::QOrbitCameraController(rootEntity);
+  camController->setCamera(camera);
+
+  view3D->setRootEntity(rootEntity);
 }
