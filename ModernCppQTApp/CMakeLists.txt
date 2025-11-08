@@ -2,7 +2,8 @@
 project(ModernCppQTApp VERSION 1.0)
 
 #Find Qt6
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Multimedia Quick QuickWidgets)
+find_package(Vulkan REQUIRED)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 23)
@@ -16,12 +17,15 @@ set(CMAKE_AUTORCC ON)
 set(SOURCES
     src/main.cpp
     src/mainwindow.cpp
+    src/SimpleRenderer.cpp
     src/periodictablewindow.cpp
 )
 
 # Define header files
 set(HEADERS
     src/mainwindow.h
+    src/MyVulkanItem.h
+    src/SimpleRenderer.h
     src/periodictablewindow.h
 )
 
@@ -46,12 +50,16 @@ add_executable(${PROJECT_NAME}
 #Include directories for static library
 target_include_directories(${PROJECT_NAME} PUBLIC
     ../PlayGroundLib
+    ${Vulkan_INCLUDE_DIRS}
 )
 
 target_link_libraries(${PROJECT_NAME}
     PlaygroundLib
+    Vulkan::Vulkan
     Qt6::Multimedia
     Qt6::Core
     Qt6::Gui
     Qt6::Widgets
+    Qt6::Quick
+    Qt6::QuickWidgets
 )

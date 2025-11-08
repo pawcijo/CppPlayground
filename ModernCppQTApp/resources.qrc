@@ -2,4 +2,7 @@
 <RCC version="1.0">
     <qresource prefix="/">
     </qresource>
+      <qresource prefix="/">
+        <file>VulkanPanel.qml</file>
+    </qresource>
 </RCC>

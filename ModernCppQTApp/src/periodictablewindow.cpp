@@ -1,14 +1,25 @@
 #include "periodictablewindow.h"
 #include "ui_periodictablewindow.h"
 
+// from static lib PlaygroundLib
 #include <Mendelejew/Element.hpp>
 #include <Mendelejew/ElementReader.hpp>
+
+// from Qt
 #include <QHelpEvent>
+#include <QQmlContext>
+#include <QQuickWidget>
 #include <QTableWidgetItem>
+#include <QTimer>
 #include <QToolTip>
 #include <QVariantAnimation>
+#include <QVulkanInstance>
+#include <QVulkanWindow>
 #include <string>
 #include <vector>
+
+// Local vulkan window includes
+#include "MyVulkanItem.h"
 
 void fillPeriodicTable(QTableWidget* table,
                        const std::vector<PlaygroundLib::Element>& elements)
@@ -106,6 +117,31 @@ PeriodicTableWindow::PeriodicTableWindow(QWidget* parent)
   , ui(new Ui::PeriodicTableWindow)
 {
   ui->setupUi(this);
+
+  qmlRegisterType<MyVulkanItem>("MyVulkan", 1, 0, "VulkanItem");
+
+  auto* quickWidget = new QQuickWidget(this);
+  quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
+
+  // Load QML from resource or local file
+  quickWidget->setSource(QUrl(QStringLiteral("qrc:/VulkanPanel.qml")));
+  quickWidget->setMinimumSize(300, 200);
+
+  // Replace placeholder
+  ui->verticalLayoutPeriodInfo->replaceWidget(ui->vulkanWidgetPlaceholder,
+                                              quickWidget);
+  ui->vulkanWidgetPlaceholder->deleteLater();
+
+  m_vkInstance.setExtensions({ "VK_KHR_surface", "VK_KHR_portability_subset" });
+  if (!m_vkInstance.create())
+    qWarning() << "Vulkan instance creation FAILED!";
+
+  // Pass instance to the QQuickItem after loading QML
+  QObject* rootObj = quickWidget->rootObject();
+  if (auto* vulkanItem = rootObj->findChild<MyVulkanItem*>("vulkanItem"))
+  {
+    vulkanItem->setVulkanInstance(&m_vkInstance);
+  }
 
   // Read elements from
   std::filesystem::path exePath = std::filesystem::

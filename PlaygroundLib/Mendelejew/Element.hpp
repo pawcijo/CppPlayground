@@ -1,9 +1,8 @@
 #pragma once
-#include <map>
+#include <exception>
 #include <ostream>
 #include <print>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 #include <unordered_map>
 namespace PlaygroundLib
@@ -43,9 +42,9 @@ public:
     {
       value = std::stoi(mAllProperties.at(kElementPropertyAtomicNumber));
     }
-    catch (std::invalid_argument& e)
+    catch (std::exception& e)
     {
-      std::println("invalid_argument exception, Invalid atomic number format.");
+      std::println("{} exception, in {}.", e.what(), __func__);
     }
     return value;
   }
@@ -53,7 +52,7 @@ public:
   {
     return mAllProperties.at(kElementPropertySymbol);
   }
-  
+
   const std::string& getName() const
   {
     return mAllProperties.at(kElementPropertyName);
@@ -66,9 +65,9 @@ public:
       mAtomicWeight =
         std::stod(mAllProperties.at(kElementPropertyAtomicWeight));
     }
-    catch (std::invalid_argument& e)
+    catch (std::exception& e)
     {
-      std::println("invalid_argument exception, Invalid atomic weight format.");
+      std::println("{} exception, in {}.", e.what(), __func__);
     }
     return mAtomicWeight;
   }
@@ -80,9 +79,9 @@ public:
     {
       value = std::stoi(mAllProperties.at(kElementPropertyNumberOfProtons));
     }
-    catch (std::invalid_argument& e)
+    catch (std::exception& e)
     {
-      std::println("invalid_argument exception, Invalid number of protons.");
+      std::println("{} exception, in {}.", e.what(), __func__);
     }
     return value;
   }
@@ -94,9 +93,9 @@ public:
     {
       value = std::stoi(mAllProperties.at(kElementPropertyNumberOfNeutrons));
     }
-    catch (std::invalid_argument& e)
+    catch (std::exception& e)
     {
-      std::println("invalid_argument exception, Invalid number of neutrons.");
+      std::println("{} exception, in {}.", e.what(), __func__);
     }
     return value;
   }
@@ -108,9 +107,9 @@ public:
     {
       value = std::stoi(mAllProperties.at(kElementPropertyNumberOfElectrons));
     }
-    catch (std::invalid_argument& e)
+    catch (std::exception& e)
     {
-      std::println("invalid_argument exception, Invalid number of electrons.");
+      std::println("{} exception, in {}.", e.what(), __func__);
     }
     return value;
   }
@@ -122,23 +121,29 @@ public:
     {
       value = std::stoi(mAllProperties.at(kElementPropertyPeriod));
     }
-    catch (std::invalid_argument& e)
+    catch (std::exception& e)
     {
-      std::println("invalid_argument exception, Invalid peroid number.");
+      std::println("{} exception, in {}.", e.what(), __func__);
     }
     return value;
   }
   int getGroup() const
   {
-    int value{};
+    // return -1 if group is not defined
+    int value{ -1 };
+
+    if (mAllProperties.at(kElementPropertyGroup).empty())
+    {
+      return value;
+    }
+
     try
     {
       value = std::stoi(mAllProperties.at(kElementPropertyGroup));
     }
-    catch (std::invalid_argument& e)
+    catch (std::exception& e)
     {
-      //std::println("invalid_argument exception, Invalid group number.");
-      return -1;
+      std::println("{} exception, in {}.", e.what(), __func__);
     }
     return value;
   }
@@ -149,7 +154,8 @@ public:
   }
   bool isRadioactive() const
   {
-    return mAllProperties.at(kElementPropertyRadioactive) == "yes" ? true : false;
+    return mAllProperties.at(kElementPropertyRadioactive) == "yes" ? true
+                                                                   : false;
   }
 
   const std::unordered_map<std::string, std::string>& getAllProperties() const
@@ -165,8 +171,9 @@ public:
         << ", Atomic Weight: " << getAtomicWeight()
         << ", Protons: " << getNumberOfProtons()
         << ", Neutrons: " << getNumberOfNeutrons()
-        << ", Electrons: " << getNumberOfElectrons() << ", Period: " << getPeriod()
-        << ", Group: " << getGroup() << ", Phase at STP: " << getPhaseAtSTP()
+        << ", Electrons: " << getNumberOfElectrons()
+        << ", Period: " << getPeriod() << ", Group: " << getGroup()
+        << ", Phase at STP: " << getPhaseAtSTP()
         << ", Radioactive: " << (isRadioactive() ? "Yes" : "No");
     return oss.str();
   }

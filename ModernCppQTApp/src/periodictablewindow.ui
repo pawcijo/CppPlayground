@@ -57,12 +57,12 @@
        </widget>
       </item>
       <item>
-       <!-- Right-side panel for period data -->
+       <!-- Right-side panel for element info and Vulkan visualization -->
        <layout class="QVBoxLayout" name="verticalLayoutPeriodInfo">
         <item>
          <widget class="QLabel" name="labelPeriodInfoTitle">
           <property name="text">
-           <string>Period Information</string>
+           <string>Element Visualization</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -76,9 +76,26 @@
          </widget>
         </item>
         <item>
+         <!-- Vulkan rendering area placeholder -->
+         <widget class="QWidget" name="vulkanWidgetPlaceholder">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: #222222; border: 1px solid #444;</string>
+          </property>
+          <property name="toolTip">
+           <string>Vulkan-rendered visualization will appear here.</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QLabel" name="labelPeriodInfoContent">
           <property name="text">
-           <string>Select a period to view details here.</string>
+           <string>Select an element to view details here.</string>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -102,7 +119,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>5</width>
-            <height>200</height>
+            <height>150</height>
            </size>
           </property>
          </spacer>
