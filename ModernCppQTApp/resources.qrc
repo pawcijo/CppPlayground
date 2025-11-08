@@ -3,6 +3,6 @@
     <qresource prefix="/">
     </qresource>
       <qresource prefix="/">
-        <file>VulkanPanel.qml</file>
+        <file>MetalPanel.qml</file>
     </qresource>
 </RCC>

@@ -13,21 +13,29 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+#MacOS sources 
+
+
 # Project name and version
 set(SOURCES
     src/main.cpp
     src/mainwindow.cpp
-    src/SimpleRenderer.cpp
     src/periodictablewindow.cpp
 )
+
+if(APPLE)
+    list(APPEND SOURCES src/MacOS/MetalItem.cpp src/MacOS/MetalSphereItem.cpp src/MacOS/MetalSphereNode.cpp)
+endif()
 
 # Define header files
 set(HEADERS
     src/mainwindow.h
-    src/MyVulkanItem.h
-    src/SimpleRenderer.h
     src/periodictablewindow.h
 )
+
+if(APPLE)
+    list(APPEND HEADERS src/MacOS/MetalItem.h src/MacOS/MetalSphereItem.h src/MacOS/MetalSphereNode.h)
+endif()
 
 # Define UI files
 set(UI_FILES

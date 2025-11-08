@@ -19,7 +19,12 @@
 #include <vector>
 
 // Local vulkan window includes
-#include "MyVulkanItem.h"
+
+#include <iostream>
+
+#ifdef __APPLE__
+#include "MacOS/MetalItem.h"
+#endif
 
 void fillPeriodicTable(QTableWidget* table,
                        const std::vector<PlaygroundLib::Element>& elements)
@@ -118,30 +123,30 @@ PeriodicTableWindow::PeriodicTableWindow(QWidget* parent)
 {
   ui->setupUi(this);
 
-  qmlRegisterType<MyVulkanItem>("MyVulkan", 1, 0, "VulkanItem");
-
+#ifdef __APPLE__
+     // Register MetalItem for QML
+    qmlRegisterType<MetalItem>("MyMetal", 1, 0, "MetalItem");
   auto* quickWidget = new QQuickWidget(this);
   quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
-
-  // Load QML from resource or local file
-  quickWidget->setSource(QUrl(QStringLiteral("qrc:/VulkanPanel.qml")));
+  quickWidget->setSource(QUrl(QStringLiteral("qrc:/MetalPanel.qml")));
   quickWidget->setMinimumSize(300, 200);
 
-  // Replace placeholder
+  if (quickWidget->status() != QQuickWidget::Ready) {
+    qWarning() << "QML failed to load:" << quickWidget->errors();
+}
+
+quickWidget->setClearColor(Qt::black);
+
+QTimer::singleShot(0, quickWidget, [quickWidget]{
+    quickWidget->update();
+});
+
+
   ui->verticalLayoutPeriodInfo->replaceWidget(ui->vulkanWidgetPlaceholder,
                                               quickWidget);
   ui->vulkanWidgetPlaceholder->deleteLater();
 
-  m_vkInstance.setExtensions({ "VK_KHR_surface", "VK_KHR_portability_subset" });
-  if (!m_vkInstance.create())
-    qWarning() << "Vulkan instance creation FAILED!";
-
-  // Pass instance to the QQuickItem after loading QML
-  QObject* rootObj = quickWidget->rootObject();
-  if (auto* vulkanItem = rootObj->findChild<MyVulkanItem*>("vulkanItem"))
-  {
-    vulkanItem->setVulkanInstance(&m_vkInstance);
-  }
+#endif
 
   // Read elements from
   std::filesystem::path exePath = std::filesystem::
