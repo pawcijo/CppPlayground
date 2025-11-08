@@ -1,4 +1,5 @@
 #pragma once
+#include "MacOS/ElementVisualizer.h"
 #include <Mendelejew/Element.hpp>
 #include <QMainWindow>
 #include <QVulkanInstance>
@@ -24,7 +25,9 @@ private:
   void PrepereAppleScene(Ui::PeriodicTableWindow* ui);
 #endif
 
-  Ui::PeriodicTableWindow* ui;
+  Ui::PeriodicTableWindow* ui = nullptr;
+  Qt3DCore::QEntity* rootEntity = nullptr; 
+  ElementVisualizer* m_elementVisualizer = nullptr;
   QVulkanInstance m_vkInstance;
   std::vector<PlaygroundLib::Element> elements;
 };

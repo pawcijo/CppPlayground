@@ -166,16 +166,19 @@ void MainWindow::onRunClicked()
 void MainWindow::onMendelejewClicked()
 {
 
-  // Create the window if it doesn't exist
-  if (!periodicTableWindow)
-    periodicTableWindow = new PeriodicTableWindow(this);
+    if (!periodicTableWindow) {
+        periodicTableWindow = new PeriodicTableWindow(this);
+        periodicTableWindow->setAttribute(Qt::WA_DeleteOnClose);
 
-  // Show the window
-  periodicTableWindow->show();
+        // Clear pointer when window is closed
+        connect(periodicTableWindow, &QWidget::destroyed, this, [this](){
+            periodicTableWindow = nullptr;
+        });
+    }
 
-  // Bring it to the front
-  periodicTableWindow->raise();
-  periodicTableWindow->activateWindow();
+    periodicTableWindow->show();
+    periodicTableWindow->raise();
+    periodicTableWindow->activateWindow();
 }
 
 void MainWindow::writeNotesToTerminal(NoteFormat& notes)

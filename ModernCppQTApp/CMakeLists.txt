@@ -35,7 +35,7 @@ set(SOURCES
 )
 
 if(APPLE)
-    list(APPEND SOURCES src/MacOS/MetalItem.cpp )
+    list(APPEND SOURCES src/MacOS/MetalItem.cpp src/MacOS/ElementVisualizer.cpp)
 endif()
 
 # Define header files
@@ -45,7 +45,7 @@ set(HEADERS
 )
 
 if(APPLE)
-    list(APPEND HEADERS src/MacOS/MetalItem.h )
+    list(APPEND HEADERS src/MacOS/MetalItem.h  src/MacOS/ElementVisualizer.h)
 endif()
 
 # Define UI files

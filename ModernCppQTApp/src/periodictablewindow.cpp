@@ -249,10 +249,30 @@ void PeriodicTableWindow::onTableCellClicked(int row, int column)
           });
 
   anim->start(QAbstractAnimation::DeleteWhenStopped);
+
+  // --- [3] Update 3D element visualization ---
+  if (m_elementVisualizer)
+  {
+    m_elementVisualizer->updateElement(*it);
+  }
 }
 
 PeriodicTableWindow::~PeriodicTableWindow()
 {
+
+  std::cout << "Destroying PeriodicTableWindow\n";
+  if (m_elementVisualizer)
+  {
+    delete m_elementVisualizer;
+    m_elementVisualizer = nullptr;
+  }
+
+  if (rootEntity)
+  {
+    delete rootEntity;
+    rootEntity = nullptr;
+  }
+
   delete ui;
 }
 
@@ -263,7 +283,7 @@ void PeriodicTableWindow::PrepereAppleScene(Ui::PeriodicTableWindow* ui)
   Qt3DExtras::QForwardRenderer* forwardRenderer =
     static_cast<Qt3DExtras::QForwardRenderer*>(view3D->defaultFrameGraph());
   if (forwardRenderer)
-    forwardRenderer->setClearColor(QColor(Qt::black));
+    forwardRenderer->setClearColor(Qt::lightGray);
 
   QWidget* container = QWidget::createWindowContainer(view3D);
   container->setMinimumSize(300, 200);
@@ -281,33 +301,7 @@ void PeriodicTableWindow::PrepereAppleScene(Ui::PeriodicTableWindow* ui)
   }
 
   // ---- Create scene ----
-  Qt3DCore::QEntity* rootEntity = new Qt3DCore::QEntity();
-
-  Qt3DCore::QEntity* cubeEntity = new Qt3DCore::QEntity(rootEntity);
-  auto* cubeMesh = new Qt3DExtras::QCuboidMesh();
-  cubeEntity->addComponent(cubeMesh);
-
-  auto* cubeMaterial = new Qt3DExtras::QPhongMaterial();
-  cubeMaterial->setDiffuse(QColor(Qt::red));
-  cubeEntity->addComponent(cubeMaterial);
-
-  auto* cubeTransform = new Qt3DCore::QTransform();
-  cubeEntity->addComponent(cubeTransform);
-
-  // Animate rotation
-  auto* animation = new QVariantAnimation(this);
-  animation->setStartValue(0.0f);
-  animation->setEndValue(360.0f);
-  animation->setDuration(4000);
-  animation->setLoopCount(-1);
-  connect(animation,
-          &QVariantAnimation::valueChanged,
-          [cubeTransform](const QVariant& v)
-          {
-            cubeTransform->setRotation(
-              QQuaternion::fromEulerAngles(0, v.toFloat(), 0));
-          });
-  animation->start();
+  rootEntity = new Qt3DCore::QEntity();
 
   Qt3DCore::QEntity* dirLightEntity = new Qt3DCore::QEntity(rootEntity);
   auto* dirLight = new Qt3DRender::QDirectionalLight(dirLightEntity);
@@ -315,6 +309,13 @@ void PeriodicTableWindow::PrepereAppleScene(Ui::PeriodicTableWindow* ui)
   dirLight->setColor(Qt::white);
   dirLight->setIntensity(1.0f); // brightness
   dirLightEntity->addComponent(dirLight);
+
+  Qt3DCore::QEntity* dirLightEntity2 = new Qt3DCore::QEntity(rootEntity);
+  auto* dirLight2 = new Qt3DRender::QDirectionalLight(dirLightEntity);
+  dirLight2->setWorldDirection(QVector3D(10.0f, -1.0f, -1.0f));
+  dirLight2->setColor(Qt::white);
+  dirLight2->setIntensity(1.0f); // brightness
+  dirLightEntity2->addComponent(dirLight2);
 
   // Camera
   Qt3DRender::QCamera* camera = view3D->camera();
@@ -326,4 +327,6 @@ void PeriodicTableWindow::PrepereAppleScene(Ui::PeriodicTableWindow* ui)
   camController->setCamera(camera);
 
   view3D->setRootEntity(rootEntity);
+
+  m_elementVisualizer = new ElementVisualizer(rootEntity);
 }
