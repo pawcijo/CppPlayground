@@ -234,7 +234,7 @@ void ElementVisualizer::updateElement(const PlaygroundLib::Element& element)
     auto* neutronMesh = new Qt3DExtras::QSphereMesh();
     neutronMesh->setRadius(0.1f);
     auto* neutronMaterial = new Qt3DExtras::QPhongMaterial();
-    neutronMaterial->setDiffuse(QColor(0, 0, 255));
+    neutronMaterial->setDiffuse(QColor(155, 155, 155));// gray
 
     for (int i = 0; i < element.getNumberOfNeutrons(); ++i)
     {
