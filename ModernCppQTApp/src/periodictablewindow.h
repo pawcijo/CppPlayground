@@ -1,5 +1,5 @@
 #pragma once
-#include "MacOS/ElementVisualizer.h"
+#include "Visualizer/ElementVisualizer.h"
 #include <Mendelejew/Element.hpp>
 #include <QMainWindow>
 #include <QVulkanInstance>

@@ -8,7 +8,6 @@ Build/Makefile
 Build/PlaygroundLib/
 Build/VulkanFun/CMakeFiles/
 Build/VulkanFun/Makefile/
-Build/ModernCppQTApp/   
 Build/compile_commands.json
 
 *.spv

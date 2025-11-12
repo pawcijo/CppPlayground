@@ -1,19 +1,19 @@
-// MetalItem.cpp
-#include "MetalItem.h"
+// MyQuickItem.cpp
+#include "MyQuickItem.h"
 #include <QSGSimpleTextureNode>
 #include <QQuickWindow>
 #include <QSGRendererInterface>
 #include <QDebug>
 #include <QSGFlatColorMaterial>
 
-MetalItem::MetalItem(QQuickItem* parent)
+MyQuickItem::MyQuickItem(QQuickItem* parent)
     : QQuickItem(parent)
 {
     // Tell Qt Quick this item will use a custom scene graph node
     setFlag(ItemHasContents, true);
 }
 
-QSGNode* MetalItem::updatePaintNode(QSGNode* oldNode, UpdatePaintNodeData*)
+QSGNode* MyQuickItem::updatePaintNode(QSGNode* oldNode, UpdatePaintNodeData*)
 {
     if (!window()) return nullptr;
 

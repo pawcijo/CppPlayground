@@ -35,9 +35,7 @@
 
 #include <iostream>
 
-//#ifdef __APPLE__
-#include "MacOS/MetalItem.h"
-//#endif
+#include "Visualizer/MyQuickItem.h"
 
 void fillPeriodicTable(QTableWidget* table,
                        const std::vector<PlaygroundLib::Element>& elements)
@@ -136,9 +134,9 @@ PeriodicTableWindow::PeriodicTableWindow(QWidget* parent)
 {
   ui->setupUi(this);
 
-//#ifdef __APPLE__
+  // #ifdef __APPLE__
   PrepereAppleScene(ui);
-//#endif
+  // #endif
 
   // Read elements from
   std::filesystem::path exePath = std::filesystem::

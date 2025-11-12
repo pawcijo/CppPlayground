@@ -34,9 +34,8 @@ set(SOURCES
     src/periodictablewindow.cpp
 )
 
-#if(APPLE)
-    list(APPEND SOURCES src/MacOS/MetalItem.cpp src/MacOS/ElementVisualizer.cpp)
-#endif()
+list(APPEND SOURCES src/Visualizer/MyQuickItem.cpp src/Visualizer/ElementVisualizer.cpp)
+
 
 # Define header files
 set(HEADERS
@@ -44,9 +43,8 @@ set(HEADERS
     src/periodictablewindow.h
 )
 
-#if(APPLE)
-    list(APPEND HEADERS src/MacOS/MetalItem.h  src/MacOS/ElementVisualizer.h)
-#endif()
+list(APPEND HEADERS src/Visualizer/MyQuickItem.h  src/Visualizer/ElementVisualizer.h)
+
 
 # Define UI files
 set(UI_FILES
