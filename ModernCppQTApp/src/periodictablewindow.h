@@ -21,9 +21,9 @@ private slots:
   void onTableCellClicked(int row, int column);
 
 private:
-#ifdef __APPLE__
+//#ifdef __APPLE__
   void PrepereAppleScene(Ui::PeriodicTableWindow* ui);
-#endif
+//#endif
 
   Ui::PeriodicTableWindow* ui = nullptr;
   Qt3DCore::QEntity* rootEntity = nullptr; 

@@ -34,9 +34,9 @@ set(SOURCES
     src/periodictablewindow.cpp
 )
 
-if(APPLE)
+#if(APPLE)
     list(APPEND SOURCES src/MacOS/MetalItem.cpp src/MacOS/ElementVisualizer.cpp)
-endif()
+#endif()
 
 # Define header files
 set(HEADERS
@@ -44,9 +44,9 @@ set(HEADERS
     src/periodictablewindow.h
 )
 
-if(APPLE)
+#if(APPLE)
     list(APPEND HEADERS src/MacOS/MetalItem.h  src/MacOS/ElementVisualizer.h)
-endif()
+#endif()
 
 # Define UI files
 set(UI_FILES
@@ -75,13 +75,13 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries(${PROJECT_NAME}
     PlaygroundLib
     Vulkan::Vulkan
+    Qt6::3DQuick
     Qt6::Multimedia
     Qt6::Core
     Qt6::Gui
     Qt6::Widgets
     Qt6::QuickWidgets
     Qt6::Quick
-    Qt6::3DQuick
     Qt6::QuickControls2
     Qt6::3DCore
     Qt6::3DRender
