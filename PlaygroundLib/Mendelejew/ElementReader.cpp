@@ -16,70 +16,52 @@ namespace PlaygroundLib
 std::vector<Element> ElementReader::ReadElementsFromFile(
   const std::filesystem::path& filePath)
 {
+  std::vector<Element> elements;
+  std::string getString{};
+  std::ifstream file(filePath.string());
 
-    std::vector<Element> elements;
+  if (!file)
+    throw std::runtime_error("Cannot open file: " + filePath.string());
 
-    std::ifstream file(filePath.string());
-    if (!file)
-        throw std::runtime_error("Cannot open file: " + filePath.string());
+  bool firstLine = true;
+  std::vector<std::string> names;
+  while (std::getline(file, getString))
+  {
 
-    std::string line;
-    bool firstLine = true;
-    std::vector<std::string> names;
-
-    // Lambda to trim whitespace from both ends
-    auto trim = [](std::string& s) {
-        s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-                                        [](unsigned char c) { return !std::isspace(c); }));
-        s.erase(std::find_if(s.rbegin(), s.rend(),
-                             [](unsigned char c) { return !std::isspace(c); }).base(),
-                s.end());
-    };
-
-    while (std::getline(file, line))
+    if (firstLine)
     {
-        trim(line);
-        if (line.empty())
-            continue; // skip empty lines
+      std::istringstream iss(getString);
+      std::string value;
+      while (std::getline(iss, value, ';'))
+      {
+        // split by comma
+        names.push_back(value);
+      }
+      // skip header line
+      firstLine = false;
 
-        std::istringstream iss(line);
-        std::string value;
-        std::vector<std::string> parts;
-
-        while (std::getline(iss, value, ','))
-        {
-            trim(value);
-            parts.push_back(value);
-        }
-
-        if (firstLine)
-        {
-            // Header row
-            names = parts;
-            firstLine = false;
-            continue;
-        }
-
-        if (parts.empty())
-            continue; // skip empty data rows
-
-        if (parts.size() != names.size())
-        {
-           // std::println("Warning: Row has {} columns but header has {}. Some data may be ignored.",
-           //              parts.size(), names.size());
-        }
-
-        std::unordered_map<std::string, std::string> additionalProperties;
-        size_t count = std::min(parts.size(), names.size());
-        for (size_t i = 0; i < count; ++i)
-        {
-            additionalProperties[names[i]] = parts[i];
-        }
-
-        elements.emplace_back(additionalProperties);
+      continue;
     }
 
-    return elements;
+    std::istringstream iss(getString);
+    std::string value;
+    std::vector<std::string> parts;
+    while (std::getline(iss, value, ';'))
+    { // split by comma
+
+      parts.push_back(value);
+    }
+    std::unordered_map<std::string, std::string> additionalProperties;
+    for (size_t i = 0; i < parts.size(); i++)
+    {
+      //std::println("{} {}", names[i], parts[i]);
+      additionalProperties[names[i]] = parts[i]; // Placeholder logic
+    }
+    Element element(additionalProperties);
+    // std::println("Read element: {}", element.toString());
+    elements.push_back(element);
+  }
+  return elements;
 }
 
 }
