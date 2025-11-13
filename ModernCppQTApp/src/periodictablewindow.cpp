@@ -143,7 +143,8 @@ PeriodicTableWindow::PeriodicTableWindow(QWidget* parent)
     current_path(); // or use QCoreApplication::applicationDirPath() with Qt
   std::filesystem::path filePath = exePath / "data/Elements.csv";
 
-  elements = PlaygroundLib::ElementReader::ReadElementsFromFile(filePath);
+  PlaygroundLib::ElementReader reader;
+  elements = reader.ReadElementsFromFile(filePath);
 
   fillPeriodicTable(ui->tablePeriodic, elements);
 

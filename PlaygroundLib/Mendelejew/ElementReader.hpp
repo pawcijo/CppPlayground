@@ -10,7 +10,7 @@ public:
   ElementReader() = default;
   ~ElementReader() = default;
 
-  static std::vector<Element> ReadElementsFromFile(
+   std::vector<Element> ReadElementsFromFile(
     const std::filesystem::path& filePath);
 };
 }
