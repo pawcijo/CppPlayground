@@ -134,9 +134,7 @@ PeriodicTableWindow::PeriodicTableWindow(QWidget* parent)
 {
   ui->setupUi(this);
 
-  // #ifdef __APPLE__
-  PrepereAppleScene(ui);
-  // #endif
+  PrepereAnimatedScene(ui);
 
   // Read elements from
   std::filesystem::path exePath = std::filesystem::
@@ -276,7 +274,7 @@ PeriodicTableWindow::~PeriodicTableWindow()
   delete ui;
 }
 
-void PeriodicTableWindow::PrepereAppleScene(Ui::PeriodicTableWindow* ui)
+void PeriodicTableWindow::PrepereAnimatedScene(Ui::PeriodicTableWindow* ui)
 {
   // Create Qt3D window
   auto* view3D = new Qt3DExtras::Qt3DWindow();

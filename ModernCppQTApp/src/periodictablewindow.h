@@ -21,12 +21,10 @@ private slots:
   void onTableCellClicked(int row, int column);
 
 private:
-//#ifdef __APPLE__
-  void PrepereAppleScene(Ui::PeriodicTableWindow* ui);
-//#endif
+  void PrepereAnimatedScene(Ui::PeriodicTableWindow* ui);
 
   Ui::PeriodicTableWindow* ui = nullptr;
-  Qt3DCore::QEntity* rootEntity = nullptr; 
+  Qt3DCore::QEntity* rootEntity = nullptr;
   ElementVisualizer* m_elementVisualizer = nullptr;
   QVulkanInstance m_vkInstance;
   std::vector<PlaygroundLib::Element> elements;
