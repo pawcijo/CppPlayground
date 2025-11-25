@@ -2,78 +2,93 @@
 
 #include <utility>
 
-template <typename T>
+namespace PlaygroundLib
+{
+
+template<typename T>
 class MyUniquePtr
 {
 
-    T *mPtr;
+  T* mPtr;
 
 public:
-    // Constructor
-    explicit MyUniquePtr(T *aPtr) : mPtr(aPtr) {}
+  // Constructor
+  explicit MyUniquePtr(T* aPtr)
+    : mPtr(aPtr)
+  {
+  }
 
-    ~MyUniquePtr()
+  ~MyUniquePtr()
+  {
+    delete mPtr;
+  }
+
+  // Move constructor
+  MyUniquePtr(MyUniquePtr&& other) noexcept
+    : mPtr(other.mPtr)
+  {
+    other.mPtr = nullptr;
+  }
+
+  // Move assign
+  MyUniquePtr& operator=(MyUniquePtr&& other) noexcept
+  {
+    if (nullptr != other.mPtr)
     {
-        delete mPtr;
+      delete mPtr;
+      mPtr = other.mPtr;
+      other.mPtr = nullptr;
     }
 
-    // Move constructor
-    MyUniquePtr(MyUniquePtr &&other) noexcept : mPtr(other.mPtr)
-    {
-        other.mPtr = nullptr;
-    }
+    return *this;
+  }
 
-    // Move assign
-    MyUniquePtr &operator=(MyUniquePtr &&other) noexcept
-    {
-        if (nullptr != other.mPtr)
-        {
-            delete mPtr;
-            mPtr = other.mPtr;
-            other.mPtr = nullptr;
-        }
+  // Removed Copy Constructor and removed copy assign operator
+  MyUniquePtr(MyUniquePtr& other) = delete;
+  MyUniquePtr& operator=(MyUniquePtr& other) = delete;
 
-        return *this;
-    }
+  T& operator*() const noexcept
+  {
+    return *mPtr;
+  }
 
-    // Removed Copy Constructor and removed copy assign operator
-    MyUniquePtr(MyUniquePtr &other) = delete;
-    MyUniquePtr &operator=(MyUniquePtr &other) = delete;
+  T* operator->() const noexcept
+  {
+    return mPtr;
+  }
 
-    T& operator*() const noexcept
-    {
-       return  *mPtr;
-    }
+  explicit operator bool() const noexcept
+  {
+    return nullptr != mPtr;
+  }
 
-    T* operator->() const noexcept
-    {
-        return mPtr;
-    }
+  void reset(T* ptr = nullptr) noexcept
+  {
+    delete mPtr;
+    mPtr = ptr;
+  }
 
-    explicit  operator bool() const noexcept
-    {
-        return nullptr != mPtr;
-    }
+  void swap(MyUniquePtr& other)
+  {
+    std::swap(this, other);
 
-    void reset(T* ptr = nullptr) noexcept
-    {
-        delete mPtr;
-        mPtr = ptr;
-    }
+    // or
+    T* tmp = mPtr;
+    mPtr = other.mPtr;
+    other.mPtr = tmp;
+  }
 
-    void swap(MyUniquePtr & other)
-    {
-        std::swap(this,other);
-
-        //or
-        T * tmp = mPtr;
-        mPtr = other.mPtr;
-        other.mPtr = tmp;
-        
-    }
-
-    T *get()
-    {
-        return mPtr;
-    }
+  T* get()
+  {
+    return mPtr;
+  }
 };
+
+template<typename T, typename... Args>
+auto make_unique(Args&&... args) noexcept -> MyUniquePtr<T>
+{
+    return MyUniquePtr<T>(new T(std::forward<Args>(args)...));
+}
+
+
+}

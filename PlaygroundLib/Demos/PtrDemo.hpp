@@ -3,6 +3,7 @@
 #include "Common/Common.hpp"
 #include "Common/DemoBase.hpp"
 #include "Common/MyUniquePtr.hpp"
+#include "Common/MySharedPtr.hpp"
 
 #include <algorithm>
 #include <iostream>
@@ -45,6 +46,13 @@ inline void MyUniquePtrDemo()
   {
     std::cout << "Value:" << value.DValue() << std::endl;
   }
+  PlaygroundLib::MyUniquePtr<TmpClass> ptr1 =
+    PlaygroundLib::make_unique<TmpClass>(10);
+
+  PlaygroundLib::MySharedPtr<TmpClass> ptr2 =
+    PlaygroundLib::make_shared<TmpClass>(20);
+
+
   LOG_END_FUNCTION();
 }
 
