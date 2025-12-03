@@ -14,7 +14,7 @@ public:
         std::cout << "Created Base class \n";
     }
 
-    ~BaseClass()
+    virtual ~BaseClass()
     {
         std::cout << "Destroyed Base class \n";
     }
@@ -29,7 +29,7 @@ class DerivedClass final : public BaseClass
 {
 
 public:
-    DerivedClass()
+    DerivedClass(): BaseClass()
     {
         std::cout << "Created  Derived class \n";
     }
@@ -39,7 +39,7 @@ public:
         std::cout << "Destroyed  Derived class \n";
     }
 
-    void Use() override
+    void Use()
     {
         std::cout << "Use Derived class \n";
     }
@@ -51,8 +51,7 @@ inline void VirtualDestructorExample()
     BaseClass *deriverd = new DerivedClass();
 
     deriverd->Use();
-
-    delete dynamic_cast<DerivedClass *>(deriverd);
+    delete deriverd;
 
     LOG_END_FUNCTION();
 }

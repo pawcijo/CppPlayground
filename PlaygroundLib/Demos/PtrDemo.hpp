@@ -2,8 +2,8 @@
 
 #include "Common/Common.hpp"
 #include "Common/DemoBase.hpp"
-#include "Common/MyUniquePtr.hpp"
 #include "Common/MySharedPtr.hpp"
+#include "Common/MyUniquePtr.hpp"
 
 #include <algorithm>
 #include <iostream>
@@ -52,7 +52,6 @@ inline void MyUniquePtrDemo()
   PlaygroundLib::MySharedPtr<TmpClass> ptr2 =
     PlaygroundLib::make_shared<TmpClass>(20);
 
-
   LOG_END_FUNCTION();
 }
 
@@ -66,7 +65,8 @@ public:
   };
   ~PtrDemo() = default;
 
-  void ShowExample(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
+  void ShowExample(
+    std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     if (nullptr == printNotesCallback)
     {
@@ -79,7 +79,8 @@ public:
     MyUniquePtrDemo();
   }
 
-  void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
+  void ShowDemo(
+    std::function<void(NoteFormat&)> printNotesCallback = nullptr) override
   {
     ShowExample(printNotesCallback);
   };

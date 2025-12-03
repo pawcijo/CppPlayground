@@ -5,12 +5,44 @@
 #include <cstdio>
 #include <iostream>
 
+#include "Common/MyUniquePtr.hpp"
 #include "DemosFactory/DemoFactory.hpp" // Include the necessary header for DemoFactory
 
+#include "Common/MySharedPtr.hpp"
+#include "Common/MySharedPtr.hpp"
+#include <type_traits>
 TEST(DemoFactoryTestTest, BasicAssertions)
 {
   // Test test :)
   EXPECT_EQ(1 + 1, 2);
+}
+
+TEST(DemoFactoryTestTest, MyUniquePtrTest)
+{
+  static_assert(!std::is_copy_constructible_v<PlaygroundLib::MyUniquePtr<int>>,
+                "Should not be copy constructible");
+  static_assert(!std::is_copy_assignable_v<PlaygroundLib::MyUniquePtr<int>>,
+                "Should not be copy assignable");
+
+  static_assert(std::is_move_constructible_v<PlaygroundLib::MyUniquePtr<int>>,
+                "Should be move constructible");
+  static_assert(std::is_move_assignable_v<PlaygroundLib::MyUniquePtr<int>>,
+                "Should be move assignable");
+  }
+
+
+TEST(DemoFactoryTestTest, MySharedPtrTest)
+{
+  static_assert(std::is_copy_constructible_v<PlaygroundLib::MySharedPtr<int>>,
+                "Should be copy constructible");
+  static_assert(std::is_copy_assignable_v<PlaygroundLib::MySharedPtr<int>>,
+                "Should be copy assignable");
+
+  static_assert(std::is_move_constructible_v<PlaygroundLib::MySharedPtr<int>>,
+                "Should be move constructible");
+  static_assert(std::is_move_assignable_v<PlaygroundLib::MySharedPtr<int>>,
+                "Should be move assignable");
+ 
 }
 
 TEST(LongestCharSequenceTest, LongestCharSequence)

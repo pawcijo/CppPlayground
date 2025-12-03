@@ -42,7 +42,7 @@ public:
   }
 
   // Copy Constructor
-  MySharedPtr(MySharedPtr& other) noexcept
+  MySharedPtr(const MySharedPtr& other) noexcept
   {
     mPtr = other.mPtr;
     ref_counter = other.ref_counter;
@@ -70,7 +70,7 @@ public:
   }
 
   // Move Constructor
-  MySharedPtr(const MySharedPtr&& moved_other) noexcept
+  MySharedPtr(MySharedPtr&& moved_other) noexcept
     : mPtr(moved_other.mPtr)
     , ref_counter(moved_other.ref_counter)
   {
@@ -98,7 +98,7 @@ public:
 };
 
 template<typename T, typename... Args>
-auto make_shared (Args&&... args) noexcept -> MySharedPtr<T>
+auto make_shared(Args&&... args) noexcept -> MySharedPtr<T>
 {
   return MySharedPtr<T>(new T(std::forward<Args>(args)...));
 };
