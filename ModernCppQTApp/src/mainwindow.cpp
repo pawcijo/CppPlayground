@@ -10,13 +10,13 @@
 #include <QTextCharFormat>
 #include <QTextCursor>
 #include <QTextEdit>
+#include <thread>
 
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-
   // Load demo map
   rawMap = DemoFactory::getDemoMap();
 
@@ -26,6 +26,14 @@ MainWindow::MainWindow(QWidget* parent)
           this,
           &MainWindow::onTagFilterChanged);
   connect(ui->tagDesignPatterns,
+          &QCheckBox::checkStateChanged,
+          this,
+          &MainWindow::onTagFilterChanged);
+  connect(ui->tagCPP11,
+          &QCheckBox::checkStateChanged,
+          this,
+          &MainWindow::onTagFilterChanged);
+  connect(ui->tagCPP14,
           &QCheckBox::checkStateChanged,
           this,
           &MainWindow::onTagFilterChanged);
@@ -80,6 +88,10 @@ void MainWindow::updateDemoSelector()
     selectedTags.push_back(DemoTag::Common);
   if (ui->tagDesignPatterns->isChecked())
     selectedTags.push_back(DemoTag::DesignPatterns);
+  if (ui->tagCPP11->isChecked())
+    selectedTags.push_back(DemoTag::CPP11);
+  if (ui->tagCPP14->isChecked())
+    selectedTags.push_back(DemoTag::CPP14);
   if (ui->tagCPP17->isChecked())
     selectedTags.push_back(DemoTag::CPP17);
   if (ui->tagCPP20->isChecked())
@@ -153,8 +165,17 @@ void MainWindow::onRunClicked()
   if (demoInstance)
   {
     // Pass the callback
-    demoInstance->ShowDemo([this](NoteFormat& notes)
-                           { writeNotesToTerminal(notes); });
+
+    writeNotesToTerminal(demoInstance->GetNotes());
+    // run demo in another thread
+    std::thread demoThread(
+      [this]()
+      {
+        demoInstance->ShowDemo([](NoteFormat& /*notes*/)
+                             { // No-op for GUI version
+                             });
+      });
+    demoThread.detach(); // Let it run independently
   }
   else
   {
@@ -166,22 +187,24 @@ void MainWindow::onRunClicked()
 void MainWindow::onMendelejewClicked()
 {
 
-    if (!periodicTableWindow) {
-        periodicTableWindow = new PeriodicTableWindow(this);
-        periodicTableWindow->setAttribute(Qt::WA_DeleteOnClose);
+  if (!periodicTableWindow)
+  {
+    periodicTableWindow = new PeriodicTableWindow(this);
+    periodicTableWindow->setAttribute(Qt::WA_DeleteOnClose);
 
-        // Clear pointer when window is closed
-        connect(periodicTableWindow, &QWidget::destroyed, this, [this](){
-            periodicTableWindow = nullptr;
-        });
-    }
+    // Clear pointer when window is closed
+    connect(periodicTableWindow,
+            &QWidget::destroyed,
+            this,
+            [this]() { periodicTableWindow = nullptr; });
+  }
 
-    periodicTableWindow->show();
-    periodicTableWindow->raise();
-    periodicTableWindow->activateWindow();
+  periodicTableWindow->show();
+  periodicTableWindow->raise();
+  periodicTableWindow->activateWindow();
 }
 
-void MainWindow::writeNotesToTerminal(NoteFormat& notes)
+void MainWindow::writeNotesToTerminal(const NoteFormat& notes)
 {
   ui->terminalOutput->clear();
   QTextCursor cursor(ui->terminalOutput->document());

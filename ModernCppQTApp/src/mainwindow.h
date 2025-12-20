@@ -24,9 +24,9 @@ private slots:
     void onMendelejewClicked();
     void onClearClicked();
     void onTagFilterChanged(); // Add this line
+    void writeNotesToTerminal(const NoteFormat& notes);
 
 private:
-    void writeNotesToTerminal(NoteFormat& notes);
     void updateDemoSelector(); // Add this line
 
     std::unique_ptr<DemoBase> createDemo(DemoType chosenDemo);

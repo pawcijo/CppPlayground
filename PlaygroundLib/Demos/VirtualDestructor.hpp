@@ -39,7 +39,7 @@ public:
         std::cout << "Destroyed  Derived class \n";
     }
 
-    void Use()
+    void Use() override
     {
         std::cout << "Use Derived class \n";
     }

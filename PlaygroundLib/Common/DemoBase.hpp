@@ -69,6 +69,11 @@ public:
 
   virtual void ShowDemo(std::function<void(NoteFormat&)> printNotesCallback = nullptr)  = 0;
 
+  const NoteFormat& GetNotes() const
+  {
+    return mNotes;
+  }
+
 public:
   static long long object_counter;
 };

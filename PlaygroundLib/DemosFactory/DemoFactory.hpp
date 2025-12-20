@@ -13,6 +13,9 @@
 #include "Demos/Patterns/Pimpl.hpp"
 #include "Demos/Patterns/Singleton/SingletonDemo.hpp"
 
+// C++ 11
+#include "Demos/CPP11/FutureObj.hpp"
+
 // C++ 17
 #include "Demos/CPP17/AnyDemo.hpp"
 #include "Demos/CPP17/CharConvDemo.hpp"
@@ -107,6 +110,7 @@ enum class DemoType : int
   Zadanko12_5_30Demo,
   Zadanko13_9_10Demo,
   Zadanko14_7_16Demo,
+  FutureObjDemo,
   Count
 };
 
@@ -114,6 +118,8 @@ enum class DemoTag : int
 {
   Common = 1,
   DesignPatterns,
+  CPP11,
+  CPP14,
   CPP17,
   CPP20,
   NeuralNetwork,
@@ -442,6 +448,11 @@ public:
             []() { return std::make_unique<Zadanko14_7_16>(); },
             "Zadanko14_7_16Demo",
             { DemoTag::GreboszCPP })},
+        { DemoType::FutureObjDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<FutureObjDemo>(); },
+            "FutureObjDemo",
+            { DemoTag::CPP11 }) },
 
       };
     // std::cout << std::format("Demo map created. Size: {}.", sizeof(demoMap))

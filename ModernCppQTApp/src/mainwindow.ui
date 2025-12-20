@@ -31,6 +31,20 @@
          </property>
         </widget>
        </item>
+        <item>
+        <widget class="QCheckBox" name="tagCPP11">
+         <property name="text">
+          <string>CPP11</string>
+         </property>
+        </widget>
+       </item>
+        <item>
+        <widget class="QCheckBox" name="tagCPP14">
+         <property name="text">
+          <string>CPP14</string>
+         </property>
+        </widget>
+       </item>
        <item>
         <widget class="QCheckBox" name="tagCPP17">
          <property name="text">
