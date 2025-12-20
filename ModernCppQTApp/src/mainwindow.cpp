@@ -14,6 +14,7 @@
 
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
+  , typingTimer(new QTimer(this))
   , ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
@@ -67,12 +68,15 @@ MainWindow::MainWindow(QWidget* parent)
   connect(
     ui->clearButton, &QPushButton::clicked, this, &MainWindow::onClearClicked);
 
+  connect(typingTimer, &QTimer::timeout, this, &MainWindow::typeNextChar);
+
   updateDemoSelector();
 }
 
 MainWindow::~MainWindow()
 {
   delete ui;
+  delete typingTimer;
 }
 
 void MainWindow::onTagFilterChanged()
@@ -204,29 +208,87 @@ void MainWindow::onMendelejewClicked()
   periodicTableWindow->activateWindow();
 }
 
-void MainWindow::writeNotesToTerminal(const NoteFormat& notes)
+void MainWindow::writeNotesToTerminalFast(const NoteFormat& notes)
+{
+    ui->terminalOutput->clear();
+    QTextCursor cursor(ui->terminalOutput->document());
+
+    int fontSize = 14;
+
+    for (const auto& pair : notes)
+    {
+        QTextCharFormat boldFormat;
+        boldFormat.setFontWeight(QFont::Bold);
+        boldFormat.setFontPointSize(fontSize);
+        cursor.insertText(QString::fromStdString(pair.first + "\n"), boldFormat);
+
+        QTextCharFormat descFormat;
+        descFormat.setForeground(QColor("#007acc"));
+        descFormat.setFontPointSize(fontSize);
+        cursor.insertText(QString::fromStdString(pair.second + "\n"), descFormat);
+    }
+
+    ui->terminalOutput->moveCursor(QTextCursor::Start);
+}
+
+
+void MainWindow::writeNotesToTerminalTyping(const NoteFormat& notes)
 {
   ui->terminalOutput->clear();
-  QTextCursor cursor(ui->terminalOutput->document());
+  typingQueue.clear();
+  typingCursor = QTextCursor(ui->terminalOutput->document());
 
-  // Set desired font size
-  int fontSize = 14; // Increase this value as needed
+  int fontSize = 14;
 
   for (const auto& pair : notes)
   {
-    // Bold for title
-    QTextCharFormat boldFormat;
-    boldFormat.setFontWeight(QFont::Bold);
-    boldFormat.setFontPointSize(fontSize);
-    cursor.insertText(QString::fromStdString(pair.first + "\n"), boldFormat);
+    QTextCharFormat titleFormat;
+    titleFormat.setFontWeight(QFont::Bold);
+    titleFormat.setFontPointSize(fontSize);
 
-    // Color for description
+    for (QChar c : QString::fromStdString(pair.first + "\n"))
+      typingQueue.push_back({ c, titleFormat });
+
     QTextCharFormat descFormat;
-    descFormat.setForeground(QColor("#007acc")); // Example: blue
+    descFormat.setForeground(QColor("#007acc"));
     descFormat.setFontPointSize(fontSize);
-    cursor.insertText(QString::fromStdString(pair.second + "\n"), descFormat);
+
+    for (QChar c : QString::fromStdString(pair.second + "\n"))
+      typingQueue.push_back({ c, descFormat });
   }
-  ui->terminalOutput->moveCursor(QTextCursor::Start);
+
+  typingTimer->start(20);
+}
+
+void MainWindow::typeNextChar()
+{
+  if (typingQueue.empty())
+  {
+    typingTimer->stop();
+    return;
+  }
+
+  const auto& next = typingQueue.front();
+  typingCursor.insertText(QString(next.ch), next.format);
+  typingQueue.pop_front();
+
+  ui->terminalOutput->ensureCursorVisible();
+}
+
+void MainWindow::writeNotesToTerminal(const NoteFormat& notes)
+{
+    if (ui->typingCheckBox->isChecked())
+    {
+        writeNotesToTerminalTyping(notes);
+    }
+    else
+    {
+        // Stop animation if running
+        if (typingTimer->isActive())
+            typingTimer->stop();
+
+        writeNotesToTerminalFast(notes);
+    }
 }
 
 void MainWindow::onClearClicked()

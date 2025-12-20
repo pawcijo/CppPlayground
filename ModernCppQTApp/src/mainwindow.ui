@@ -100,6 +100,16 @@
       </property>
      </widget>
     </item>
+        <item>
+     <widget class="QCheckBox" name="typingCheckBox">
+      <property name="text">
+       <string>Typing animation</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
     <item>
      <widget class="QTextEdit" name="terminalOutput">
       <property name="readOnly">
