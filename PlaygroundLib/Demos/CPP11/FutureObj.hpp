@@ -73,11 +73,7 @@ It is part of the C++ Standard Library's concurrency support and is used in conj
     }
 
     // create a promise object
-    std::promise<Example> prom;
-    std::future<Example> fut = prom.get_future();
-
-    // simulate work in another thread
-    do_work(std::move(prom), std::chrono::milliseconds(2000));
+    std::future<Example> fut = do_work(std::chrono::milliseconds(2000));
 
     std::cout << "Waiting for the result...\n";
     // wait for the result
@@ -88,16 +84,22 @@ It is part of the C++ Standard Library's concurrency support and is used in conj
 
   // create a thread and set the promise value after some time to simulate
   // random time
-void do_work(std::promise<Example> barrier,
-             std::chrono::milliseconds runningTime)
-{
+  std::future<Example> do_work(std::chrono::milliseconds runningTime)
+  {
+
+    std::promise<Example> promise;
+    std::future<Example> future = promise.get_future();
+
     std::thread(
-        [runningTime, promise = std::move(barrier)]() mutable
-        {
-            std::this_thread::sleep_for(runningTime);
-            promise.set_value(Example("Updated Value after work"));  // 'example' to member this->example
-        }).detach();
-}
+      [runningTime, promise = std::move(promise)]() mutable
+      {
+        std::this_thread::sleep_for(runningTime);
+        promise.set_value(Example("Updated Value after work"));
+      })
+      .detach();
+
+    return future; // ✅
+  }
 
   void ShowDemo(
     std::function<void(NoteFormat&)> printNotesCallback = nullptr) override

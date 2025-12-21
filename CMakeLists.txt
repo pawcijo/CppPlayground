@@ -11,6 +11,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_subdirectory(PlaygroundLib)
 add_subdirectory(tests)
 add_subdirectory(ModernCppQTApp)
+# add # to disable GRPCDemo build
+add_subdirectory(GRPCDemo)
 # add # to disable VulkanFun build
 add_subdirectory(VulkanFun)
 
