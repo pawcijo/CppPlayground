@@ -32,6 +32,7 @@
 #include "Demos/CPP20/CorutineDemo.hpp"
 #include "Demos/CPP20/PredicateDemo.hpp"
 #include "Demos/CPP20/SemaphoreDemo.hpp"
+#include "Demos/CPP20/ViewDemo.hpp"
 
 // C++ Grebosz
 #include "Demos/C++Grebosz/HelloWorld2025.hpp"
@@ -47,6 +48,7 @@
 #include "QuestionTasks/StringToInt.hpp"
 #include "QuestionTasks/LongestUniqueSubstring.hpp"
 #include "QuestionTasks/LongestPalindrom.hpp"
+#include "QuestionTasks/DecodeString.hpp"
 
 // Other
 #include "Demos/NeuralNetwork/NeuralNetworkDemo.hpp"
@@ -111,6 +113,8 @@ enum class DemoType : int
   Zadanko13_9_10Demo,
   Zadanko14_7_16Demo,
   FutureObjDemo,
+  ViewDemo,
+  DecodeStringDemo,
   Count
 };
 
@@ -453,7 +457,16 @@ public:
             []() { return std::make_unique<FutureObjDemo>(); },
             "FutureObjDemo",
             { DemoTag::CPP11 }) },
-
+        { DemoType::ViewDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<ViewDemo>(); },
+            "ViewDemo",
+            { DemoTag::CPP20 }) },
+          { DemoType::DecodeStringDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<DecodeStringDemo>(); },
+            "DecodeStringDemo",
+            { DemoTag::QuestionTask }) },
       };
     // std::cout << std::format("Demo map created. Size: {}.", sizeof(demoMap))
     //           << std::endl;
