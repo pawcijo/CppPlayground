@@ -15,7 +15,7 @@
                 <Rotation x="0" y="0" z="0"/>
             </Transform>
             <ChildrenIds/>
-            <ModelInfo ModelPath="models/Klocek.obj" TexturePath="textures/box.jpg">
+            <ModelInfo ModelPath="resources/models/Klocek.obj" TexturePath="resources/textures/box.jpg">
                 <Transform>
                     <Position x="0" y="0" z="0"/>
                     <Scale x="1" y="1" z="1"/>

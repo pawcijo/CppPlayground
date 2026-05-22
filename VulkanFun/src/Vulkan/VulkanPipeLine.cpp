@@ -653,13 +653,13 @@ namespace GPGVulkan
     {
 
         std::unique_ptr<VulkanShader> vertexShader = std::make_unique<VulkanShader>("Vertex Shader",
-                                                                                    "shaders/vert.spv",
+                                                                                    "resources/shaders/vert.spv",
                                                                                     VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
                                                                                     VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT,
                                                                                     mVulkanContext.mDevice);
 
         std::unique_ptr<VulkanShader> fragmentShader = std::make_unique<VulkanShader>("Fragment Shader",
-                                                                                      "shaders/frag.spv",
+                                                                                      "resources/shaders/frag.spv",
                                                                                       VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO,
                                                                                       VkShaderStageFlagBits::VK_SHADER_STAGE_FRAGMENT_BIT,
                                                                                       mVulkanContext.mDevice);
@@ -1463,7 +1463,7 @@ namespace GPGVulkan
 
         ImGuiIO &io = ImGui::GetIO();
 
-        const char *scenePath = "Scene.xml";
+        const char *scenePath = "resources/Scene.xml";
 
         // 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
         {

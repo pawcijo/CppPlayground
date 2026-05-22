@@ -12,7 +12,7 @@ add_subdirectory(PlaygroundLib)
 add_subdirectory(tests)
 add_subdirectory(ModernCppQTApp)
 # add # to disable GRPCDemo build
-add_subdirectory(GRPCDemo)
+add_subdirectory(grpcDemo)
 # add # to disable VulkanFun build
 add_subdirectory(VulkanFun)
 
