@@ -9,6 +9,12 @@ Build/PlaygroundLib/
 Build/VulkanFun/CMakeFiles/
 Build/VulkanFun/Makefile/
 Build/compile_commands.json
+Build/ModernCppQTApp/ModernCppQTApp_autogen/
+Build/ModernCppQTApp/CMakeFiles/
+Build/ModernCppQTApp/resources.qrc.depends
+Build/ModernCppQTApp/Makefile
+Build/ModernCppQTApp/qrc_resources.cpp
+compile_commands.json
 
 *.spv
 *.cmake
