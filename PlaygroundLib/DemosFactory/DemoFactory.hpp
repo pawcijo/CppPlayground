@@ -29,7 +29,7 @@
 // C++ 20
 #include "Demos/CPP20/BitDemo.hpp"
 #include "Demos/CPP20/CompareDemo.hpp"
-#include "Demos/CPP20/CorutineDemo.hpp"
+#include "Demos/CPP20/CoroutineDemo.hpp"
 #include "Demos/CPP20/PredicateDemo.hpp"
 #include "Demos/CPP20/SemaphoreDemo.hpp"
 #include "Demos/CPP20/ViewDemo.hpp"
@@ -99,7 +99,7 @@ enum class DemoType : int
   SemaphoreDemo,
   CompareDemo,
   PredicateDemo,
-  CorutineDemo,
+  CoroutineDemo,
   HelloWorld2025Demo,
   TypeLimitsDemo,
   OutOfRangeDemo,
@@ -385,7 +385,7 @@ public:
             []() { return std::make_unique<PredicateDemo>(); },
             "PredicateDemo",
             { DemoTag::CPP20 }) },
-        { DemoType::CorutineDemo,
+        { DemoType::CoroutineDemo,
           DemoCreatorWithNameAndTags(
             []() { return std::make_unique<CoroutineDemo>(); },
             "CoroutineDemo",

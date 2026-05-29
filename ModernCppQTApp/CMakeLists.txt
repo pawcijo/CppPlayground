@@ -66,7 +66,7 @@ add_executable(${PROJECT_NAME}
 
 #Include directories for static library
 target_include_directories(${PROJECT_NAME} PUBLIC
-    ../PlayGroundLib
+    ../PlaygroundLib
     ${Vulkan_INCLUDE_DIRS}
 )
 

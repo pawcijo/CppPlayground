@@ -56,13 +56,13 @@ make
 
 #### C++20:
 - ~~bit~~
-- compare
+- ~~compare~~
     - ~~strong_ordering~~
     - ~~weak_ordering~~
     - ~~partial_ordering~~
-- concepts
+- ~~concepts~~
     - ~~predicate~~
-- coroutine
+- ~~coroutine~~
 - format
 - numbers
 - ranges
