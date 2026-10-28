@@ -4,16 +4,30 @@
 #include "Common/DemoBase.hpp"
 
 #include <coroutine>
-#include <thread>
 #include <functional>
-#include <unistd.h>
 #include <sys/syscall.h>
+#include <thread>
+#include <unistd.h>
 
 namespace
 {
-inline pid_t get_tid()
+inline pid_t GetThreadId()
 {
+#if defined(__APPLE__)
+  std::uint64_t threadId = 0;
+  const int result = pthread_threadid_np(nullptr, &threadId);
+
+  if (result != 0)
+  {
+    return static_cast<pid_t>(-1);
+  }
+
+  return static_cast<pid_t>(threadId);
+#elif defined(__linux__)
   return static_cast<pid_t>(syscall(SYS_gettid));
+#else
+  return static_cast<pid_t>(-1);
+#endif
 }
 class Generator
 {
@@ -23,7 +37,7 @@ public:
 
   struct promise_type
   {
-    unsigned long long current_value; // unsigned long long to hold the value 
+    unsigned long long current_value; // unsigned long long to hold the value
                                       // uint64_t could also work
     std::suspend_always yield_value(unsigned long long value)
     {
@@ -150,8 +164,8 @@ public:
     for (int i = 1; i <= max; ++i)
     {
       auto hid = std::hash<std::thread::id>{}(std::this_thread::get_id());
-      std::cout << "Coroutine body tid: " << get_tid()
-                << " (hash: " << hid << ") about to yield " << i << std::endl;
+      std::cout << "Coroutine body tid: " << GetThreadId() << " (hash: " << hid
+                << ") about to yield " << i << std::endl;
       co_yield i;
     }
   }
@@ -165,30 +179,35 @@ public:
     std::cout << "Coroutine example executed." << std::endl;
 
     auto main_hash = std::hash<std::thread::id>{}(std::this_thread::get_id());
-    std::cout << "Main thread tid: " << get_tid() << " (hash: " << main_hash << ")" << std::endl;
+    std::cout << "Main thread tid: " << GetThreadId() << " (hash: " << main_hash
+              << ")" << std::endl;
 
     Generator gen = counter(5);
 
     std::cout << "Resuming coroutine on main thread..." << std::endl;
     while (gen.next())
     {
-      std::cout << "Main got value: " << gen.value() << " on tid " << get_tid()
+      std::cout << "Main got value: " << gen.value() << " on tid " << GetThreadId()
                 << " (hash: " << main_hash << ")" << '\n';
     }
 
-    std::cout << "\nNow resume the same coroutine logic on a worker thread..." << std::endl;
+    std::cout << "\nNow resume the same coroutine logic on a worker thread..."
+              << std::endl;
     Generator workerGen = counter(5);
 
-    std::thread worker([&workerGen]() {
-      auto worker_id = std::this_thread::get_id();
-      auto worker_hash = std::hash<std::thread::id>{}(worker_id);
-      std::cout << "Worker thread tid: " << get_tid() << " (hash: " << worker_hash << ")" << std::endl;
-      while (workerGen.next())
+    std::thread worker(
+      [&workerGen]()
       {
-        std::cout << "Worker got value: " << workerGen.value() << " on tid " << get_tid()
-                  << " (hash: " << worker_hash << ")" << '\n';
-      }
-    });
+        auto worker_id = std::this_thread::get_id();
+        auto worker_hash = std::hash<std::thread::id>{}(worker_id);
+        std::cout << "Worker thread tid: " << GetThreadId()
+                  << " (hash: " << worker_hash << ")" << std::endl;
+        while (workerGen.next())
+        {
+          std::cout << "Worker got value: " << workerGen.value() << " on tid "
+                    << GetThreadId() << " (hash: " << worker_hash << ")" << '\n';
+        }
+      });
 
     worker.join();
 
@@ -205,7 +224,7 @@ public:
       for (int i = 0; i < n; ++i)
       {
         auto hid = std::hash<std::thread::id>{}(std::this_thread::get_id());
-        std::cout << "Fibonacci coroutine tid: " << get_tid()
+        std::cout << "Fibonacci coroutine tid: " << GetThreadId()
                   << " (hash: " << hid << ") yielding " << a << std::endl;
         co_yield a;
         unsigned long long next = a + b;
