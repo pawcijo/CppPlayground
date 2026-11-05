@@ -121,14 +121,16 @@ private:
 
   void StoiTimeTest(const std::string& str)
   {
+    int value{ 0 };
     try
     {
-      std::stoi(str);
+      value = std::stoi(str);
     }
     catch (const std::exception& e)
     {
       std::cerr << "stoi failed: " << e.what() << "\n";
     }
+    std::cout << "stoi works fine. Status(" << value << ")\n";
   }
 
   void StringstreamTimeTest(const std::string& str)
