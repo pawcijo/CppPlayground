@@ -4,6 +4,10 @@
 
 #include <cstdio>
 #include <iostream>
+#include <format>
+#include <iterator>
+#include <string>
+#include <chrono>
 
 #include "Common/MyUniquePtr.hpp"
 #include "DemosFactory/DemoFactory.hpp" // Include the necessary header for DemoFactory
@@ -106,6 +110,112 @@ TEST(DemoFactoryTest, NoThrowOnCreateDemo)
     }
   }
 }
+
+
+TEST(FormatMemoryTest, CompareFormatAndFormatTo)
+{
+    constexpr auto formatString = "The answer is {}. This is a longer string to test heap allocations.";
+    constexpr int argument = 42;
+
+    // ------------------------------------------------
+    // A: std::format()
+    // ------------------------------------------------
+    auto startFormat = std::chrono::steady_clock::now();
+
+    std::string formatted;
+
+    for (int i = 0; i < 10000; ++i)
+    {
+        formatted = std::format(formatString, argument);
+    }
+
+    auto endFormat = std::chrono::steady_clock::now();
+
+    auto formatTime =
+        std::chrono::duration_cast<std::chrono::microseconds>(
+            endFormat - startFormat).count();
+
+    // ------------------------------------------------
+    // B: std::format_to() without reserve()
+    // ------------------------------------------------
+    auto startFormatTo = std::chrono::steady_clock::now();
+
+    std::string buffer;
+
+    for (int i = 0; i < 10000; ++i)
+    {
+        buffer.clear();
+
+        std::format_to(
+            std::back_inserter(buffer),
+            formatString,
+            argument
+        );
+    }
+
+    auto endFormatTo = std::chrono::steady_clock::now();
+
+    auto formatToTime =
+        std::chrono::duration_cast<std::chrono::microseconds>(
+            endFormatTo - startFormatTo).count();
+
+    // ------------------------------------------------
+    // C: std::format_to() with reserve()
+    // ------------------------------------------------
+    std::string reservedBuffer;
+    reservedBuffer.reserve(128);
+
+    auto startReserved = std::chrono::steady_clock::now();
+
+    for (int i = 0; i < 10000; ++i)
+    {
+        reservedBuffer.clear();
+
+        std::format_to(
+            std::back_inserter(reservedBuffer),
+            formatString,
+            argument
+        );
+    }
+
+    auto endReserved = std::chrono::steady_clock::now();
+
+    auto reservedTime =
+        std::chrono::duration_cast<std::chrono::microseconds>(
+            endReserved - startReserved).count();
+
+    // ------------------------------------------------
+    // Verify identical results
+    // ------------------------------------------------
+    EXPECT_EQ(formatted, buffer);
+    EXPECT_EQ(formatted, reservedBuffer);
+
+    // Verify reserved capacity was sufficient
+    EXPECT_GE(reservedBuffer.capacity(), reservedBuffer.size());
+
+    // ------------------------------------------------
+    // Display results
+    // ------------------------------------------------
+    std::cout << "\n========== FORMAT BENCHMARK ==========\n";
+
+    std::cout << "Iterations: 10000\n";
+
+    std::cout << "std::format(): "
+              << formatTime << " us\n";
+
+    std::cout << "std::format_to(): "
+              << formatToTime << " us\n";
+
+    std::cout << "std::format_to() + reserve(): "
+              << reservedTime << " us\n";
+
+    std::cout << "Reserved buffer capacity: "
+              << reservedBuffer.capacity() << " bytes\n";
+
+    std::cout << "======================================\n";
+}
+
+
 
 struct OutputSilencer
 {

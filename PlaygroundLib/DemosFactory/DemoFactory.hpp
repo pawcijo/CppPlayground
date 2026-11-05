@@ -33,6 +33,7 @@
 #include "Demos/CPP20/PredicateDemo.hpp"
 #include "Demos/CPP20/SemaphoreDemo.hpp"
 #include "Demos/CPP20/ViewDemo.hpp"
+#include "Demos/CPP20/FormatDemo.hpp"
 
 // C++ Grebosz
 #include "Demos/C++Grebosz/HelloWorld2025.hpp"
@@ -114,6 +115,7 @@ enum class DemoType : int
   Zadanko14_7_16Demo,
   FutureObjDemo,
   ViewDemo,
+  FormatDemo,
   DecodeStringDemo,
   Count
 };
@@ -462,6 +464,12 @@ public:
             []() { return std::make_unique<ViewDemo>(); },
             "ViewDemo",
             { DemoTag::CPP20 }) },
+        { DemoType::FormatDemo,
+          DemoCreatorWithNameAndTags(
+            []() { return std::make_unique<FormatDemo>(); },
+            "FormatDemo",
+            { DemoTag::CPP20 }) },
+            
           { DemoType::DecodeStringDemo,
           DemoCreatorWithNameAndTags(
             []() { return std::make_unique<DecodeStringDemo>(); },
