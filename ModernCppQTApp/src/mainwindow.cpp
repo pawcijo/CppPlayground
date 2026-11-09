@@ -112,9 +112,9 @@ void MainWindow::updateDemoSelector()
   filteredDemoMap.clear();
 
   int id = 1;
-  for (const auto& [demoType, tuple] : rawMap)
+  for (const auto& [demoType, info] : rawMap)
   {
-    const auto& tags = std::get<2>(tuple);
+    const auto& tags = info.tags;
     bool matches = false;
     for (const auto& tag : tags)
     {
@@ -127,8 +127,8 @@ void MainWindow::updateDemoSelector()
     }
     if (matches)
     {
-      filteredDemoMap[id] = { demoType, std::get<1>(tuple) };
-      ui->demoSelector->addItem(QString::fromStdString(std::get<1>(tuple)), id);
+      filteredDemoMap[id] = { demoType, info.name };
+      ui->demoSelector->addItem(QString::fromStdString(info.name), id);
       ++id;
     }
   }
@@ -140,8 +140,7 @@ std::unique_ptr<DemoBase> MainWindow::createDemo(DemoType chosenDemo)
   if (it != rawMap.end())
   {
     std::cout << "Creating demo: " << "\n";
-    return std::get<0>(it->second)(); // Call the associated lambda function
-                                      // to create the object
+    return it->second.creator();
   }
   return nullptr;
 }

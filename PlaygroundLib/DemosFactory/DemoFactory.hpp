@@ -1,9 +1,11 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 #include "CommonDemos.h" // IWYU pragma: keep
 
@@ -14,6 +16,7 @@
 #include "Demos/Patterns/Singleton/SingletonDemo.hpp"
 
 // C++ 11
+#include "Demos/CPP11/AtomicDemo.hpp"
 #include "Demos/CPP11/FutureObj.hpp"
 
 // C++ 17
@@ -113,6 +116,7 @@ enum class DemoType : int
   Zadanko12_5_30Demo,
   Zadanko13_9_10Demo,
   Zadanko14_7_16Demo,
+  AtomicDemo,
   FutureObjDemo,
   ViewDemo,
   FormatDemo,
@@ -145,9 +149,22 @@ public:
   // This is a lambda function that creates a DemoBase object
   // It creates a unique pointer to the object of the derived class
   using DemoCreator = std::function<std::unique_ptr<DemoBase>()>;
-  // This is a pair of the lambda function and the name of the demo
-  using DemoCreatorWithNameAndTags =
-    std::tuple<DemoCreator, std::string, std::vector<DemoTag>>;
+
+  struct DemoInfo
+  {
+    DemoCreator creator;
+    std::string name;
+    std::vector<DemoTag> tags;
+
+    DemoInfo(DemoCreator creator,
+             std::string name,
+             std::vector<DemoTag> tags)
+      : creator(std::move(creator))
+      , name(std::move(name))
+      , tags(std::move(tags))
+    {
+    }
+  };
 
   static std::unique_ptr<DemoBase> createDemo(DemoType chosenDemo)
   {
@@ -155,323 +172,327 @@ public:
     const auto& it = demoMap.find(chosenDemo);
     if (it != demoMap.end())
     {
-      return std::get<0>(it->second)(); // Call the associated lambda function
-                                        // to create the object
+      return it->second.creator();
     }
     return nullptr;
   }
 
-  static const std::unordered_map<DemoType, DemoCreatorWithNameAndTags>&
+  static const std::unordered_map<DemoType, DemoInfo>&
   getDemoMap()
   {
     // Initialize the map statically
-    static const std::unordered_map<DemoType, DemoCreatorWithNameAndTags>
+    static const std::unordered_map<DemoType, DemoInfo>
       demoMap = {
         { DemoType::DeductingTypesDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<DeductingTypesDemo>(); },
             "DeductingTypesDemo",
             { DemoTag::Common }) },
         { DemoType::AutoDeductionDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<AutoDeductionDemo>(); },
             "AutoDeductionDemo",
             { DemoTag::Common }) },
         { DemoType::DeclareTypeDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<DeclareTypeDemo>(); },
             "DeclareTypeDemo",
             { DemoTag::Common }) },
         { DemoType::UndesiredTypesDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<UndesiredTypesDemo>(); },
             "UndesiredTypesDemo",
             { DemoTag::Common }) },
         { DemoType::AssigmentDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<AssigmentDemo>(); },
             "AssigmentDemo",
             { DemoTag::Common }) },
         { DemoType::OverloadingAndOverridingDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<OverloadingAndOverridingDemo>(); },
             "OverloadingAndOverridingDemo",
             { DemoTag::Common }) },
         { DemoType::PtrDemo,
-          DemoCreatorWithNameAndTags([]()
+          DemoInfo([]()
                                      { return std::make_unique<PtrDemo>(); },
                                      "PtrDemo",
                                      { DemoTag::Common }) },
         { DemoType::ConstIteratorsDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<ConstIteratorsDemo>(); },
             "ConstIteratorsDemo",
             { DemoTag::Common }) },
         { DemoType::ThrowAndNoExceptDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<ThrowAndNoExceptDemo>(); },
             "ThrowAndNoExceptDemo",
             { DemoTag::Common }) },
         { DemoType::ConstExpressionDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<ConstExpressionDemo>(); },
             "ConstExpressionDemo",
             { DemoTag::Common }) },
         { DemoType::ConstMutableDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<ConstMutableDemo>(); },
             "ConstMutableDemo",
             { DemoTag::Common }) },
         { DemoType::RuleOfThreeDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<RuleOfThreeDemo>(); },
             "RuleOfThreeDemo",
             { DemoTag::Common }) },
         { DemoType::SOLID_Demo,
-          DemoCreatorWithNameAndTags([]()
+          DemoInfo([]()
                                      { return std::make_unique<SOLID_Demo>(); },
                                      "SOLID_Demo",
                                      { DemoTag::Common }) },
         { DemoType::VirtualDestructorDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<VirtualDestructorDemo>(); },
             "VirtualDestructorDemo",
             { DemoTag::Common }) },
         { DemoType::ReferencePolymorphismDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<ReferencePolymorphismDemo>(); },
             "ReferencePolymorphismDemo",
             { DemoTag::Common }) },
         { DemoType::StaticMemoryAllocationDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<StaticMemoryAllocationDemo>(); },
             "StaticMemoryAllocationDemo",
             { DemoTag::Common }) },
         { DemoType::DeepShallowCopyDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<DeepShallowCopyDemo>(); },
             "DeepShallowCopyDemo",
             { DemoTag::Common }) },
         { DemoType::WeakPtrVsSharedPtrDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<WeakPtrVsSharedPtrDemo>(); },
             "WeakPtrVsSharedPtrDemo",
             { DemoTag::Common }) },
         { DemoType::ExceptionAndStackDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<ExceptionAndStackDemo>(); },
             "ExceptionAndStackDemo",
             { DemoTag::Common }) },
         { DemoType::CompilationProcessDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<CompilationProcessDemo>(); },
             "CompilationProcessDemo",
             { DemoTag::Common }) },
         { DemoType::UniquePtrFactoryDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<UniquePtrFactoryDemo>(); },
             "UniquePtrFactoryDemo",
             { DemoTag::Common }) },
         { DemoType::MoreAboutSharedPtrDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<MoreAboutSharedPtrDemo>(); },
             "MoreAboutSharedPtrDemo",
             { DemoTag::Common }) },
         { DemoType::HowToWeakPtrDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<HowToWeakPtrDemo>(); },
             "HowToWeakPtrDemo",
             { DemoTag::Common }) },
         { DemoType::AllocateSharedDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<AllocateSharedDemo>(); },
             "AllocateSharedDemo",
             { DemoTag::Common }) },
         { DemoType::PimplDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<PimplExample>(); },
             "PimplDemo",
             { DemoTag::DesignPatterns }) },
         { DemoType::UniversalRefVsRValueRefDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<UniversalRefVsRValueRefDemo>(); },
             "UniversalRefVsRValueRefDemo",
             { DemoTag::Common }) },
         { DemoType::ForwardDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<ForwardDemo>(); },
             "ForwardDemo",
             { DemoTag::Common }) },
         { DemoType::EmptyDemo,
-          DemoCreatorWithNameAndTags([]()
+          DemoInfo([]()
                                      { return std::make_unique<EmptyDemo>(); },
                                      "EmptyDemo",
                                      { DemoTag::Common }) },
         { DemoType::AnyDemo,
-          DemoCreatorWithNameAndTags([]()
+          DemoInfo([]()
                                      { return std::make_unique<AnyDemo>(); },
                                      "AnyDemo",
                                      { DemoTag::CPP17 }) },
         { DemoType::VariantDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<VariantDemo>(); },
             "VariantDemo",
             { DemoTag::CPP17 }) },
         { DemoType::StringViewDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<StringViewDemo>(); },
             "StringViewDemo",
             { DemoTag::CPP17 }) },
         { DemoType::CharConvDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<CharConvDemo>(); },
             "CharConvDemo",
             { DemoTag::CPP17 }) },
         { DemoType::ExecutionDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<ExecutionDemo>(); },
             "ExecutionDemo",
             { DemoTag::CPP17 }) },
         { DemoType::FileSystemDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<FileSystemDemo>(); },
             "FileSystemDemo",
             { DemoTag::CPP17 }) },
         { DemoType::MemoryResourceDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<MemoryResourceDemo>(); },
             "MemoryResourceDemo",
             { DemoTag::CPP17 }) },
         { DemoType::OptionalDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<OptionalDemo>(); },
             "OptionalDemo",
             { DemoTag::CPP17 }) },
         { DemoType::NeuralNetworkDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<NeuralNetworkDemo>(); },
             "NeuralNetworkDemo",
             { DemoTag::NeuralNetwork }) },
         { DemoType::SingletonDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<SingletonDemo>(); },
             "SingletonDemo",
             { DemoTag::DesignPatterns }) },
         { DemoType::BuilderDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<BuilderDemo>(); },
             "BuilderDemo",
             { DemoTag::DesignPatterns }) },
         { DemoType::AdapterDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<AdapterDemo>(); },
             "AdapterDemo",
             { DemoTag::DesignPatterns }) },
         { DemoType::BitDemo,
-          DemoCreatorWithNameAndTags([]()
+          DemoInfo([]()
                                      { return std::make_unique<BitDemo>(); },
                                      "BitDemo",
                                      { DemoTag::CPP20 }) },
         { DemoType::SemaphoreDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<SemaphoreDemo>(); },
             "SemaphoreDemo",
             { DemoTag::CPP20 }) },
         { DemoType::CompareDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<CompareDemo>(); },
             "CompareDemo",
             { DemoTag::CPP20 }) },
         { DemoType::PredicateDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<PredicateDemo>(); },
             "PredicateDemo",
             { DemoTag::CPP20 }) },
         { DemoType::CoroutineDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<CoroutineDemo>(); },
             "CoroutineDemo",
             { DemoTag::CPP20, DemoTag::DesignPatterns }) },
         { DemoType::HelloWorld2025Demo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<HelloWorld2025Demo>(); },
             "HelloWorld2025Demo",
             { DemoTag::GreboszCPP }) },
         { DemoType::TypeLimitsDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<TypeLimitsDemo>(); },
             "TypeLimitsDemo",
             { DemoTag::GreboszCPP }) },
         { DemoType::OutOfRangeDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<OutOfRangeDemo>(); },
             "OutOfRangeDemo",
             { DemoTag::Common }) },
 
         { DemoType::LongestCharSequenceDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<LongestCharSequence>(); },
             "LongestCharSequenceDemo",
             { DemoTag::QuestionTask }) },
 
         { DemoType::StringToIntoDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<StringToIntoDemo>(); },
             "StringToIntoDemo",
             { DemoTag::QuestionTask }) },
         { DemoType::LongestUniqueSubstringDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<LongestUniqueSubstring>(); },
             "LongestUniqueSubstringDemo",
             { DemoTag::QuestionTask }) },
         { DemoType::LongestPalindromDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<LongestPalindrom>(); },
             "LongestPalindromDemo",
             { DemoTag::QuestionTask }) },
         { DemoType::Zadanko4_16IIIDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<Zadanko4_16III>(); },
             "Zadanko4_16IIIDemo",
             { DemoTag::GreboszCPP }) },
         { DemoType::Zadanko8_28Demo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<Zadanko8_28>(); },
             "Zadanko8_28Demo",
             { DemoTag::GreboszCPP }) },
         { DemoType::Zadanko12_5_30Demo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<Zadanko12_5_30>(); },
             "Zadanko12_5_30Demo",
             { DemoTag::GreboszCPP }) },
            { DemoType::Zadanko13_9_10Demo,
-            DemoCreatorWithNameAndTags(
+            DemoInfo(
             []() { return std::make_unique<Zadanko13_9_10>(); },
             "Zadanko13_9_10Demo",
             { DemoTag::GreboszCPP })},
             { DemoType::Zadanko14_7_16Demo,
-            DemoCreatorWithNameAndTags(
+            DemoInfo(
             []() { return std::make_unique<Zadanko14_7_16>(); },
             "Zadanko14_7_16Demo",
             { DemoTag::GreboszCPP })},
+        { DemoType::AtomicDemo,
+          DemoInfo(
+            []() { return std::make_unique<AtomicDemo>(); },
+            "AtomicDemo",
+            { DemoTag::CPP11 }) },
         { DemoType::FutureObjDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<FutureObjDemo>(); },
             "FutureObjDemo",
             { DemoTag::CPP11 }) },
         { DemoType::ViewDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<ViewDemo>(); },
             "ViewDemo",
             { DemoTag::CPP20 }) },
         { DemoType::FormatDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<FormatDemo>(); },
             "FormatDemo",
             { DemoTag::CPP20 }) },
             
           { DemoType::DecodeStringDemo,
-          DemoCreatorWithNameAndTags(
+          DemoInfo(
             []() { return std::make_unique<DecodeStringDemo>(); },
             "DecodeStringDemo",
             { DemoTag::QuestionTask }) },

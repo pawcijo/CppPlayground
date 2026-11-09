@@ -54,7 +54,7 @@ private:
   std::unique_ptr<DemoBase> createDemo(DemoType chosenDemo);
   Ui::MainWindow* ui;
   PeriodicTableWindow* periodicTableWindow = nullptr;
-  std::unordered_map<DemoType, DemoFactory::DemoCreatorWithNameAndTags> rawMap;
+  std::unordered_map<DemoType, DemoFactory::DemoInfo> rawMap;
   std::unique_ptr<DemoBase> demoInstance;
   std::map<int, std::pair<DemoType, std::string>>
     filteredDemoMap; // Add this line
