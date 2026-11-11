@@ -75,5 +75,5 @@ public:
   }
 
 public:
-  static long long object_counter;
+  static std::atomic<long long> object_counter;
 };

@@ -63,9 +63,9 @@ make
 - ~~concepts~~
     - ~~predicate~~
 - ~~coroutine~~
-- format
-- numbers
-- ranges
+- ~~format~~
+- ~~numbers~~
+- ~~ranges~~
 - source_location
 - span
 - syncstream

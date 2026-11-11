@@ -33,7 +33,9 @@
 #include "Demos/CPP20/BitDemo.hpp"
 #include "Demos/CPP20/CompareDemo.hpp"
 #include "Demos/CPP20/CoroutineDemo.hpp"
+#include "Demos/CPP20/NumbersDemo.hpp"
 #include "Demos/CPP20/PredicateDemo.hpp"
+#include "Demos/CPP20/RangesDemo.hpp"
 #include "Demos/CPP20/SemaphoreDemo.hpp"
 #include "Demos/CPP20/ViewDemo.hpp"
 #include "Demos/CPP20/FormatDemo.hpp"
@@ -102,6 +104,8 @@ enum class DemoType : int
   BitDemo,
   SemaphoreDemo,
   CompareDemo,
+  NumbersDemo,
+  RangesDemo,
   PredicateDemo,
   CoroutineDemo,
   HelloWorld2025Demo,
@@ -397,6 +401,16 @@ public:
           DemoInfo(
             []() { return std::make_unique<CompareDemo>(); },
             "CompareDemo",
+            { DemoTag::CPP20 }) },
+        { DemoType::NumbersDemo,
+          DemoInfo(
+            []() { return std::make_unique<NumbersDemo>(); },
+            "NumbersDemo",
+            { DemoTag::CPP20 }) },
+        { DemoType::RangesDemo,
+          DemoInfo(
+            []() { return std::make_unique<RangesDemo>(); },
+            "RangesDemo",
             { DemoTag::CPP20 }) },
         { DemoType::PredicateDemo,
           DemoInfo(
